@@ -23,12 +23,16 @@ Kemudian buka `http://localhost:8000`.
 
 ## Menerbitkan dengan GitHub Pages
 
-1. Buka **Settings → Pages** pada repositori.
-2. Pilih publikasi dari branch `main` dan folder `/(root)`, jika opsi tersebut tersedia.
-3. Simpan pengaturan, lalu periksa status deployment dan URL yang ditampilkan GitHub.
-4. Setelah perubahan di-commit ke branch sumber, GitHub Pages akan memperbarui situs mengikuti konfigurasi repositori.
+Workflow penerbitan sudah disiapkan di `.github/workflows/pages.yml`. Untuk mengaktifkannya:
 
-Panduan resmi: [GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages).
+1. Buka **Settings → Pages** pada repositori.
+2. Pada bagian **Build and deployment → Source**, pilih **GitHub Actions**.
+3. Setelah pengaturan disimpan, buka tab **Actions** dan periksa workflow **Deploy JDIH prototype to GitHub Pages**.
+4. Workflow akan berjalan pada push ke branch `main`. Jika deployment berhasil, URL situs akan terlihat di ringkasan workflow dan Settings → Pages.
+
+Workflow hanya menerbitkan `index.html`; README dan dokumen evaluasi tidak dimasukkan ke situs publik. GitHub Pages tetap harus diaktifkan dari pengaturan repositori.
+
+Panduan resmi: [Konfigurasi sumber publikasi GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site).
 
 ## Data contoh
 
