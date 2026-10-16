@@ -4,11 +4,13 @@ Prototipe frontend statis untuk mengevaluasi struktur informasi, penelusuran dok
 
 ## Status dan batasan
 
-**Ini merupakan prototipe UI/UX, bukan pengganti portal resmi.** Dataset pencarian lokal hanya berisi empat contoh peraturan dan tidak diperbarui otomatis. Status, ringkasan, tanggal, serta informasi pengundangan perlu diverifikasi sebelum digunakan sebagai data operasional. Prototipe tidak terhubung ke database/API, tidak menyediakan backend/admin, dan tidak mengumpulkan statistik kunjungan.
+**Ini merupakan prototipe UI/UX, bukan pengganti portal resmi. Prinsip desainnya adalah mempertahankan fitur eksisting dan menambahkan perbaikan berdasarkan evaluasi, bukan menghapus menu yang tidak disebut dalam evaluasi.**
+
+Dataset pencarian lokal hanya berisi empat contoh peraturan dan tidak diperbarui otomatis. Status, ringkasan, tanggal, serta informasi pengundangan perlu diverifikasi sebelum digunakan sebagai data operasional. Navigasi kategori, Program Unggulan 5T, berita, informasi kelembagaan, statistik/survei, dan tautan jejaring JDIH telah ditampilkan kembali sebagai jalur akses. Sebagian besar tautan tersebut masih membuka portal resmi, karena data dan fungsi backend belum dimigrasikan. Panel statistik prototipe sengaja tidak menggunakan angka simulasi.
 
 ## Isi repositori
 
-- `index.html`: antarmuka responsif, CSS dan JavaScript, pencarian/filter lokal, detail dokumen, navigasi mobile, serta kontrol ukuran teks dan kontras.
+- `index.html`: antarmuka responsif, pencarian/filter lokal, detail dokumen, katalog kategori lengkap dengan tautan ke sumber resmi, Program Unggulan 5T, berita, Tentang Kami, statistik/survei, tautan JDIH terkait, navigasi mobile, kontrol ukuran teks dan kontras, serta bagian penambahan fitur berdasarkan evaluasi.
 - `docs/peta-indikator-evaluasi.md`: pemetaan temuan evaluasi ke keputusan desain dan prioritas tindak lanjut.
 
 ## Menjalankan secara lokal
