@@ -16,6 +16,29 @@ PDF bernama `Indikator-Penilaian-Anggota-JDIH-2025` memuat materi berjudul **Sos
 | IV. Pengembangan JDIH | 10 | Layanan onsite, terjemahan, pengembangan aplikasi dan keamanan, aksesibilitas disabilitas, evaluasi mandiri |
 | **Total** | **100** | |
 
+## Audit kesetaraan fitur portal eksisting (*feature parity*)
+
+Tujuan audit adalah memastikan redesign tidak mengurangi kemampuan portal hanya karena suatu fitur tidak disebut dalam indikator evaluasi. Inventaris ini didasarkan pada menu dan komponen beranda portal resmi yang ditinjau pada 16 Oktober 2026. Untuk verifikasi, lihat [portal resmi JDIH Kementerian Transmigrasi](https://jdih.transmigrasi.go.id/).
+
+| Fitur portal eksisting | Penilaian pada prototipe awal | Status pada prototipe saat ini | Arah pengembangan |
+|---|---|---|---|
+| Pencarian berdasarkan kata kunci, tahun, dan nomor | Sebagian disederhanakan menjadi kata kunci, jenis, tahun, status | Pencarian lokal tetap demo; perluas input nomor dan dukungan filter tanpa menghilangkan kemampuan yang sudah ada | Pertahankan pencarian eksisting lalu optimalkan pencarian lanjutan, filter, relevansi, dan akses keyboard |
+| Seluruh kategori peraturan dan keputusan | Tidak dipetakan sebagai navigasi lengkap | Seluruh jalur kategori utama disediakan sebagai tautan ke portal resmi | Saat migrasi data dilakukan, jadikan kategori tersedia langsung di frontend baru dengan pagination dan jumlah data dari sumber resmi |
+| Putusan pengadilan/yurisprudensi | Hanya satu pintasan kategori | Jalur kategori putusan dan yurisprudensi tetap ada | Tambahkan skema metadata sesuai jenis putusan sebagaimana rekomendasi evaluasi |
+| Dokumen pembentukan PUU | Hanya beberapa item pembentukan ditampilkan | Rancangan, Naskah Urgensi, dan Naskah Akademik tetap ditautkan; submenu tambahan ditampilkan sebagai backlog/usulan | Tambahkan Progsun/Proleg, hasil Manjau/analisis dan evaluasi, risalah/notulensi harmonisasi, partisipasi publik, kajian dan penelitian setelah koleksinya tersedia |
+| Nonperaturan: monografi, artikel hukum, yurisprudensi, HAKI | Bagian dokumen lain terlalu ringkas dan tidak seluruhnya tersedia | Keempat jalur nonperaturan ditampilkan kembali | Beri tiap tipe halaman daftar dan struktur metadata sendiri, dengan pemeriksaan kelengkapan data |
+| Berita JDIH | Tidak dimasukkan | Jalur Berita ditambahkan kembali melalui portal resmi | Tambahkan daftar berita dan relasi berita ke produk hukum bila tersedia |
+| Profil, dasar hukum, visi-misi, dan sejarah | Tidak dimasukkan | Seluruh jalur Tentang Kami ditambahkan kembali | Pertahankan dan sesuaikan struktur editorial setelah validasi pemilik konten |
+| Program Unggulan 5T | Tidak dimasukkan | Lima kartu ringkasan ditambahkan kembali pada prototipe | Validasi narasi final terhadap naskah resmi dan sediakan halaman detail bila dibutuhkan |
+| Statistik pengunjung, harian/bulanan, total klik | Diganti dengan placeholder statistik dokumen sehingga fitur eksisting tidak terwakili | Komponen statistik pengunjung dan survei ditampilkan kembali, tetapi nilainya berupa placeholder tanpa angka rekaan | Hubungkan angka ke sumber metrik resmi; pisahkan statistik kunjungan dari statistik dokumen hukum |
+| Survei/SKM dan penilaian pengguna | Tidak difungsikan sebagai jalur yang jelas | Tautan ke portal resmi tetap disediakan; tidak mengklaim submission dari prototipe | Verifikasi target/form survei resmi dan integrasikan secara sahih, dengan penjelasan privasi |
+| Tautan JDIHN dan JDIH instansi lain | Hanya tautan JDIHN yang dipertahankan | Jejaring tautan instansi terkait ditampilkan kembali | Validasi setiap tautan secara berkala dan tandai tautan eksternal |
+| Responsif mobile dan fitur aksesibilitas | Ada dasar responsif dan kontrol ukuran teks/kontras | Dipertahankan serta memakai skip link, label form, dan fokus keyboard | Uji manual di perangkat nyata dan lakukan audit WCAG/pembaca layar |
+| API integrasi JDIHN dan sinkronisasi | Belum tersambung | Status secara jelas belum terintegrasi dari prototipe | Jangan menghapus API eksisting; verifikasi endpoint dan jadwal sinkronisasi bersama tim TI |
+| Layanan onsite, terjemahan, optimasi aplikasi dan keamanan | Belum diimplementasikan di prototipe | Tetap sebagai rencana pengembangan, bukan fitur yang diklaim sudah aktif | Tambahkan setelah SOP, penanggung jawab, sumber data, dan prasyarat keamanan ditetapkan |
+
+**Kesimpulan audit:** versi awal prototipe memang terlalu berfokus pada indikator sehingga beberapa fitur portal eksisting tidak terbawa. Versi yang diperbarui mengembalikan jalur navigasinya, tetapi belum memindahkan data, formulir, statistik, atau proses backend dari portal resmi. Tautan menuju portal resmi adalah jembatan sementara, bukan bukti bahwa fitur telah dimigrasikan penuh.
+
 ## Temuan evaluasi dan implikasi rancangan
 
 | Area | Temuan dalam PDF evaluasi | Respons pada prototipe | Tindak lanjut sebelum operasional |
