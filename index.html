@@ -13,6 +13,16 @@
 @media(max-width:650px){.wrap{width:min(100% - 28px,1160px)}.top .wrap{padding:7px 0;font-size:.73rem}.toplinks{gap:12px}.mastin{min-height:72px;gap:12px}.brand{min-width:0;gap:9px}.brand strong{font-size:.9rem}.brand small{font-size:.61rem}.seal{width:39px;height:39px}.menu{display:block}.nav{display:none;position:absolute;top:100%;left:0;right:0;padding:12px 20px 18px;background:white;border-bottom:1px solid var(--line);box-shadow:var(--shadow);flex-direction:column;align-items:stretch}.nav.open{display:flex}.nav a{padding:7px 0;font-size:.94rem}.heroin{padding:42px 0 18px}.hero h1{font-size:2.5rem}.actions{flex-wrap:wrap}.searchbox{padding:19px}.fieldrow{grid-template-columns:1fr}.herobottom{font-size:.72rem;gap:9px}.section{padding:44px 0}.sectionhead{align-items:start;flex-direction:column;gap:12px}.quick{gap:10px}.quick a{padding:14px;min-height:140px}.controls{grid-template-columns:1fr;padding:13px}.controls .field:first-child{grid-column:auto}.grid{grid-template-columns:1fr}.doc{padding:17px}.docdata{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr;gap:25px}.otherright{grid-template-columns:1fr}.statgrid{grid-template-columns:1fr 1fr}.ctain,.footerin,.copyright{align-items:start;flex-direction:column}.relationcenter{width:90%}.dialogbody{padding:18px}.detailgrid{grid-template-columns:1fr 1fr}.footerlinks{gap:13px}.toplinks a:first-child{display:none}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
 </style><style>
+
+.topbrand{display:flex;align-items:center;gap:9px;min-width:0}
+.topbrand img{width:25px;height:25px;object-fit:contain;flex:0 0 auto;border-radius:50%;background:#fff}
+.brand-mark{width:46px;height:46px;display:block;object-fit:contain;flex:0 0 auto;border-radius:8px;background:#fff}
+.footerbrand{display:flex;align-items:flex-start;gap:14px;max-width:540px}
+.footerbrand>img{width:62px;height:62px;display:block;object-fit:contain;flex:0 0 auto;border-radius:50%;background:#fff}
+.footerbrand>div{min-width:0}
+.footerbrand strong{display:block}
+@media(max-width:650px){.topbrand img{width:22px;height:22px}.footerbrand{gap:10px}.footerbrand>img{width:48px;height:48px}.brand-mark{width:40px;height:40px}}
+
 .navgroup{position:relative}
 .navgroup>summary{list-style:none;cursor:pointer;font-size:.86rem;font-weight:750;color:#445752;white-space:nowrap}
 .navgroup>summary::-webkit-details-marker{display:none}
@@ -48,9 +58,9 @@
 </head>
 <body>
 <a class="skip" href="#main">Lewati ke konten utama</a>
-<div class="top"><div class="wrap"><span>Kementerian Transmigrasi Republik Indonesia</span><div class="toplinks"><a href="https://jdihn.go.id/" target="_blank" rel="noopener">JDIHN Nasional ↗</a><a href="#akses">Aksesibilitas</a></div></div></div>
+<div class="top"><div class="wrap"><div class="topbrand"><img src="assets/logo-kementrans-bulat.webp" alt=""><span>Kementerian Transmigrasi Republik Indonesia</span></div><div class="toplinks"><a href="https://jdihn.go.id/" target="_blank" rel="noopener">JDIHN Nasional ↗</a><a href="#akses">Aksesibilitas</a></div></div></div>
 <header class="mast"><div class="wrap mastin">
-<a class="brand" href="#beranda" aria-label="JDIH Kementerian Transmigrasi"><span class="seal" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><path d="M24 4 40 10v12c0 10-7 18-16 22C15 40 8 32 8 22V10L24 4Z" stroke="currentColor" stroke-width="2"/><path d="M15 18h18M18 23h12M20 28h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="24" cy="14" r="2.5" fill="#c89c4b"/></svg></span><span><strong>JDIH Kementerian Transmigrasi</strong><small>Jaringan Dokumentasi dan Informasi Hukum</small></span></a>
+<a class="brand" href="#beranda" aria-label="JDIH Kementerian Transmigrasi"><img class="brand-mark" src="assets/logo-jdih-globe.webp" alt=""><span><strong>JDIH Kementerian Transmigrasi</strong><small>Jaringan Dokumentasi dan Informasi Hukum</small></span></a>
 <button class="menu" id="menu" aria-expanded="false" aria-controls="nav">☰ Menu</button>
 <nav class="nav" id="nav" aria-label="Navigasi utama">
 <a href="#beranda">Beranda</a>
@@ -203,7 +213,7 @@
 
 <section class="cta" id="akses"><div class="wrap ctain"><div><strong>Informasi hukum harus dapat diakses semua orang.</strong><p>Pengembangan berikutnya perlu menguji akses keyboard, pembaca layar, kontras, dan keterbacaan mobile.</p></div><div style="display:flex;gap:9px;flex-wrap:wrap"><button class="btn outline" id="fontminus" type="button">A−</button><button class="btn outline" id="fontplus" type="button">A+</button><button class="btn outline" id="contrast" type="button" aria-pressed="false">Kontras tinggi</button><a class="btn primary" href="https://jdih.transmigrasi.go.id/" target="_blank" rel="noopener">Portal resmi ↗</a></div></div></section>
 </main>
-<footer class="footer"><div class="wrap footerin"><div><strong>JDIH Kementerian Transmigrasi</strong><p>Prototipe UI/UX untuk mengevaluasi struktur informasi, penelusuran, metadata, aksesibilitas dasar, dan arah integrasi sistem.</p></div><div class="footerlinks"><a href="https://jdih.transmigrasi.go.id/" target="_blank" rel="noopener">Situs resmi</a><a href="https://jdihn.go.id/" target="_blank" rel="noopener">JDIHN</a><a href="#pembentukan">Pembentukan PUU</a><a href="#statistik">Statistik</a></div></div><div class="wrap copyright"><span>© 2026 Kementerian Transmigrasi Republik Indonesia · Prototipe</span><span>Bukan pengganti portal resmi.</span></div></footer>
+<footer class="footer"><div class="wrap footerin"><div class="footerbrand"><img src="assets/logo-kementrans-bulat.webp" alt="Lambang Kementerian Transmigrasi"><div><strong>JDIH Kementerian Transmigrasi</strong><p>Prototipe UI/UX untuk mengevaluasi struktur informasi, penelusuran, metadata, aksesibilitas dasar, dan arah integrasi sistem.</p></div></div><div class="footerlinks"><a href="https://jdih.transmigrasi.go.id/" target="_blank" rel="noopener">Situs resmi</a><a href="https://jdihn.go.id/" target="_blank" rel="noopener">JDIHN</a><a href="#pembentukan">Pembentukan PUU</a><a href="#statistik">Statistik</a></div></div><div class="wrap copyright"><span>© 2026 Kementerian Transmigrasi Republik Indonesia · Prototipe</span><span>Bukan pengganti portal resmi.</span></div></footer>
 <dialog class="dialog" id="dialog"><div class="dialoghead"><span>DETAIL DOKUMEN · PRATINJAU</span><button class="close" id="close" aria-label="Tutup" type="button">×</button></div><div class="dialogbody" id="detail"></div></dialog><div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 <script>
 const base="https://jdih.transmigrasi.go.id";
