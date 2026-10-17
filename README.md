@@ -11,7 +11,9 @@ Dataset pencarian lokal hanya berisi empat contoh peraturan dan tidak diperbarui
 ## Isi repositori
 
 - `index.html`: antarmuka responsif, pencarian/filter lokal, detail dokumen, katalog kategori lengkap dengan tautan ke sumber resmi, Program Unggulan 5T, berita, Tentang Kami, statistik/survei, tautan JDIH terkait, navigasi mobile, kontrol ukuran teks dan kontras, serta bagian penambahan fitur berdasarkan evaluasi.
-- `docs/peta-indikator-evaluasi.md`: pemetaan temuan evaluasi ke keputusan desain dan prioritas tindak lanjut.
+- `assets/logo-jdih-globe.webp`: logo JDIH untuk identitas/header.
+- `assets/logo-kementrans-bulat.webp`: lambang Kementerian Transmigrasi untuk identitas institusi pada bar atas dan footer.
+- `docs/peta-indikator-evaluasi.md`: pemetaan temuan evaluasi ke keputusan desain, audit fitur eksisting, dan prioritas tindak lanjut.
 
 ## Menjalankan secara lokal
 
