@@ -48,8 +48,20 @@ jobs:
       - name: Prepare static site
         run: |
           mkdir -p _site
-          cp index.html detail.html katalog.html ruang.html _site/
+          cp index.html detail.html katalog.html contoh.html ruang.html _site/
           cp -R assets data _site/
+      - name: Download and verify public official PDF samples
+        run: node scripts/salin-pdf-sampel.cjs
+      - name: Validate sample PDF manifest and download status
+        run: node tests/sampel-pdf.test.cjs
+      - name: Archive source-audit and PDF status for Pusdatin
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jdih-sampel-resmi-status
+          path: _site/data/pdf-manifest.json
+          if-no-files-found: warn
+          retention-days: 30
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
