@@ -84,6 +84,8 @@ async function run(){
      assert.equal(await sitePage.locator("#catalog-results .catalogcard").count(),1);
      await sitePage.locator(".internal-detail").first().click();
      assert.ok(sitePage.url().includes("contoh.html?id=kepmen-99-2025"));
+     await sitePage.waitForLoadState("load");
+     await sitePage.waitForFunction(()=>document.querySelector("#doc-title")?.textContent?.length>5,{timeout:12000});
      const actualSampleTitle=await sitePage.locator("#doc-title").innerText();
      assert.ok(actualSampleTitle.includes("Nomor 99 Tahun 2025"),"Title="+JSON.stringify(actualSampleTitle)+" errors="+JSON.stringify(errors)+" notfound="+(await sitePage.locator("#notfound").isVisible()));
      assert.equal(await sitePage.locator("#metadatafields .meta").count()>8,true);
@@ -92,6 +94,8 @@ async function run(){
      await sitePage.goto(origin+"/katalog.html?kategori=putusan-pengadilanyurisprudensi",{waitUntil:"load"});
      assert.equal(await sitePage.locator("#catalog-results .catalogcard").count(),1);
      await sitePage.locator(".internal-detail").first().click();
+     await sitePage.waitForLoadState("load");
+     await sitePage.waitForFunction(()=>document.querySelector("#doc-title")?.textContent?.length>5,{timeout:12000});
      assert.ok((await sitePage.locator("#source-status-note").innerText()).includes("inkracht"),"Putusan status qualifier");
      await sitePage.goto(origin+"/katalog.html?kategori=rancangan-peraturan",{waitUntil:"load"});
      assert.equal(await sitePage.locator("#catalog-results .catalogcard").count(),1);
