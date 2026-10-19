@@ -13,6 +13,8 @@ Dataset pencarian lokal masih berisi empat peraturan contoh Tahun 2026, namun no
 - `index.html`: beranda dengan pencarian/filter lokal, dialog ringkasan cepat, serta tautan ke halaman detail lengkap. Seluruh navigasi dan fitur prototipe sebelumnya dipertahankan.
 - `detail.html`: halaman detail peraturan lengkap untuk `?id=1` sampai `?id=4`, mencakup metadata, ikhtisar abstrak, relasi terverifikasi, preview PDF yang dimuat atas permintaan, dan pranala sumber resmi.
 - `data/peraturan-2026.js`: satu sumber data empat contoh peraturan yang digunakan oleh beranda dan detail, tanpa memasukkan metadata atau relasi yang tidak terverifikasi.
+- `data/metadata-schemas.js`: standar bidang metadata yang **dibedakan** untuk peraturan, monografi, artikel, dan putusan, berdasarkan Lampiran II Permenkumham Nomor 8 Tahun 2019.
+- `docs/matriks-metadata-permenkumham-8-2019.md`: penjelasan item metadata resmi per jenis serta perbedaan abstrak PUU dengan ringkasan jenis dokumen lain.
 - `tests/sprint1.test.cjs`: audit integritas metadata, tautan PDF, regresi fitur lama, dan pemeriksaan sintaks JavaScript.
 - `tests/browser-smoke.cjs`: pengujian dengan Chromium untuk lebar 375, 768, dan 1440 piksel serta interaksi pencarian/detail/PDF.
 - `assets/logo-jdih-globe.webp`: logo JDIH untuk identitas/header.
@@ -67,6 +69,14 @@ Sprint 1 menyediakan halaman metadata peraturan yang dapat dibuka langsung, cont
 **Pengujian otomatis:** GitHub Actions menjalankan `node tests/sprint1.test.cjs` dan uji Chromium 375px, 768px, 1440px. Ini **bukan** pengujian Safari iOS langsung dan bukan sertifikasi WCAG atau keamanan.
 
 **Pengujian manual berikutnya:** buka di Safari iOS dan Android untuk menilai keterbacaan, navigasi, tombol unduh dan preview, serta periksa kembali ketepatan metadata bersama Biro Hukum.
+
+## Koreksi pemetaan standar metadata (19 Oktober 2026)
+
+Lampiran II Permenkumham Nomor 8 Tahun 2019 menggunakan empat skema yang berbeda, bukan satu skema universal: peraturan (halaman 24), monografi hukum (56), artikel hukum (81), dan putusan pengadilan/yurisprudensi (92). Detail halaman memilih bidang dari `data/metadata-schemas.js` berdasarkan jenis dokumen.
+
+Lampiran I (halaman 7–9) menetapkan **struktur abstrak untuk peraturan perundang-undangan** berupa kepala abstrak, dasar pertimbangan, dasar hukum, materi pokok, serta catatan. Struktur tersebut **tidak diterapkan sebagai standar wajib** pada ringkasan monografi, artikel, dan putusan. Dalam prototipe, bagian abstrak PUU yang belum ditranskripsi diberi keterangan demikian, bukan diisi dengan perkiraan dari ikhtisar.
+
+**Batasan penting:** template keempat jenis sudah disiapkan di kode, tetapi dataset faktual yang ditampilkan baru empat peraturan. Belum ada contoh monografi, artikel atau putusan yang diklaim terverifikasi. Detail empat contoh tetap bergantung pada URL JDIH resmi untuk sumber naskah/abstrak, dan belum memenuhi integrasi API atau audit menyeluruh atas kualitas seluruh koleksi.
 
 ## Tahap pengembangan berikutnya
 
