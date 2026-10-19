@@ -7,7 +7,7 @@ const path=require("node:path");
 const http=require("node:http");
 const {chromium}=require("playwright");
 const root=path.resolve(__dirname,"..");
-const mime={".html":"text/html; charset=utf-8",".js":"application/javascript; charset=utf-8",".webp":"image/webp"};
+const mime={".html":"text/html; charset=utf-8",".js":"application/javascript; charset=utf-8",".webp":"image/webp",".css":"text/css; charset=utf-8"};
 const server=http.createServer((req,res)=>{
   try{
     let requestPath=new URL(req.url,"http://localhost").pathname;
@@ -44,6 +44,7 @@ async function run(){
      await page.getByRole("button",{name:"Muat pratinjau abstrak"}).click();
      assert.ok((await page.locator("#pdfpreview").getAttribute("src")).includes("AB_2026"));
      await page.screenshot({path:path.join(output,"sprint1-detail-"+width+".png"),fullPage:true});
+     await page.screenshot({path:path.join(output,"sprint2-day-detail-"+width+".png"),fullPage:true});
      const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-window.innerWidth);
      assert.ok(overflow<=2,"Overflow detail "+width+"px: "+overflow);
      assert.deepEqual(errors,[],"JavaScript error pada detail "+width+"px");
@@ -53,7 +54,42 @@ async function run(){
      assert.equal(await page.locator("#results .doc").count(),1);
      await page.locator("#results .doc .detail-link").click();
      assert.ok(page.url().includes("detail.html?id=4"));
+     // Uji warna yang nyaman, mode malam, lokalisasi dan navigasi internal.
+     const sitePage=page;
+     assert.equal(await sitePage.locator("#theme-toggle").count(),1,"Theme switch ada di header");
+     assert.equal(await sitePage.locator("#lang-select").count(),1,"Language switch ada di header");
+     const initialColor=await sitePage.evaluate(()=>getComputedStyle(document.body).backgroundColor);
+     assert.notEqual(initialColor,"rgb(255, 255, 255)","Latar siang tidak putih menyilaukan");
+     await sitePage.locator("#theme-toggle").click();
+     assert.equal(await sitePage.locator("html").getAttribute("data-theme"),"night");
+     const nightColor=await sitePage.evaluate(()=>getComputedStyle(document.body).backgroundColor);
+     assert.notEqual(initialColor,nightColor,"Mode malam harus mengubah background");
+     await sitePage.locator("#lang-select").selectOption("en");
+     assert.equal(await sitePage.locator("html").getAttribute("lang"),"en");
+     assert.equal(await sitePage.locator("#lang-select").inputValue(),"en");
+     // Menu kategori eksisting wajib menuju website ini, bukan portal lama.
+     const ministerial=sitePage.locator('#nav a[href="./katalog.html?kategori=peraturan-menteri-transmigrasi"]').first();
+     assert.ok(await ministerial.count(),"Menu Permen menuju katalog internal");
+     await sitePage.goto(origin+"/katalog.html?kategori=peraturan-menteri-transmigrasi",{waitUntil:"load"});
+     assert.equal(await sitePage.locator("#catalog-results .catalogcard").count(),4);
+     assert.equal(await sitePage.locator("html").getAttribute("data-theme"),"night","Tema tersimpan lintas halaman");
+     assert.equal(await sitePage.locator("html").getAttribute("lang"),"en","Bahasa tersimpan lintas halaman");
+     await sitePage.locator("#catalog-query").fill("Nomor 4");
+     assert.equal(await sitePage.locator("#catalog-results .catalogcard").count(),1);
+     await sitePage.locator('#catalog-results a[href="./detail.html?id=4"]').first().click();
+     assert.ok(sitePage.url().includes("detail.html?id=4"));
+     await sitePage.goto(origin+"/katalog.html?kategori=monographs",{waitUntil:"load"});
+     assert.equal(await sitePage.locator("#catalog-empty").isVisible(),true);
+     assert.equal(await sitePage.locator("#catalog-results .catalogcard").count(),0);
+     await sitePage.goto(origin+"/ruang.html?bagian=berita",{waitUntil:"load"});
+     assert.equal(await sitePage.locator("#pagebody").count(),1);
+     assert.ok((await sitePage.locator("#pagebody").innerText()).length>40,"Halaman berita internal punya status koleksi");
+     await sitePage.goto(origin+"/index.html",{waitUntil:"load"});
+     await sitePage.locator("#lang-select").selectOption("id");
+     await sitePage.locator("#theme-toggle").click();
+     assert.equal(await sitePage.locator("html").getAttribute("data-theme"),"day");
      await page.goto(origin+"/index.html",{waitUntil:"load"});
+     await page.screenshot({path:path.join(output,"sprint2-day-home-"+width+".png"),fullPage:true});
      const homeOverflow=await page.evaluate(()=>document.documentElement.scrollWidth-window.innerWidth);
      assert.ok(homeOverflow<=2,"Overflow beranda "+width+"px: "+homeOverflow);
      assert.deepEqual(errors,[],"JavaScript error pada beranda "+width+"px");
@@ -67,7 +103,7 @@ async function run(){
    assert.equal(await page.locator("#notfound").isVisible(),true);
    assert.equal(await page.locator("#detailpage").isVisible(),false);
    await page.close();
-   console.log("LULUS: interaksi data/detail, PDF berdasarkan klik, fallback, tanpa JS error, dan tanpa scroll horizontal pada 375px, 768px, 1440px ("+count+" ukuran).");
+   console.log("LULUS: metadata/PDF, katalog dan layanan internal, peralihan ID-EN, tema tersimpan, serta responsivitas 375/768/1440px ("+count+" ukuran).");
  }finally{await browser.close();await new Promise(resolve=>server.close(resolve));}
 }
 run().catch(err=>{console.error(err);process.exitCode=1;server.close();});
