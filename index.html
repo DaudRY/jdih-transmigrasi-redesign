@@ -54,6 +54,20 @@
 .feature-note{font-size:.78rem;color:var(--muted);margin-top:14px}
 @media(max-width:900px){.controls{grid-template-columns:repeat(3,minmax(0,1fr))}.controls .field:first-child{grid-column:span 3}.featuregrid{grid-template-columns:repeat(3,1fr)}.programgrid{grid-template-columns:repeat(3,1fr)}.nav{gap:13px}.navgroup>summary{font-size:.78rem}}
 @media(max-width:650px){.controls{grid-template-columns:1fr}.controls .field:first-child{grid-column:auto}.navgroup{width:100%}.navgroup>summary{padding:7px 0;font-size:.94rem}.navmenu{position:static;box-shadow:none;border:0;border-left:2px solid #dfe6df;border-radius:0;padding:2px 0 6px 10px;max-height:35vh;min-width:0}.navmenu a{font-size:.84rem;padding:8px 9px}.featuregrid{grid-template-columns:repeat(2,1fr)}.programgrid{grid-template-columns:1fr 1fr}.servicegrid{grid-template-columns:1fr}.featuretile{min-height:100px}.programcard{padding:14px}}
+
+/* Tablet: gunakan navigasi lipat lebih awal untuk mencegah header melebar. */
+@media(min-width:651px) and (max-width:900px){
+  .mastin{gap:12px;min-height:76px}
+  .brand{min-width:0}
+  .menu{display:block;white-space:nowrap;flex:0 0 auto}
+  .nav{display:none;position:absolute;top:100%;left:0;right:0;padding:12px 25px 18px;background:#fff;border-bottom:1px solid var(--line);box-shadow:var(--shadow);flex-direction:column;align-items:stretch;gap:8px}
+  .nav.open{display:flex}
+  .nav a{padding:7px 0;font-size:.93rem}
+  .navgroup{width:100%}
+  .navgroup>summary{padding:7px 0;font-size:.93rem}
+  .navmenu{position:static;box-shadow:none;border:0;border-left:2px solid #dfe6df;border-radius:0;padding:2px 0 6px 10px;max-height:35vh;min-width:0}
+  .navmenu a{font-size:.84rem;padding:8px 9px}
+}
 </style>
 </head>
 <body>
