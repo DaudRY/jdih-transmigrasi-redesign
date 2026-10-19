@@ -194,6 +194,7 @@ function changeLanguage(v){
  lang=v==="en"?"en":"id";
  persist("jdih-lang",lang);
  translatePage();
+ document.dispatchEvent(new CustomEvent("jdih:languagechange",{detail:{language:lang}}));
 }
 function init(){
  theme=saved("jdih-theme")==="night"?"night":"day";
@@ -208,6 +209,7 @@ function init(){
    controls.querySelector("#lang-select").addEventListener("change",e=>changeLanguage(e.target.value));
  }
  translatePage();
+ document.dispatchEvent(new CustomEvent("jdih:languagechange",{detail:{language:lang}}));
 }
 window.JDIHPreferences={translate:translatePage,t:tr,get language(){return lang},get theme(){return theme}};
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});
