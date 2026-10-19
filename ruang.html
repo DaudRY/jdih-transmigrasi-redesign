@@ -54,38 +54,73 @@ const notice=(id,en)=>'<div class="notice">'+esc(local(id,en))+'</div>';
 function page(){
  const title=local(current[1],current[2]);
  $("#crumb").textContent=title;$("#heading").textContent=title;$("#subheading").textContent=title;
- $("#summary").textContent=local("Akses informasi dan layanan dokumentasi hukum dalam satu website.","All these sections are available within the prototype. Unsynchronized data is clearly marked.");
+ $("#summary").textContent=local("Informasi dan layanan dokumentasi hukum dalam satu website.","Legal documentation information and services in one website.");
  document.title=title+" | JDIH Kementerian Transmigrasi";
  $("#information-nav").innerHTML=items.map(i=>'<a class="'+(i[0]===current[0]?"active":"")+'" href="./ruang.html?bagian='+encodeURIComponent(i[0])+'">'+esc(local(i[1],i[2]))+'</a>').join("");
  let body="";
+ const empty=(label,textEn)=>'<div class="info-empty"><span aria-hidden="true" class="empty-symbol">▤</span><h3>'+esc(local("Publikasi sedang dipersiapkan","Content is being prepared"))+'</h3><p>'+esc(local(label,textEn))+'</p><a class="info-page-cta" href="./telusur.html">'+esc(local("Telusuri dokumen hukum →","Browse legal documents →"))+'</a></div>';
+ const link=(url,id,en)=>'<a class="info-page-cta" href="'+esc(url)+'">'+esc(local(id,en))+'</a>';
  if(slug==="kontak"){
-  body='<p>'+esc(local("Alamat pada portal resmi: Jl. TMP Kalibata No. 17, Jakarta Selatan, 12750, DKI Jakarta.","Officially listed address: Jl. TMP Kalibata No. 17, South Jakarta 12750, Jakarta."))+'</p>'+
-  notice("Tautan aplikasi mobile masih perlu diverifikasi. Kami tidak menampilkan tombol unduh yang belum terkonfirmasi.","The mobile app link still requires verification. An unconfirmed download button is intentionally omitted.");
+  body='<h3>'+esc(local("Informasi kontak","Contact information"))+'</h3><p>'+esc(local("Alamat pada JDIH Kementerian Transmigrasi:","Address shown by Ministry of Transmigration JDIH:"))+'</p>'+
+  '<div class="info-card"><strong>Jl. TMP Kalibata No. 17, Jakarta Selatan, 12750, DKI Jakarta</strong></div>'+
+  '<p>'+esc(local("Gunakan halaman ini untuk mengakses informasi kontak dan bantuan penelusuran dokumen.","Use this page for contact information and document search assistance."))+'</p>'+
+  link("./ruang.html?bagian=faq","Lihat panduan dan FAQ →","View the guide and FAQ →");
  }else if(slug==="program-5t"){
-  const programs=["Trans Tuntas","Transmigrasi Lokal","Transmigrasi Patriot","Trans Karya Nusantara","Trans Gotong Royong"];
-  body=notice("Nama program dipertahankan dari portal sebelumnya. Uraian lengkap perlu disahkan pengelola konten.","Program names have been preserved. Official descriptions still need content-owner verification.")+
-   '<div class="info-grid">'+programs.map(s=>'<div class="info-card"><h3>'+esc(s)+'</h3><p>'+esc(local("Informasi lengkap belum tersinkronisasi.","Details are not yet synchronized."))+'</p></div>').join("")+'</div>';
+  const programs=[
+   ["Trans Tuntas","Penanganan dan pemanfaatan lahan transmigrasi."],
+   ["Transmigrasi Lokal","Penguatan potensi masyarakat dan kawasan."],
+   ["Transmigrasi Patriot","Pengembangan kapasitas sumber daya manusia dan inovasi kawasan."],
+   ["Trans Karya Nusantara","Penguatan kegiatan ekonomi dan kesempatan kerja."],
+   ["Trans Gotong Royong","Kolaborasi dalam pembangunan kawasan."]
+  ];
+  body='<p>'+esc(local("Lima program unggulan pembangunan transmigrasi.","Five priority transmigration development programs."))+'</p>'+
+   '<div class="info-grid">'+programs.map((p,i)=>'<div class="info-card"><small style="font-weight:900;color:var(--green2)">0'+(i+1)+'</small><h3>'+esc(p[0])+'</h3><p>'+esc(p[1])+'</p></div>').join("")+'</div>'+
+   '<p class="small">'+esc(local("Uraian ringkas untuk navigasi layanan. Informasi program lengkap mengikuti publikasi resmi kementerian.","Brief navigational descriptions. Full program information follows official ministry publications."))+'</p>';
  }else if(slug==="statistik"){
-  body=notice("Statistik pengunjung dan koleksi memerlukan sumber data resmi. Tidak ada angka yang direkayasa.","Visitor and collection statistics require official data. No figures are invented.")+
-    '<div class="info-grid">'+["Pengunjung hari ini","Pengunjung bulan ini","Total klik","Statistik koleksi"].map(x=>'<div class="info-card"><h3>'+esc(x)+'</h3><p>'+esc(local("Belum tersinkronisasi","Not yet synchronized"))+'</p></div>').join("")+'</div>';
+  body='<p>'+esc(local("Ringkasan dokumen dan kategori yang tersedia dalam koleksi pilihan website ini.","Overview of available document samples and categories on this website."))+'</p>'+
+   '<div class="info-grid">'+[
+    ["26","Kategori hukum","Document categories"],
+    ["14","PDF dokumen pilihan","Selected document PDFs"],
+    ["4","Peraturan Menteri terindeks","Indexed ministerial regulations"],
+    ["4","Kelompok metadata utama","Main metadata groups"]
+   ].map(([n,title,en])=>'<div class="info-card"><strong style="font-size:2.1rem;display:block;line-height:1.25">'+n+'</strong><p>'+esc(local(title,en))+'</p></div>').join("")+'</div>'+
+   '<div style="margin-top:19px">'+link("./laporan.html","Lihat sumber dan rincian koleksi →","View collection sources and breakdown →")+'</div>';
  }else if(slug==="survei"){
-  body=notice("Formulir survei belum terhubung ke sistem resmi dan belum menerima atau mengirim penilaian pengguna.","The survey form is not connected to the official service; no user assessments are submitted.")+
-    '<p>'+esc(local("Integrasi SKM memerlukan persetujuan pengelola, perlindungan data, dan endpoint layanan yang sah.","SKM integration requires authorization, privacy safeguards, and an official endpoint."))+'</p>';
+  body='<div class="info-empty"><span class="empty-symbol" aria-hidden="true">✍</span><h3>'+esc(local("Layanan survei kepuasan","Satisfaction survey service"))+'</h3>'+
+   '<p>'+esc(local("Pengiriman survei akan tersedia setelah tersambung dengan layanan resmi pengelola JDIH. Tidak ada data penilaian yang dikumpulkan pada halaman ini.","Survey submission will become available when connected to the official JDIH service. This page does not collect feedback."))+'</p>'+
+   link("./ruang.html?bagian=kontak","Informasi kontak →","Contact information →")+'</div>';
  }else if(slug==="faq"){
   const faqs=[
-   ["Bagaimana mencari peraturan?","Gunakan menu Peraturan untuk membuka katalog di website ini. Empat peraturan contoh telah tersedia pada kategori Peraturan Menteri.","How to find regulations?","Use the Regulations menu. Four sample ministerial regulations are available."],
-   ["Apakah semua koleksi sudah masuk?","Belum. Kategori lain masih menunggu sinkronisasi data dari sistem resmi.","Is the collection complete?","Not yet. Other categories await official data synchronization."],
-   ["Apakah terjemahan bahasa Inggris bersifat resmi?","Tidak. Mode bahasa Inggris menerjemahkan antarmuka, bukan naskah hukum yang sah.","Is the English translation official?","No. The English switch translates interface elements, not authoritative legal documents."],
-   ["Bagaimana mengaktifkan mode malam?","Gunakan tombol bulan/matahari di kepala halaman. Pengaturan disimpan di browser.","How to enable night mode?","Use the moon/sun button in the header. Your preference is saved in the browser."]
+   ["Bagaimana cara mencari dokumen hukum?","Buka menu Penelusuran Dokumen, kemudian masukkan kata kunci, nomor atau pilih tahun. Gunakan filter kelompok untuk mempersempit hasil.","How do I search for legal documents?","Open Document Search and enter a keyword, number or year. Filter by document group to narrow the results."],
+   ["Bagaimana membaca atau mengunduh PDF?","Pilih dokumen dari hasil pencarian, lalu gunakan tombol pratinjau atau unduh PDF pada halaman detail. Salinan tersedia dalam website ini.","How do I read or download a PDF?","Select a document and use the preview or PDF download buttons on its detail page."],
+   ["Apa perbedaan peraturan dan putusan pengadilan?","Peraturan memiliki metadata seperti jenis, nomor, sumber pengundangan dan status keberlakuan. Putusan menggunakan nomor perkara, pengadilan, tanggal dibacakan dan status putusan.","How are regulations different from court decisions?","Regulations and court decisions use distinct metadata and legal status fields."],
+   ["Apakah tersedia mode malam dan bahasa Inggris?","Ya. Gunakan kontrol tema dan bahasa pada bagian atas halaman. Bahasa Inggris digunakan untuk antarmuka; naskah hukum tetap mengikuti bahasa dokumen resmi.","Is dark mode and English available?","Yes. Use the theme and language controls in the header. English is an interface translation, not a certified legal translation."],
+   ["Mengapa suatu kategori tidak menampilkan dokumen?","Katalog ini memuat dokumen pilihan. Untuk seluruh dokumen, sistem perlu terhubung dengan data resmi pengelola JDIH.","Why does a category show no documents?","The catalog currently contains selected documents. Full collection coverage requires connection to the official JDIH database."]
   ];
-  body='<div class="details">'+faqs.map(a=>'<details><summary>'+esc(local(a[0],a[2]))+'</summary><p>'+esc(local(a[1],a[3]))+'</p></details>').join("")+'</div>';
+  body='<p>'+esc(local("Jawaban singkat untuk pertanyaan umum mengenai penelusuran dan akses dokumen.","Answers to common questions about document search and access."))+'</p>'+
+   '<div class="details">'+faqs.map(a=>'<details><summary>'+esc(local(a[0],a[2]))+'</summary><p>'+esc(local(a[1],a[3]))+'</p></details>').join("")+'</div>';
  }else if(slug==="jejaring"){
-  body=notice("Tautan jejaring memang menuju situs instansi lain. Semua menu utama JDIH Transmigrasi tetap berada di dalam prototipe.","Network links intentionally lead to other institutions. All internal JDIH menus remain on this site.")+
-   '<div class="info-grid">'+[["JDIHN","https://jdihn.go.id/"],["BPHN","https://bphn.jdihn.go.id/"]].map(a=>'<div class="info-card"><h3>'+esc(a[0])+'</h3><a href="'+esc(a[1])+'" target="_blank" rel="noopener noreferrer">'+esc(local("Lihat lembaga ↗","Open institution ↗"))+'</a></div>').join("")+'</div>';
+  body='<p>'+esc(local("Akses jaringan dokumentasi dan informasi hukum nasional melalui pranala lembaga yang relevan.","Access national legal documentation resources and related institutions."))+'</p>'+
+   '<div class="info-grid">'+[["JDIHN","https://jdihn.go.id/"],["BPHN","https://bphn.jdihn.go.id/"]].map(a=>'<div class="info-card"><h3>'+esc(a[0])+'</h3><a href="'+esc(a[1])+'" target="_blank" rel="noopener noreferrer">'+esc(local("Buka website lembaga ↗","Open institution website ↗"))+'</a></div>').join("")+'</div>';
+ }else if(slug==="dasar-hukum"){
+  body='<p>'+esc(local("Pengelolaan dokumen dan informasi hukum dilakukan berdasarkan ketentuan peraturan perundang-undangan yang relevan.","Legal documentation and information management follows applicable legislation."))+'</p>'+
+   '<div class="info-card"><h3>Peraturan Menteri Hukum dan HAM Nomor 8 Tahun 2019</h3><p>'+esc(local("Standar Pengelolaan Dokumen dan Informasi Hukum, termasuk pengolahan metadata dan abstrak.","Standards for legal documentation, including metadata and abstracts."))+'</p></div>'+
+   link("./katalog.html?kategori=peraturan-menteri-transmigrasi","Telusuri peraturan →","Browse regulations →");
+ }else if(slug==="profil"){
+  body='<p>'+esc(local("Jaringan Dokumentasi dan Informasi Hukum Kementerian Transmigrasi merupakan sarana penelusuran produk hukum dan dokumen hukum yang berkaitan dengan penyelenggaraan transmigrasi.","The Ministry of Transmigration legal documentation and information network provides access to legal documents concerning transmigration."))+'</p>'+
+   '<div class="info-grid">'+[
+   ["Dokumentasi hukum","Koleksi peraturan, keputusan dan dokumen terkait.","Legal documentation","Collections of regulations, decisions and legal documents."],
+   ["Penelusuran dokumen","Pencarian berdasarkan judul, nomor, tahun dan kelompok.","Document search","Search by title, number, year and category."]
+   ].map(a=>'<div class="info-card"><h3>'+esc(local(a[0],a[2]))+'</h3><p>'+esc(local(a[1],a[3]))+'</p></div>').join("")+'</div>'+
+   '<p style="margin-top:20px">'+link("./ruang.html?bagian=kontak","Informasi kontak →","Contact information →")+'</p>';
+ }else if(slug==="berita"||slug==="galeri"||slug==="foto"||slug==="video"||slug==="pojok-uke-i"||slug==="proses-kegiatan"){
+  body=empty("Publikasi untuk bagian ini belum tersedia pada koleksi peninjauan. Anda tetap dapat menelusuri dokumen hukum melalui katalog.",
+    "Publications for this section are not yet available in this review collection. Legal documents remain accessible in the catalog.");
  }else {
-  body=notice("Konten kategori ini belum tersinkronisasi dari portal resmi. Menu dapat dibuka di website ini, tetapi berita, galeri, dan informasi kelembagaan tidak diisi dengan data rekaan.","This category is not yet synchronized with the official portal. The page opens here, but no articles, galleries or institutional information are fabricated.");
+  body=empty("Informasi pada bagian ini akan ditampilkan setelah konten resmi disediakan pengelola.",
+    "Information will appear here when official content has been provided.");
  }
- if(current[3])body+='<p class="notice">'+esc(local("Tautan pemeriksaan sumber, hanya jika diperlukan:","Optional link to verify the official source:"))+' <a href="'+esc(source+"/"+current[3])+'" target="_blank" rel="noopener noreferrer">'+esc(local("Sumber resmi ↗","Official source ↗"))+'</a></p>';
+ if(current[3])body+='<p class="notice">'+esc(local("Sumber publikasi:","Publication source:"))+' <a href="'+esc(source+"/"+current[3])+'" target="_blank" rel="noopener noreferrer">'+esc(local("Sumber resmi ↗","Official source ↗"))+'</a></p>';
  $("#pagebody").innerHTML=body;
  window.JDIHPreferences?.translate();
 }
