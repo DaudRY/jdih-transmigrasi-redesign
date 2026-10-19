@@ -124,6 +124,23 @@ Implementasi tambahan sekarang menyediakan **satu PDF resmi yang dapat diunduh u
 
 **Batasan:** 14 adalah jumlah kategori dengan sampel publik, bukan jumlah seluruh dokumen JDIH dan bukan tingkat pemenuhan evaluasi. Dua belas kategori belum mempunyai sampel PDF yang terverifikasi pada audit ini. Dokumen putusan tidak dianggap inkracht hanya karena portal menyebut "Berlaku"; keterangan sumber yang belum lengkap harus divalidasi oleh unit pemilik dokumen. Unduhan PDF dibangun dari dokumen publik resmi dengan checksum dan perlu diurus ke Pusdatin untuk pembaruan otomatis jika prototipe dijadikan layanan operasional.
 
+## Penyempurnaan UI/UX dan paket serah-terima Pusdatin (19 Oktober 2026)
+
+**Tujuan:** beranda dan halaman layanan tampil sebagai rancangan yang dapat langsung digunakan sebagai acuan coding, bukan daftar audit evaluasi pada halaman pengunjung. Konten yang belum tersedia tidak direkayasa.
+
+Perubahan yang dapat diuji:
+- Beranda dengan hero kawasan transmigrasi, palet sage ramah mata, pencarian dokumen utama dan kartu kategori berikon.
+- [Penelusuran terpadu](https://daudry.github.io/jdih-transmigrasi-redesign/telusur.html) mencakup **17 dokumen terindeks**, termasuk 4 Permen dan 13 dokumen kategori lain. Filter kata kunci, nomor, tahun, kelompok, dan pengurutan; URL hasil pencarian dapat dibagikan.
+- Halaman kategori, metadata per jenis dokumen, status/relasi hukum terverifikasi, pratinjau dan unduhan PDF di dalam domain prototipe.
+- Statistik beranda hanya menampilkan angka yang berasal dari sumber data yang disiapkan (17 entri, 14 PDF salinan, 26 kategori), bukan angka kunjungan tiruan.
+- Bahasa antarmuka ID/EN, tema siang/malam, ikon menu, navigasi responsif, dan halaman layanan/FAQ yang memiliki alur jelas.
+- Tombol salin sitasi, salin tautan, bagikan, dan cetak pada halaman detail dokumen.
+- Pengujian otomatis pada mesin Chromium, Firefox dan WebKit dengan lebar 390, 768 dan 1440 piksel, di samping pengujian regresi Chromium 375/768/1440. **WebKit bukan pengujian fisik Safari di iOS**.
+
+**Serah terima teknis:** [Spesifikasi Implementasi Pusdatin](docs/spesifikasi-implementasi-pusdatin.md) memuat model metadata, rancangan endpoint API, arsitektur konten/CMS, keamanan, aksesibilitas, daftar browser, dan kriteria penerimaan operasional. [Laporan sumber PDF](docs/laporan-sampel-pusdatin.md) berisi inventaris ke-14 sampel. Berkas `assets/portal-finish.css` dan `tests/cross-browser.cjs` menjadi dasar desain dan pengujian frontend.
+
+**Batasan yang harus disebut saat laporan resmi:** proyek masih frontend peninjauan, bukan portal pemerintah yang sudah diluncurkan. Publikasi produksi memerlukan CMS/API resmi, validasi lengkap oleh Biro Hukum, pengujian perangkat iOS/Android langsung, keamanan, pemutakhiran koleksi, serta penerimaan Pusdatin.
+
 ## Tahap pengembangan berikutnya
 
 Prioritaskan inventarisasi dan kelengkapan dokumen hukum lain, konsistensi metadata serta abstrak, model metadata berbeda untuk peraturan dan putusan, relasi peraturan yang tervalidasi, statistik dari sumber resmi, serta pengujian API/sinkronisasi dan aksesibilitas. Jangan menaruh token atau kunci API di frontend publik. Keputusan arsitektur backend harus dilakukan bersama pemilik sistem dan tim TI.
