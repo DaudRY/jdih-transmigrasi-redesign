@@ -22,7 +22,7 @@ a{color:#24634f;text-underline-offset:3px}
 .breadcrumb{display:flex;gap:8px;font-size:.78rem;flex-wrap:wrap}.breadcrumb a{color:#fff}
 .content{padding:29px 0 72px}
 .searchpanel{background:#edf2ea;border:1px solid #b9cbbd;border-radius:18px;padding:22px;box-shadow:0 12px 28px #183e2810}
-.searchfields{display:grid;grid-template-columns:minmax(0,2fr) 1fr 1fr 1fr;align-items:end;gap:12px}
+.searchfields{display:grid;grid-template-columns:minmax(0,2fr) .8fr 1fr .8fr 1fr;align-items:end;gap:12px}
 .searchfields label{display:block;color:#1d4137;font-size:.78rem;font-weight:800;margin:0 0 7px}
 .searchfields input,.searchfields select{width:100%;min-width:0;min-height:47px;padding:9px 11px;border-radius:10px;border:1px solid #b9cbbd;background:#f0f4ed;color:#213f37}
 .searchactions{margin-top:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
@@ -62,6 +62,7 @@ a{color:#24634f;text-underline-offset:3px}
 <form id="search-form" role="search" aria-label="Cari dokumen hukum">
 <div class="searchfields">
 <div><label for="q">Judul, nomor, atau kata kunci</label><input id="q" type="search" placeholder="Contoh: transmigrasi patriot" autocomplete="off"></div>
+<div><label for="number">Nomor</label><input id="number" type="search" placeholder="Contoh: 99" autocomplete="off"></div>
 <div><label for="group">Kelompok dokumen</label><select id="group"><option value="all">Semua kelompok</option><option value="regulation">Peraturan & keputusan</option><option value="formation">Pembentukan PUU</option><option value="nonregulation">Dokumen nonperaturan</option><option value="decision">Putusan pengadilan</option></select></div>
 <div><label for="year">Tahun</label><select id="year"><option value="all">Semua tahun</option></select></div>
 <div><label for="sort">Urutkan</label><select id="sort"><option value="newest">Tahun terbaru</option><option value="oldest">Tahun terlama</option><option value="title">Judul A–Z</option></select></div>
@@ -94,6 +95,7 @@ const tr=(a,b)=>preference()==="en"?b:a;
 const params=new URLSearchParams(location.search);
 const current={
  q:params.get("q")||"",
+ number:params.get("number")||"",
  group:params.get("group")||"all",
  year:params.get("year")||"all",
  sort:params.get("sort")||"newest"
@@ -120,6 +122,7 @@ const safeSort=new Set(["newest","oldest","title"]);
 if(!safeGroup.has(current.group))current.group="all";
 if(!safeSort.has(current.sort))current.sort="newest";
 $("#q").value=current.q;
+$("#number").value=current.number;
 $("#group").value=current.group;
 $("#year").value=years.map(String).includes(current.year)?current.year:"all";
 $("#sort").value=current.sort;
@@ -146,6 +149,7 @@ function record(d){
 function syncUrl(){
  const p=new URLSearchParams();
  if(current.q)p.set("q",current.q);
+ if(current.number)p.set("number",current.number);
  if(current.group!=="all")p.set("group",current.group);
  if(current.year!=="all")p.set("year",current.year);
  if(current.sort!=="newest")p.set("sort",current.sort);
@@ -157,6 +161,7 @@ function render(){
  const q=current.q.trim().toLocaleLowerCase("id-ID");
  let result=docs.filter(d=>(current.group==="all"||d.group===current.group)&&
   (current.year==="all"||String(d.year)===current.year)&&
+  (!current.number||String(d.number||"").toLowerCase().includes(current.number.toLowerCase()))&&
   (!q||[d.title,d.summary,d.number,d.year,d.label,d.category].join(" ").toLocaleLowerCase("id-ID").includes(q)));
  result.sort((a,b)=>{
   if(current.sort==="oldest")return a.year-b.year||a.title.localeCompare(b.title);
@@ -169,12 +174,12 @@ function render(){
  window.JDIHPreferences?.translate();
 }
 function readControls(){
- current.q=$("#q").value.trim();current.group=$("#group").value;current.year=$("#year").value;current.sort=$("#sort").value;
+ current.q=$("#q").value.trim();current.number=$("#number").value.trim();current.group=$("#group").value;current.year=$("#year").value;current.sort=$("#sort").value;
  syncUrl();render();
 }
 function reset(){
- current.q="";current.group="all";current.year="all";current.sort="newest";
- $("#q").value="";$("#group").value="all";$("#year").value="all";$("#sort").value="newest";
+ current.q="";current.number="";current.group="all";current.year="all";current.sort="newest";
+ $("#q").value="";$("#number").value="";$("#group").value="all";$("#year").value="all";$("#sort").value="newest";
  syncUrl();render();
 }
 $("#search-form").addEventListener("submit",e=>{e.preventDefault();readControls()});
@@ -182,6 +187,7 @@ $("#group").addEventListener("change",readControls);
 $("#year").addEventListener("change",readControls);
 $("#sort").addEventListener("change",readControls);
 $("#q").addEventListener("input",readControls);
+$("#number").addEventListener("input",readControls);
 $("#reset-filters").addEventListener("click",reset);
 $("#noresults-reset").addEventListener("click",reset);
 document.addEventListener("jdih:languagechange",render);
