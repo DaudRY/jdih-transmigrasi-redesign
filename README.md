@@ -12,9 +12,15 @@ Dataset pencarian lokal masih berisi empat peraturan contoh Tahun 2026, namun no
 
 - `index.html`: beranda dengan pencarian/filter lokal, dialog ringkasan cepat, serta tautan ke halaman detail lengkap. Seluruh navigasi dan fitur prototipe sebelumnya dipertahankan.
 - `detail.html`: halaman detail peraturan lengkap untuk `?id=1` sampai `?id=4`, mencakup metadata, ikhtisar abstrak, relasi terverifikasi, preview PDF yang dimuat atas permintaan, dan pranala sumber resmi.
-- `katalog.html`: satu halaman katalog dinamis untuk 26 kategori JDIH. Menu, filter, dan navigasi kategori berada pada domain prototipe. Hanya kategori Peraturan Menteri yang mempunyai empat data contoh terverifikasi.
+- `katalog.html`: katalog 26 kategori JDIH dan navigasi internal. Sebanyak **14 kategori** mempunyai masing-masing **satu sampel PDF asli yang dapat diunduh**; 12 kategori lain dipertahankan dengan keterangan belum ada contoh terverifikasi.
 - `ruang.html`: halaman internal untuk 16 topik informasi dan layanan, termasuk berita, profil, galeri, statistik, survei, FAQ, Program 5T, kontak, dan jejaring. Bagian tanpa data resmi menampilkan informasi bahwa integrasi belum dilakukan.
 - `data/catalog-categories.js`: pemetaan kategori dan URL sumber rujukan.
+- `data/sampel-resmi.js`: 13 sampel dari kategori lain, ditambah satu contoh Permen yang telah ada.
+- `contoh.html`: halaman detail contoh untuk kategori selain Permen dengan metadata dan unduh/pratinjau PDF.
+- `laporan.html`: **laporan demonstrasi yang dapat dicetak menjadi PDF** untuk disampaikan kepada Pusdatin, berisi daftar sampel, status unduhan, dan rekomendasi integrasi.
+- `docs/laporan-sampel-pusdatin.md`: dokumentasi daftar sumber per kategori, batasan dan kebutuhan Pusdatin.
+- `scripts/salin-pdf-sampel.cjs`: unduhan 14 PDF dari domain sumber resmi saat GitHub Actions membangun situs; validasi header PDF dan checksum SHA-256.
+- `tests/sampel-pdf.test.cjs`: pemeriksaan file salinan, jumlah kategori, ukuran berkas dan SHA-256.
 - `assets/comfort-theme.css`: palet siang hijau-sage yang tidak putih menyilaukan serta mode malam responsif.
 - `assets/site-preferences.js`: pilihan bahasa ID/EN dan mode siang/malam, dengan penyimpanan preferensi pada browser. Terjemahan antarmuka bersifat bantuan navigasi, bukan terjemahan hukum resmi.
 - `assets/foto-kawasan-transmigrasi.webp`: salinan WebP ringan dari foto kawasan yang diunggah pengguna, digunakan sebagai background hero dengan overlay demi keterbacaan.
@@ -22,7 +28,7 @@ Dataset pencarian lokal masih berisi empat peraturan contoh Tahun 2026, namun no
 - `data/metadata-schemas.js`: standar bidang metadata yang **dibedakan** untuk peraturan, monografi, artikel, dan putusan, berdasarkan Lampiran II Permenkumham Nomor 8 Tahun 2019.
 - `docs/matriks-metadata-permenkumham-8-2019.md`: penjelasan item metadata resmi per jenis serta perbedaan abstrak PUU dengan ringkasan jenis dokumen lain.
 - `tests/sprint1.test.cjs`: audit integritas metadata, tautan PDF, regresi fitur lama, dan pemeriksaan sintaks JavaScript.
-- `tests/browser-smoke.cjs`: pengujian dengan Chromium untuk lebar 375, 768, dan 1440 piksel serta interaksi pencarian/detail/PDF.
+- `tests/browser-smoke.cjs`: pengujian Chromium pada lebar 375, 768, dan 1440 piksel, navigasi kategori/sampel, unduhan dokumen, ikon, tema, dan pilihan bahasa.
 - `assets/logo-jdih-globe.webp`: logo JDIH untuk identitas/header.
 - `assets/logo-kementrans-bulat.webp`: lambang Kementerian Transmigrasi untuk identitas institusi pada bar atas dan footer.
 - `docs/peta-indikator-evaluasi.md`: pemetaan temuan evaluasi ke keputusan desain, audit fitur eksisting, dan prioritas tindak lanjut.
@@ -46,7 +52,7 @@ Workflow penerbitan sudah disiapkan di `.github/workflows/pages.yml`. Untuk meng
 3. Setelah pengaturan disimpan, buka tab **Actions** dan periksa workflow **Deploy JDIH prototype to GitHub Pages**.
 4. Workflow akan berjalan pada push ke branch `main`. Jika deployment berhasil, URL situs akan terlihat di ringkasan workflow dan Settings → Pages.
 
-Workflow menerbitkan `index.html`, `detail.html`, `katalog.html`, `ruang.html`, folder `data/`, dan folder `assets/`. Sebelum menerbitkan, GitHub Actions wajib meluluskan uji integritas metadata dan smoke test Chromium. Screenshot hasil uji responsif disimpan sementara sebagai GitHub Actions artifact. README dan dokumen evaluasi tidak dipublikasikan sebagai bagian situs. GitHub Pages harus diaktifkan pada pengaturan repositori.
+Workflow menerbitkan `index.html`, `detail.html`, `contoh.html`, `katalog.html`, `laporan.html`, `ruang.html`, folder `data/`, `assets/` dan 14 PDF contoh pada `pdfs/` (jika unduhan sukses). Hasil audit tersimpan pada `data/pdf-manifest.json` dan dalam artifact workflow. Sebelum menerbitkan, GitHub Actions wajib meluluskan uji integritas metadata dan smoke test Chromium. Screenshot hasil uji responsif disimpan sementara sebagai GitHub Actions artifact. README dan dokumen evaluasi tidak dipublikasikan sebagai bagian situs. GitHub Pages harus diaktifkan pada pengaturan repositori.
 
 Panduan resmi: [Konfigurasi sumber publikasi GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site).
 
@@ -106,6 +112,17 @@ Lampiran I (halaman 7–9) menetapkan **struktur abstrak untuk peraturan perunda
 ### Pemeriksaan
 
 Pengujian Chromium memeriksa tampilan 375px/768px/1440px, mode siang/malam, penyimpanan tema/bahasa lintas halaman, pencarian dan tautan detail/katalog, serta halaman kosong yang tidak mengarang data. Tetap perlu verifikasi langsung pada Safari iOS, perangkat Android, dan pengujian aksesibilitas mendalam.
+
+## Sampel PDF resmi per kategori dan laporan Pusdatin (19 Oktober 2026)
+
+Implementasi tambahan sekarang menyediakan **satu PDF resmi yang dapat diunduh untuk tiap kategori yang mempunyai sampel**, dengan **14 dari 14 PDF terverifikasi berhasil disalin** pada pengujian GitHub Actions. Halaman katalog, detail dokumen, preview PDF, dan tombol unduh salinan tetap berada di website ini. Unduhan tidak memerlukan navigasi ke domain sumber jika salinan tersedia.
+
+- [Laporan demonstrasi Pusdatin](https://daudry.github.io/jdih-transmigrasi-redesign/laporan.html) menyediakan matriks 26 kategori, status 14 PDF contoh, pranala sumber resmi, hasil validasi dan kebutuhan API/CMS. Halaman dapat dicetak atau disimpan sebagai PDF melalui browser.
+- [Unduh manifest verifikasi berkas](https://daudry.github.io/jdih-transmigrasi-redesign/data/pdf-manifest.json) untuk melihat ukuran dan checksum SHA-256 yang dihasilkan saat build.
+- [Daftar sumber dan batasan resmi](docs/laporan-sampel-pusdatin.md).
+- [Contoh Kepmen 99/2025](https://daudry.github.io/jdih-transmigrasi-redesign/contoh.html?id=kepmen-99-2025), [contoh Putusan PN Malili 2025](https://daudry.github.io/jdih-transmigrasi-redesign/contoh.html?id=putusan-malili-2025), dan [contoh Permen 4/2026](https://daudry.github.io/jdih-transmigrasi-redesign/detail.html?id=4).
+
+**Batasan:** 14 adalah jumlah kategori dengan sampel publik, bukan jumlah seluruh dokumen JDIH dan bukan tingkat pemenuhan evaluasi. Dua belas kategori belum mempunyai sampel PDF yang terverifikasi pada audit ini. Dokumen putusan tidak dianggap inkracht hanya karena portal menyebut "Berlaku"; keterangan sumber yang belum lengkap harus divalidasi oleh unit pemilik dokumen. Unduhan PDF dibangun dari dokumen publik resmi dengan checksum dan perlu diurus ke Pusdatin untuk pembaruan otomatis jika prototipe dijadikan layanan operasional.
 
 ## Tahap pengembangan berikutnya
 
