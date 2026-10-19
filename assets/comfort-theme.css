@@ -126,3 +126,18 @@ html[data-theme="night"] a:focus-visible,html[data-theme="night"] button:focus-v
  .quick a{min-height:140px}
 }
 @media(max-width:390px){.site-tools button{font-size:0}.site-tools .theme-indicator{font-size:1rem}.brand small{display:none}}
+
+/* Header lebar desktop 1201–1600: navigasi dipadatkan agar tombol preferensi tidak keluar layar. */
+@media(min-width:1201px) and (max-width:1600px){
+ .mastin{gap:10px}
+ .brand{min-width:210px;gap:9px}
+ .brand strong{font-size:.95rem}
+ .nav{gap:11px}
+ .nav a,.navgroup>summary{font-size:.78rem}
+ .site-tools{gap:4px}
+ .site-tools button,.site-tools select{padding:7px 6px;font-size:.75rem}
+}
+@media(max-width:650px){
+ .mastin{flex-wrap:wrap}
+ .menu{background:var(--surface-alt);border-color:var(--line);color:var(--ink)}
+}
