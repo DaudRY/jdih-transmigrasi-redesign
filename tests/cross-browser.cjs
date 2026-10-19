@@ -12,9 +12,10 @@ const server=http.createServer((req,res)=>{
   const p=decodeURIComponent(new URL(req.url,"http://localhost").pathname);
   const file=path.resolve(root,"."+(p==="/"?"/index.html":p));
   if(!file.startsWith(root+path.sep))return res.writeHead(403).end();
+  const body=fs.readFileSync(file);
   res.writeHead(200,{"content-type":types[path.extname(file)]||"application/octet-stream"});
-  res.end(fs.readFileSync(file));
- }catch(e){res.writeHead(404).end("Not found");}
+  res.end(body);
+ }catch(e){if(!res.headersSent)res.writeHead(404);res.end("Not found");}
 });
 async function test(name,engine,origin){
  const browser=await engine.launch({headless:true});
