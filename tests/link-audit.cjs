@@ -1,0 +1,45 @@
+"use strict";
+/* Static navigation audit, not a full accessibility conformance review. */
+const fs=require("node:fs");
+const path=require("node:path");
+const assert=require("node:assert/strict");
+const vm=require("node:vm");
+const root=path.resolve(__dirname,"..");
+const pages=["index.html","katalog.html","telusur.html","detail.html","contoh.html","ruang.html","laporan.html"];
+const all={};
+for(const page of pages)all[page]=fs.readFileSync(path.join(root,page),"utf8");
+const ctx={window:{}};
+vm.runInNewContext(fs.readFileSync(path.join(root,"data/catalog-categories.js"),"utf8"),ctx);
+const categories=new Set(Array.from(ctx.window.JDIH_CATEGORIES,x=>x.slug));
+let checked=0;
+for(const [name,text] of Object.entries(all)){
+ assert.match(text,/<main(?:\s|>)/,"Main landmark missing: "+name);
+ assert.match(text,/<meta name="viewport"/,"Responsive viewport missing: "+name);
+ assert.ok(text.includes("assets/comfort-theme.css"),"Comfort palette missing: "+name);
+ assert.ok(text.includes("assets/portal-finish.css"),"Shared design system missing: "+name);
+ assert.ok(text.includes("assets/site-preferences.js"),"Language/theme missing: "+name);
+ const beforeScripts=text.slice(0,text.indexOf("<script src=")>0?text.indexOf("<script src="):text.length);
+ const attrs=[...beforeScripts.matchAll(/\b(?:href|src)="([^"]+)"/g)].map(x=>x[1]);
+ for(const val of attrs){
+  if(val==="#"||val.startsWith("mailto:")||val.startsWith("tel:")||val.startsWith("https://"))continue;
+  if(val.startsWith("#")){
+   assert.ok(text.includes('id="'+val.slice(1)+'"'),"Unresolved anchor "+name+": "+val);
+   checked++;continue;
+  }
+  const parsed=new URL(val,"https://example.invalid/"+name);
+  if(parsed.host!=="example.invalid")continue;
+  const target=decodeURIComponent(parsed.pathname).replace(/^\//,"");
+  if(!target)continue;
+  const file=path.resolve(root,target);
+  assert.ok(file.startsWith(root+path.sep)&&fs.existsSync(file),"Broken internal link "+name+" -> "+val);
+  if(parsed.searchParams.has("kategori")){
+   assert.ok(categories.has(parsed.searchParams.get("kategori")),"Unknown catalog slug "+val);
+  }
+  if(parsed.hash&&["index.html","detail.html","katalog.html","telusur.html"].includes(target)){
+   assert.ok(all[target].includes('id="'+decodeURIComponent(parsed.hash.slice(1))+'"'),"Unknown fragment "+name+" -> "+val);
+  }
+  checked++;
+ }
+ assert.ok(!/href="javascript:/i.test(beforeScripts),"Javascript URL "+name);
+}
+console.log("LULUS: "+checked+" tautan/anchor internal statis, tujuh landmark halaman, CSS tema bersama, serta slug kategori.");
