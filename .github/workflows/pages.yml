@@ -21,6 +21,26 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Verify metadata, navigation, assets and JavaScript
+        run: node tests/sprint1.test.cjs
+      - name: Install browser testing tools
+        run: |
+          npm install --no-save playwright@1.58.2
+          npx playwright install --with-deps chromium
+      - name: Smoke test desktop, tablet and mobile widths
+        run: node tests/browser-smoke.cjs
+      - name: Upload responsive test screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sprint1-responsive-screenshots
+          path: artifacts/sprint1-detail-*.png
+          if-no-files-found: ignore
+          retention-days: 7
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
         with:
@@ -28,8 +48,8 @@ jobs:
       - name: Prepare static site
         run: |
           mkdir -p _site
-          cp index.html _site/index.html
-          cp -R assets _site/assets
+          cp index.html detail.html _site/
+          cp -R assets data _site/
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
