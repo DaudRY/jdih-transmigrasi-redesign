@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="id">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#dce6dc"><title>Laporan Demonstrasi Katalog untuk Pusdatin | JDIH Transmigrasi</title>
+<meta name="theme-color" content="#dce6dc"><title>Dokumentasi Implementasi untuk Pusdatin | JDIH Transmigrasi</title>
 <meta name="description" content="Matriks satu PDF dokumen resmi per kategori dan kebutuhan integrasi katalog JDIH dengan Pusdatin.">
 <style>
 *{box-sizing:border-box}body{margin:0;background:#dce6dc;color:#1c3631;font:16px/1.58 system-ui,-apple-system,"Segoe UI",sans-serif}a{color:#1b6050;text-underline-offset:3px}.wrap{width:min(1170px,calc(100% - 36px));margin:auto}
@@ -18,11 +18,11 @@
 </head>
 <body>
 <header class="mast"><div class="wrap mastin"><a class="brand" href="./index.html"><img src="assets/logo-jdih-globe.webp" alt=""><span><strong>JDIH Kementerian Transmigrasi</strong><small>Jaringan Dokumentasi dan Informasi Hukum</small></span></a><nav><a href="./index.html">Beranda</a><a href="./katalog.html?kategori=peraturan-menteri-transmigrasi">Katalog</a><a href="./ruang.html?bagian=faq">Bantuan</a></nav></div></header>
-<section class="hero-report"><div class="wrap"><p class="kicker">DOKUMENTASI DEMONSTRASI UNTUK PUSDATIN</p><h1>Inventaris Sampel PDF Resmi per Kategori JDIH</h1><p>Satu contoh PDF yang dapat ditelusuri per kategori tersedia, dengan tautan metadata sumber, status salinan PDF, dan kebutuhan sistem untuk integrasi penuh. Tidak mengklaim koleksi sudah tersinkronisasi.</p></div></section>
+<section class="hero-report"><div class="wrap"><p class="kicker">DOKUMENTASI IMPLEMENTASI UNTUK PUSDATIN</p><h1>Inventaris dan Verifikasi PDF Dokumen Hukum</h1><p>Matriks sumber dokumen, unduhan PDF, dan kebutuhan integrasi untuk pengembangan layanan JDIH pada lingkungan operasional.</p></div></section>
 <main class="main"><div class="wrap">
-<div class="tools"><button type="button" id="print-report">Cetak / Simpan PDF laporan</button><a href="./katalog.html?kategori=peraturan-menteri-transmigrasi">Jelajahi katalog</a><a href="./data/pdf-manifest.json" target="_blank" rel="noopener noreferrer">Audit PDF JSON</a></div>
+<div class="tools"><button type="button" id="print-report">Cetak / Simpan PDF laporan</button><a href="./katalog.html?kategori=peraturan-menteri-transmigrasi">Jelajahi katalog</a><a href="./data/pdf-manifest.json" target="_blank" rel="noopener noreferrer">Audit PDF JSON</a><a href="https://github.com/DaudRY/jdih-transmigrasi-redesign/blob/main/docs/spesifikasi-implementasi-pusdatin.md" target="_blank" rel="noopener noreferrer">Spesifikasi teknis untuk Pusdatin ↗</a></div>
 <section class="panel"><h2>Ringkasan pemeriksaan</h2><div class="stats"><div class="stat"><strong id="count-sampled">14</strong><span>Kategori dengan satu sampel dokumen publik</span></div><div class="stat"><strong id="count-unavailable">12</strong><span>Kategori tanpa PDF contoh yang ditemukan</span></div><div class="stat"><strong id="count-local">...</strong><span>PDF yang berhasil disalin ke GitHub Pages</span></div></div><div class="notice">Sumber metadata dan PDF berasal dari JDIH Kementerian Transmigrasi, diperiksa 19 Oktober 2026. Kategori tanpa sampel tidak berarti dokumennya tidak ada dalam pengelolaan internal Biro Hukum. Untuk katalog penuh diperlukan data resmi dari sistem utama.</div></section>
-<section class="panel"><h2>Matriks dokumen dan sumber pemeriksaan</h2><p class="meta-mini">Tautan “Detail” menuju prototipe ini. Tombol PDF menggunakan salinan lokal jika tersedia; jika tidak, langsung ke file resmi JDIH. Bukti hash salinan tertera pada berkas manifest.</p><div class="tablewrap"><table class="data-table"><thead><tr><th>Kategori</th><th>Sampel dokumen</th><th>Nomor / tahun</th><th>Status PDF</th><th>Penelusuran</th></tr></thead><tbody id="report-rows"></tbody></table></div></section>
+<section class="panel"><h2>Matriks dokumen dan sumber pemeriksaan</h2><p class="meta-mini">Tautan detail membuka website ini. Salinan PDF berasal dari JDIH resmi dan dicatat bersama ukuran serta checksum SHA-256 dalam manifest.</p><div class="tablewrap"><table class="data-table"><thead><tr><th>Kategori</th><th>Sampel dokumen</th><th>Nomor / tahun</th><th>Status PDF</th><th>Penelusuran</th></tr></thead><tbody id="report-rows"></tbody></table></div></section>
 <section class="panel"><h2>Kebutuhan pengembangan untuk Pusdatin</h2><ol class="checklist">
 <li><strong>API katalog per kategori:</strong> endpoint berhalaman untuk daftar, pencarian dan filter jenis/tahun/nomor/status, dengan ID dokumen stabil dan tanggal pemutakhiran.</li>
 <li><strong>Dokumen PDF:</strong> penyimpanan file resmi, URL unduh dan pratinjau yang tidak kedaluwarsa, serta checksum berkas dan pengendalian perubahan.</li>
@@ -30,9 +30,9 @@
 <li><strong>Validasi status:</strong> hindari menyamakan status “Berlaku” untuk peraturan dengan status berkekuatan hukum tetap suatu putusan; definisikan kamus status dan relasi hukum.</li>
 <li><strong>Kualitas data dan pembaruan:</strong> verifikasi field wajib, riwayat sunting, petugas pengesahan, sinkronisasi JDIHN, log dan penanganan file gagal.</li>
 <li><strong>Integrasi operasional:</strong> CMS untuk berita, layanan kontak, galeri, statistik kunjungan, survei kepuasan, autentikasi pengguna, dan aksesibilitas.</li>
-</ol><p class="meta-mini">Laporan ini adalah dokumentasi prototipe, bukan berita acara pemenuhan standar atau hasil penilaian resmi.</p></section>
+</ol><p class="meta-mini">Dokumen ini merupakan referensi pengembangan teknis. Pemenuhan persyaratan operasional memerlukan pengujian, verifikasi data, dan persetujuan Pusdatin serta Biro Hukum.</p></section>
 </div></main>
-<footer class="footer"><div class="wrap">JDIH Kementerian Transmigrasi · Dokumen demonstrasi prototipe · 19 Oktober 2026</div></footer>
+<footer class="footer"><div class="wrap">JDIH Kementerian Transmigrasi · Dokumentasi implementasi · 19 Oktober 2026</div></footer>
 <script src="data/catalog-categories.js"></script>
 <script src="data/sampel-resmi.js"></script>
 <script src="data/peraturan-2026.js"></script>
