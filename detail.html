@@ -65,10 +65,10 @@
     </section>
     <section class="panel" id="relasi" aria-labelledby="relasiheading">
       <h2 id="relasiheading">Status dan hubungan antarperaturan</h2>
-      <p class="panelintro">Hubungan hukum hanya ditampilkan jika dinyatakan pada keterangan status atau catatan abstrak resmi, bukan berdasarkan kemiripan judul.</p>
-      <div class="proof">● <span id="statusdetail"></span></div>
+      <p class="panelintro" id="relationintro">Hubungan hukum hanya ditampilkan jika dinyatakan pada keterangan status atau catatan abstrak resmi, bukan berdasarkan kemiripan judul.</p>
+      <div class="proof" id="statusproof">● <span id="statusdetail"></span></div>
       <div id="relations"></div>
-      <p class="smallsrc">Peraturan pelaksanaan dan dokumen terkait lainnya memerlukan metadata yang diverifikasi lebih lanjut. Daftar rekomendasi otomatis di portal resmi tidak dianggap sebagai bukti hubungan hukum.</p>
+      <p class="smallsrc" id="relationnote">Peraturan pelaksanaan dan dokumen terkait lainnya memerlukan metadata yang diverifikasi lebih lanjut. Daftar rekomendasi otomatis di portal resmi tidak dianggap sebagai bukti hubungan hukum.</p>
     </section>
     <section class="panel" id="dokumen" aria-labelledby="pdfheading">
       <h2 id="pdfheading">Pratinjau naskah peraturan dan abstrak</h2>
@@ -116,19 +116,35 @@ var $=function(q){return document.querySelector(q);};
 var schemas=window.JDIH_METADATA_SCHEMAS||{};
 if(!d){$("#notfound").hidden=false;$("#detailpage").hidden=true;return;}
 $("#detailpage").hidden=false;
-document.title="Nomor "+d.number+" Tahun "+d.year+" | JDIH Kementerian Transmigrasi";
+document.title=(d.type==="regulation"?"Nomor "+d.number+" Tahun "+d.year:d.title)+" | JDIH Kementerian Transmigrasi";
 document.querySelector('meta[name="description"]').setAttribute("content",d.title+". Metadata dari JDIH Kementerian Transmigrasi.");
-$("#crumb-number").textContent="Nomor "+d.number+" Tahun "+d.year;
+$("#crumb-number").textContent=d.type==="regulation"?"Nomor "+d.number+" Tahun "+d.year:d.title;
 $("#typechip").textContent=d.label;
-$("#statuschip").textContent="Status: "+(d.status||"Belum terverifikasi");
+if(d.type==="regulation")$("#statuschip").textContent="Status peraturan: "+(d.status||"Belum terverifikasi");
+else if(d.type==="decision")$("#statuschip").textContent="Status putusan: "+(d.decisionStatus||"Belum terverifikasi");
+else $("#statuschip").hidden=true;
 $("#doctitle").textContent=d.title;
-$("#docsummary").textContent=d.summary;
+$("#docsummary").textContent=d.summary||"";
 $("#sourcecta").href=d.url;
 $("#officialsource").href=d.url;
-$("#pdfcta").href=d.pdfUrl;
-$("#pdfexternal").href=d.pdfUrl;
+if(d.pdfUrl){$("#pdfcta").href=d.pdfUrl;$("#pdfexternal").href=d.pdfUrl;}
+else{$("#pdfcta").hidden=true;$("#pdfexternal").hidden=true;$("#preview-regulation").disabled=true;}
 if(d.abstractPdfUrl){$("#abstractcta").href=d.abstractPdfUrl;} else{$("#abstractcta").hidden=true;$("#preview-abstract").disabled=true;}
-$("#statusdetail").textContent="Status tercantum pada portal resmi: "+(d.status||"Belum terverifikasi");
+if(d.type==="regulation"){
+  $("#relasiheading").textContent="Status dan hubungan antarperaturan";
+  $("#statusdetail").textContent="Status peraturan menurut portal resmi: "+(d.status||"Belum terverifikasi");
+}else if(d.type==="decision"){
+  $("#relasiheading").textContent="Status putusan dan putusan terkait";
+  $("#relationintro").textContent="Keterkaitan putusan hanya disajikan jika ada rujukan yang dapat diverifikasi dari sumber peradilan resmi.";
+  $("#relationnote").textContent="Jangan menyamakan status putusan dengan status berlaku atau tidak berlaku suatu peraturan.";
+  $("#statusdetail").textContent="Status putusan pada sumber resmi: "+(d.decisionStatus||"Belum terverifikasi");
+}else{
+  $("#relasiheading").textContent="Referensi dan dokumen pendukung";
+  $("#relationintro").textContent="Dokumen pendukung, edisi, atau karya terkait ditampilkan hanya jika rujukannya tersedia dan terverifikasi.";
+  $("#relationnote").textContent="Monografi dan artikel tidak menggunakan status keberlakuan peraturan. Bibliografi dan isi ringkasan mengikuti karya atau artikel aslinya.";
+  $("#statusproof").hidden=true;
+}
+$("#pdfheading").textContent=d.type==="regulation"?"Pratinjau naskah peraturan dan abstrak":d.type==="decision"?"Pratinjau salinan putusan dan ringkasan":"Pratinjau dokumen dan ringkasan";
 var schema=schemas[d.type];
 if(!schema){
   $("#metadatacaption").textContent="Jenis dokumen belum mempunyai skema terverifikasi; data tidak akan dipaksakan ke format peraturan.";
@@ -200,11 +216,16 @@ if(d.relations&&d.relations.length){
    $("#relations").appendChild(card);
  });
 }else{
- appendText($("#relations"),"div","empty-state","Belum ada relasi hukum yang dinyatakan pada metadata status dokumen ini. Hal ini tidak berarti bahwa peraturan tidak mempunyai hubungan hukum dengan peraturan lain.");
+ var emptyCopy=d.type==="regulation"
+ ? "Belum ada relasi hukum yang dinyatakan pada metadata status dokumen ini. Hal ini tidak berarti bahwa peraturan tidak mempunyai hubungan hukum dengan peraturan lain."
+ : d.type==="decision"
+   ? "Belum ada putusan terkait yang telah diverifikasi. Tidak ada relasi yurisprudensi yang diasumsikan."
+   : "Belum ada referensi atau dokumen pendukung yang telah diverifikasi pada dataset ini.";
+ appendText($("#relations"),"div","empty-state",emptyCopy);
 }
 data.filter(function(item){return item.id!==d.id;}).forEach(function(item){
  var box=document.createElement("div");box.className="otherdoc";
- appendText(box,"strong","","Peraturan Menteri Nomor "+item.number+" Tahun "+item.year);
+ appendText(box,"strong","",item.type==="regulation"?"Peraturan Menteri Nomor "+item.number+" Tahun "+item.year:item.label||item.title);
  var a=document.createElement("a");a.href="./detail.html?id="+encodeURIComponent(item.id);a.textContent=item.subject+" ↗";box.appendChild(a);
  $("#otherdocs").appendChild(box);
 });
@@ -219,7 +240,7 @@ function loadPreview(url,title){
  $("#pdfexternal").href=url;
  label.textContent="Sedang memuat "+title+". Jika tidak muncul, pilih Buka PDF di tab baru.";
 }
-$("#preview-regulation").addEventListener("click",function(){loadPreview(d.pdfUrl,"naskah peraturan");});
+$("#preview-regulation").addEventListener("click",function(){loadPreview(d.pdfUrl,d.type==="regulation"?"naskah peraturan":d.type==="decision"?"salinan putusan":"dokumen");});
 $("#preview-abstract").addEventListener("click",function(){loadPreview(d.abstractPdfUrl,"abstrak resmi");});
 })();
 </script>
