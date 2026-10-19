@@ -6,12 +6,18 @@ Prototipe frontend statis untuk mengevaluasi struktur informasi, penelusuran dok
 
 **Ini merupakan prototipe UI/UX, bukan pengganti portal resmi. Prinsip desainnya adalah mempertahankan fitur eksisting dan menambahkan perbaikan berdasarkan evaluasi, bukan menghapus menu yang tidak disebut dalam evaluasi.**
 
-Dataset pencarian lokal masih berisi empat peraturan contoh Tahun 2026, namun nomor, judul, status, sumber, ikhtisar, catatan tanggal mulai berlaku, serta tautan PDF telah diperiksa terhadap halaman resmi JDIH Kementerian Transmigrasi pada 19 Oktober 2026. Data tidak diperbarui otomatis. Kolom tanggal yang kosong di metadata asli tetap kosong dalam prototipe; tanggal dalam catatan abstrak ditampilkan terpisah. Hubungan hukum hanya dicatat jika ditegaskan oleh sumber resmi. Integrasi langsung tetap membutuhkan persetujuan pemilik data dan Pusdatin. Navigasi kategori, Program Unggulan 5T, berita, informasi kelembagaan, statistik/survei, dan tautan jejaring JDIH telah ditampilkan kembali sebagai jalur akses. Sebagian besar tautan tersebut masih membuka portal resmi, karena data dan fungsi backend belum dimigrasikan. Panel statistik prototipe sengaja tidak menggunakan angka simulasi.
+Dataset pencarian lokal masih berisi empat peraturan contoh Tahun 2026, namun nomor, judul, status, sumber, ikhtisar, catatan tanggal mulai berlaku, serta tautan PDF telah diperiksa terhadap halaman resmi JDIH Kementerian Transmigrasi pada 19 Oktober 2026. Data tidak diperbarui otomatis. Kolom tanggal yang kosong di metadata asli tetap kosong dalam prototipe; tanggal dalam catatan abstrak ditampilkan terpisah. Hubungan hukum hanya dicatat jika ditegaskan oleh sumber resmi. Integrasi langsung tetap membutuhkan persetujuan pemilik data dan Pusdatin. Navigasi kategori, Program Unggulan 5T, berita, informasi kelembagaan, statistik/survei, dan tautan jejaring JDIH telah ditampilkan kembali sebagai jalur akses. Kategori peraturan/nonperaturan, menu berita, profil, galeri, informasi, dan layanan kini membuka halaman internal prototipe. Tautan menuju sumber JDIH resmi tetap tersedia sebagai opsi verifikasi dokumen dan PDF, bukan tujuan utama menu. Konten dan proses backend pada sebagian besar kategori tetap belum dimigrasikan. Panel statistik prototipe sengaja tidak menggunakan angka simulasi.
 
 ## Isi repositori
 
 - `index.html`: beranda dengan pencarian/filter lokal, dialog ringkasan cepat, serta tautan ke halaman detail lengkap. Seluruh navigasi dan fitur prototipe sebelumnya dipertahankan.
 - `detail.html`: halaman detail peraturan lengkap untuk `?id=1` sampai `?id=4`, mencakup metadata, ikhtisar abstrak, relasi terverifikasi, preview PDF yang dimuat atas permintaan, dan pranala sumber resmi.
+- `katalog.html`: satu halaman katalog dinamis untuk 26 kategori JDIH. Menu, filter, dan navigasi kategori berada pada domain prototipe. Hanya kategori Peraturan Menteri yang mempunyai empat data contoh terverifikasi.
+- `ruang.html`: halaman internal untuk 16 topik informasi dan layanan, termasuk berita, profil, galeri, statistik, survei, FAQ, Program 5T, kontak, dan jejaring. Bagian tanpa data resmi menampilkan informasi bahwa integrasi belum dilakukan.
+- `data/catalog-categories.js`: pemetaan kategori dan URL sumber rujukan.
+- `assets/comfort-theme.css`: palet siang hijau-sage yang tidak putih menyilaukan serta mode malam responsif.
+- `assets/site-preferences.js`: pilihan bahasa ID/EN dan mode siang/malam, dengan penyimpanan preferensi pada browser. Terjemahan antarmuka bersifat bantuan navigasi, bukan terjemahan hukum resmi.
+- `assets/foto-kawasan-transmigrasi.webp`: salinan WebP ringan dari foto kawasan yang diunggah pengguna, digunakan sebagai background hero dengan overlay demi keterbacaan.
 - `data/peraturan-2026.js`: satu sumber data empat contoh peraturan yang digunakan oleh beranda dan detail, tanpa memasukkan metadata atau relasi yang tidak terverifikasi.
 - `data/metadata-schemas.js`: standar bidang metadata yang **dibedakan** untuk peraturan, monografi, artikel, dan putusan, berdasarkan Lampiran II Permenkumham Nomor 8 Tahun 2019.
 - `docs/matriks-metadata-permenkumham-8-2019.md`: penjelasan item metadata resmi per jenis serta perbedaan abstrak PUU dengan ringkasan jenis dokumen lain.
@@ -40,7 +46,7 @@ Workflow penerbitan sudah disiapkan di `.github/workflows/pages.yml`. Untuk meng
 3. Setelah pengaturan disimpan, buka tab **Actions** dan periksa workflow **Deploy JDIH prototype to GitHub Pages**.
 4. Workflow akan berjalan pada push ke branch `main`. Jika deployment berhasil, URL situs akan terlihat di ringkasan workflow dan Settings → Pages.
 
-Workflow menerbitkan `index.html`, `detail.html`, folder `data/`, dan folder `assets/`. Sebelum menerbitkan, GitHub Actions wajib meluluskan uji integritas metadata dan smoke test Chromium. Screenshot hasil uji responsif disimpan sementara sebagai GitHub Actions artifact. README dan dokumen evaluasi tidak dipublikasikan sebagai bagian situs. GitHub Pages harus diaktifkan pada pengaturan repositori.
+Workflow menerbitkan `index.html`, `detail.html`, `katalog.html`, `ruang.html`, folder `data/`, dan folder `assets/`. Sebelum menerbitkan, GitHub Actions wajib meluluskan uji integritas metadata dan smoke test Chromium. Screenshot hasil uji responsif disimpan sementara sebagai GitHub Actions artifact. README dan dokumen evaluasi tidak dipublikasikan sebagai bagian situs. GitHub Pages harus diaktifkan pada pengaturan repositori.
 
 Panduan resmi: [Konfigurasi sumber publikasi GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site).
 
@@ -77,6 +83,29 @@ Lampiran II Permenkumham Nomor 8 Tahun 2019 menggunakan empat skema yang berbeda
 Lampiran I (halaman 7–9) menetapkan **struktur abstrak untuk peraturan perundang-undangan** berupa kepala abstrak, dasar pertimbangan, dasar hukum, materi pokok, serta catatan. Struktur tersebut **tidak diterapkan sebagai standar wajib** pada ringkasan monografi, artikel, dan putusan. Dalam prototipe, bagian abstrak PUU yang belum ditranskripsi diberi keterangan demikian, bukan diisi dengan perkiraan dari ikhtisar.
 
 **Batasan penting:** template keempat jenis sudah disiapkan di kode, tetapi dataset faktual yang ditampilkan baru empat peraturan. Belum ada contoh monografi, artikel atau putusan yang diklaim terverifikasi. Detail empat contoh tetap bergantung pada URL JDIH resmi untuk sumber naskah/abstrak, dan belum memenuhi integrasi API atau audit menyeluruh atas kualitas seluruh koleksi.
+
+## Pengembangan navigasi internal dan tema nyaman-mata (19 Oktober 2026)
+
+### Navigasi internal
+
+- Beranda dan detail tetap ada.
+- Tersedia 26 kategori pada halaman internal `katalog.html?kategori=...`, termasuk Peraturan Menteri, Keputusan Menteri, UU, Perpres, rancangan PUU, monografi, artikel, putusan dan yurisprudensi.
+- Tersedia 16 halaman informasi/layanan pada `ruang.html?bagian=...`, termasuk berita, profil, sejarah, dasar hukum, galeri, statistik, FAQ, kontak dan Program Unggulan 5T.
+- Tautan kategori dari menu, akses cepat, katalog lengkap dan tahapan pembentukan sekarang mengarah ke halaman di domain prototipe.
+- Dokumen sumber asli atau tautan ke instansi lain masih dapat dibuka secara eksplisit untuk verifikasi, bukan sebagai perpindahan otomatis saat membuka kategori.
+
+**Batasan data dan fungsi:** hanya empat contoh Permen 2026 yang ditampilkan dalam katalog. Halaman kategori lain tidak menyatakan jumlah dokumen resmi nol; mereka menampilkan status *belum tersinkronisasi*. Halaman berita, galeri, profil, statistik dan survei belum memuat data atau menjalankan backend resmi. Sistem belum merupakan *mirror* seluruh database JDIH, belum memiliki CMS, autentikasi, alur unggah, pengiriman SKM, ataupun integrasi API langsung. Pengembangan fungsi penuh wajib dikoordinasikan dengan Pusdatin serta pemilik konten Biro Hukum.
+
+### Mode warna dan bahasa
+
+- Tema default memakai palet hijau-sage/abu lembut, bukan latar putih murni; mode malam memakai latar biru-hijau gelap dan kartu gelap.
+- Tombol bulan/matahari berada di header seluruh halaman, menyimpan preferensi ke `localStorage` pengguna.
+- Pilihan **ID / EN** menerjemahkan navigasi dan sebagian besar teks antarmuka. Judul peraturan, data metadata otoritatif, naskah PDF, dan informasi hukum asli tetap dalam bahasa Indonesia. Ini **bukan terjemahan tersertifikasi** dari dokumen hukum.
+- Foto kawasan transmigrasi hanya dipakai sebagai latar hero dengan overlay; halaman dokumen mengutamakan ketenangan visual dan keterbacaan.
+
+### Pemeriksaan
+
+Pengujian Chromium memeriksa tampilan 375px/768px/1440px, mode siang/malam, penyimpanan tema/bahasa lintas halaman, pencarian dan tautan detail/katalog, serta halaman kosong yang tidak mengarang data. Tetap perlu verifikasi langsung pada Safari iOS, perangkat Android, dan pengujian aksesibilitas mendalam.
 
 ## Tahap pengembangan berikutnya
 
