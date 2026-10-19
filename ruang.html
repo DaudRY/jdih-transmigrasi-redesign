@@ -7,19 +7,20 @@
 .catalog-head{background:linear-gradient(115deg,#113931,#2b594d);color:white;padding:38px 0}.catalog-head a{color:white}.catalog-head h1{margin:12px 0;font-size:clamp(1.7rem,3.4vw,2.6rem)}.catalog-head p{color:#dcefe2;max-width:780px}
 .content{padding:38px 0 70px}.info-layout{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:20px}.info-panel,.info-card{border:1px solid #b9cbbd;background:#edf2ea;border-radius:14px;padding:23px}.info-panel h2{margin-top:0}.info-card{margin-bottom:13px}.info-card h3{margin:0 0 8px}.info-nav{display:grid;gap:5px}.info-nav a{display:block;padding:7px 10px;text-decoration:none;font-size:.83rem;border-radius:8px}.info-nav a.active,.info-nav a:hover{background:var(--surface-alt,#d2dfd3)}.info-sidebar{position:sticky;top:98px;max-height:80vh;overflow:auto}.notice{border-left:4px solid #c89c4b;padding:14px 16px;background:var(--surface-alt,#d2dfd3);margin:15px 0}.info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.info-grid .info-card{margin:0}.info-card p{font-size:.87rem}.details details{border-bottom:1px solid #b9cbbd;padding:12px}.details summary{font-weight:800;cursor:pointer}.footer{background:#0c2927;color:white;padding:25px 0;font-size:.8rem}.footer .wrap{display:flex;justify-content:space-between;gap:12px}.footer a{color:white}
 @media(max-width:1050px){.mastin{flex-wrap:wrap;padding:10px 0}.nav{order:3;margin-left:0;width:100%}}@media(max-width:850px){.info-layout{grid-template-columns:1fr}.info-sidebar{position:static;max-height:none}}@media(max-width:600px){.content{padding:18px 0 40px}.info-panel,.info-card{padding:16px}.info-grid{grid-template-columns:1fr}.nav{gap:10px}.nav a{font-size:.73rem}}
-</style><link rel="stylesheet" href="assets/comfort-theme.css"></head>
+</style><link rel="stylesheet" href="assets/comfort-theme.css">
+<link rel="stylesheet" href="assets/portal-finish.css"></head>
 <body>
 <header class="mast"><div class="wrap mastin">
 <a class="brand" href="./index.html"><img src="assets/logo-jdih-globe.webp" alt=""><span><strong>JDIH Kementerian Transmigrasi</strong><small>Jaringan Dokumentasi dan Informasi Hukum</small></span></a>
 <nav class="nav" aria-label="Navigasi"><a href="./index.html">Beranda</a><a href="./katalog.html?kategori=peraturan-menteri-transmigrasi">Peraturan</a><a href="./katalog.html?kategori=rancangan-peraturan">Pembentukan PUU</a><a href="./ruang.html?bagian=berita">Informasi</a></nav>
 </div></header>
-<section class="catalog-head"><div class="wrap"><a href="./index.html">Beranda</a> › <span id="crumb">Informasi</span><h1 id="heading">Informasi dan Layanan</h1><p id="summary">Menu layanan tersedia di dalam website ini.</p></div></section>
+<section class="catalog-head"><div class="wrap"><a href="./index.html">Beranda</a> › <span id="crumb">Informasi</span><h1 id="heading">Informasi dan Layanan</h1><p id="summary">Informasi, layanan dan panduan penelusuran hukum.</p></div></section>
 <main class="content" id="main"><div class="wrap info-layout">
 <section class="info-panel"><h2 id="subheading">Informasi</h2><div id="pagebody"></div></section>
 <aside class="info-sidebar"><div class="info-card"><h3>Menu informasi</h3><nav class="info-nav" id="information-nav"></nav></div>
 <div class="info-card"><h3>Telusuri kategori</h3><p>Peraturan, dokumen pembentukan, nonperaturan, dan putusan dapat ditelusuri tanpa meninggalkan situs.</p><a href="./katalog.html?kategori=peraturan-menteri-transmigrasi">Buka katalog internal →</a></div></aside>
 </div></main>
-<footer class="footer"><div class="wrap"><span>JDIH Kementerian Transmigrasi · Prototipe</span><a href="./index.html">Kembali ke beranda ↑</a></div></footer>
+<footer class="footer"><div class="wrap"><span>JDIH Kementerian Transmigrasi</span><a href="./index.html">Kembali ke beranda ↑</a></div></footer>
 <script src="assets/site-preferences.js"></script>
 <script>
 (function(){
@@ -52,7 +53,7 @@ const notice=(id,en)=>'<div class="notice">'+esc(local(id,en))+'</div>';
 function page(){
  const title=local(current[1],current[2]);
  $("#crumb").textContent=title;$("#heading").textContent=title;$("#subheading").textContent=title;
- $("#summary").textContent=local("Seluruh menu ini tersedia dalam prototipe. Data yang belum diintegrasikan ditandai secara terbuka.","All these sections are available within the prototype. Unsynchronized data is clearly marked.");
+ $("#summary").textContent=local("Akses informasi dan layanan dokumentasi hukum dalam satu website.","All these sections are available within the prototype. Unsynchronized data is clearly marked.");
  document.title=title+" | JDIH Kementerian Transmigrasi";
  $("#information-nav").innerHTML=items.map(i=>'<a class="'+(i[0]===current[0]?"active":"")+'" href="./ruang.html?bagian='+encodeURIComponent(i[0])+'">'+esc(local(i[1],i[2]))+'</a>').join("");
  let body="";
