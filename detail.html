@@ -116,7 +116,9 @@ var id=params.get("id");
 var d=data.find(function(item){return item.id===id;});
 var $=function(q){return document.querySelector(q);};
 var schemas=window.JDIH_METADATA_SCHEMAS||{};
+var preferredPdf=null;
 if(!d){$("#notfound").hidden=false;$("#detailpage").hidden=true;return;}
+preferredPdf=d.pdfUrl||null;
 $("#detailpage").hidden=false;
 document.title=(d.type==="regulation"?"Nomor "+d.number+" Tahun "+d.year:d.title)+" | JDIH Kementerian Transmigrasi";
 document.querySelector('meta[name="description"]').setAttribute("content",d.title+". Metadata dari JDIH Kementerian Transmigrasi.");
@@ -233,7 +235,9 @@ data.filter(function(item){return item.id!==d.id;}).forEach(function(item){
 });
 var preview=$("#pdfpreview"),hint=$("#preview-placeholder"),label=$("#preview-label");
 function loadPreview(url,title){
- if(!url||!/^https:\/\/jdih\.transmigrasi\.go\.id\/public\/documents\/[^?#]+\.pdf(\?[^#]*)?$/.test(url)){
+ const validRemote=/^https:\/\/jdih\.transmigrasi\.go\.id\/public\/documents\/[^?#]+\.pdf(\?[^#]*)?$/.test(url||"");
+ const validLocal=/^\.\/pdfs\/[a-z0-9-]+\.pdf$/.test(url||"");
+ if(!validRemote&&!validLocal){
    label.textContent="Tautan PDF belum tervalidasi. Gunakan halaman resmi.";
    return;
  }
@@ -242,8 +246,28 @@ function loadPreview(url,title){
  $("#pdfexternal").href=url;
  label.textContent="Sedang memuat "+title+". Jika tidak muncul, pilih Buka PDF di tab baru.";
 }
-$("#preview-regulation").addEventListener("click",function(){loadPreview(d.pdfUrl,d.type==="regulation"?"naskah peraturan":d.type==="decision"?"salinan putusan":"dokumen");});
+$("#preview-regulation").addEventListener("click",function(){loadPreview(preferredPdf,d.type==="regulation"?"naskah peraturan":d.type==="decision"?"salinan putusan":"dokumen");});
 $("#preview-abstract").addEventListener("click",function(){loadPreview(d.abstractPdfUrl,"abstrak resmi");});
+if(d.id==="4"){
+  fetch("./data/pdf-manifest.json",{cache:"no-store"})
+    .then(function(r){return r.ok?r.json():null;})
+    .then(function(m){
+      var item=m&&m.items&&m.items["permen-4-2026"];
+      if(item&&item.bundled&&/^pdfs\/[a-z0-9-]+\.pdf$/.test(item.path)){
+        preferredPdf="./"+item.path;
+        $("#pdfcta").href=preferredPdf;
+        $("#pdfexternal").href=preferredPdf;
+        var a=document.createElement("a");
+        a.className="btn subtle";
+        a.href=preferredPdf;
+        a.download="permen-4-2026.pdf";
+        a.textContent="Unduh PDF resmi (salinan lokal) ↓";
+        $("#pdfexternal").parentElement.appendChild(a);
+        $("#preview-label").textContent="PDF resmi disalin dari JDIH dan diverifikasi SHA-256 pada saat build. "+Math.round(item.bytes/1024)+" KB.";
+      }
+    }).catch(function(){});
+}
+
 window.JDIHPreferences?.translate();
 })();
 </script>
