@@ -86,9 +86,9 @@ a{color:#185e4e;text-underline-offset:3px}a:focus-visible,button:focus-visible,s
 <p id="sample-pdf-status" class="sample-status">Memeriksa salinan PDF lokal...</p>
 <div id="catalog-results"></div>
 <div id="catalog-empty" class="catalogempty" hidden>
-<h2>Belum ada data terverifikasi</h2>
-<p id="catalog-empty-desc">Koleksi kategori ini belum tersinkronisasi ke prototipe. Keadaan ini bukan bukti bahwa portal JDIH resmi tidak memiliki dokumen pada kategori tersebut.</p>
-<p id="catalog-empty-help">Pilih kategori lain, atau lihat rujukan sumber resmi melalui tautan verifikasi bila diperlukan.</p>
+<h2>Belum ada dokumen pilihan</h2>
+<p id="catalog-empty-desc">Dokumen untuk kategori ini belum tersedia dalam koleksi pilihan saat ini.</p>
+<p id="catalog-empty-help">Pilih kategori lain atau lanjutkan penelusuran dokumen.</p>
 </div>
 <div id="source-panel" class="page-notice" hidden></div>
 </section>
@@ -100,7 +100,7 @@ a{color:#185e4e;text-underline-offset:3px}a:focus-visible,button:focus-visible,s
 </aside>
 </div>
 </div></main>
-<footer class="footer"><div class="wrap"><div class="footbrand"><img src="assets/logo-kementrans-bulat.webp" alt=""><span>JDIH Kementerian Transmigrasi · Prototipe</span></div><a href="./index.html">Kembali ke beranda ↑</a></div></footer>
+<footer class="footer"><div class="wrap"><div class="footbrand"><img src="assets/logo-kementrans-bulat.webp" alt=""><span>JDIH Kementerian Transmigrasi</span></div><a href="./index.html">Kembali ke beranda ↑</a></div></footer>
 <script src="data/catalog-categories.js"></script>
 <script src="data/peraturan-2026.js"></script>
 <script src="data/sampel-resmi.js"></script>
@@ -181,7 +181,7 @@ function showRecords(){
  $("#catalog-empty").hidden=!!result.length;
  $("#catalog-count").textContent=all.length?
    tr(result.length+" dari "+all.length+" contoh dokumen terverifikasi dalam kategori ini.",result.length+" of "+all.length+" verified document samples in this category."):
-   tr("Belum ditemukan contoh PDF resmi pada kategori ini.", "No verified official PDF sample found in this category.");
+   tr("Belum ada dokumen pilihan pada kategori ini.", "No verified official PDF sample found in this category.");
  if(!all.length)$("#catalog-empty-desc").textContent=tr(
  "Tidak ditemukan dokumen PDF pada koleksi publik kategori ini saat pemeriksaan. Bukan berarti kategorinya tidak mempunyai dokumen di sistem internal JDIH.",
  "No PDF was found in this public category at the time of checking. The internal JDIH system may still contain records."
@@ -224,7 +224,7 @@ function setHeader(){
   src.hidden=false;
   src.innerHTML='<strong>'+esc(tr("Sumber kategori yang diperiksa","Verified category source"))+':</strong> '+
    '<a href="'+esc(active.sourceUrl)+'" target="_blank" rel="noopener noreferrer">'+esc(tr("Halaman kategori resmi ↗","Official category page ↗"))+'</a>. '+
-   esc(tr("Sampel ini belum tersinkronisasi otomatis melalui API. Tanggal audit: 19 Oktober 2026.","Samples are not automatically synchronized through an API. Audit date: 19 October 2026."));
+   esc(tr("Data yang tampil diperiksa terhadap rujukan resmi pada 19 Oktober 2026.","Displayed documents were checked against official sources on 19 October 2026."));
  }else src.hidden=true;
 }
 function renderAll(){renderNavigation();setHeader();showRecords()}
