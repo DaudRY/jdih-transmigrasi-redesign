@@ -48,7 +48,7 @@ jobs:
       - name: Prepare static site
         run: |
           mkdir -p _site
-          cp index.html detail.html _site/
+          cp index.html detail.html katalog.html ruang.html _site/
           cp -R assets data _site/
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
