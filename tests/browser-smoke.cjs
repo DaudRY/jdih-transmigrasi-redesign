@@ -56,6 +56,7 @@ async function run(){
      assert.ok(page.url().includes("detail.html?id=4"));
      // Uji warna yang nyaman, mode malam, lokalisasi dan navigasi internal.
      const sitePage=page;
+     await sitePage.goto(origin+"/index.html",{waitUntil:"load"});
      assert.equal(await sitePage.locator("#theme-toggle").count(),1,"Theme switch ada di header");
      assert.equal(await sitePage.locator("#lang-select").count(),1,"Language switch ada di header");
      const initialColor=await sitePage.evaluate(()=>getComputedStyle(document.body).backgroundColor);
