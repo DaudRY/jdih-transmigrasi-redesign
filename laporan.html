@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="id">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#dce6dc"><title>Laporan Demonstrasi Katalog untuk Pusdatin | JDIH Transmigrasi</title>
+<meta name="description" content="Matriks satu PDF dokumen resmi per kategori dan kebutuhan integrasi katalog JDIH dengan Pusdatin.">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#dce6dc;color:#1c3631;font:16px/1.58 system-ui,-apple-system,"Segoe UI",sans-serif}a{color:#1b6050;text-underline-offset:3px}.wrap{width:min(1170px,calc(100% - 36px));margin:auto}
+.mast{background:#edf2ea;position:sticky;top:0;border-bottom:1px solid #b9cbbd;z-index:10}.mastin{min-height:78px;display:flex;gap:15px;align-items:center}.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:#164739}.brand img{width:42px;height:42px;background:#fff;border-radius:9px}.brand strong,.brand small{display:block}.brand strong{font-size:.9rem}.brand small{font-size:.7rem}.mast nav{display:flex;gap:15px;margin-left:auto;flex-wrap:wrap}.mast nav a{font-size:.78rem;font-weight:800;text-decoration:none}
+.hero-report{background:linear-gradient(110deg,#153f36,#2f6451);color:#f5f9ef;padding:40px 0}.hero-report h1{font-size:clamp(1.65rem,3vw,2.5rem);margin:8px 0}.hero-report p{max-width:920px;color:#e0ebe4}.kicker{font-size:.73rem;font-weight:850;letter-spacing:.12em;text-transform:uppercase;color:#e7c885}
+.main{padding:28px 0 66px}.panel{background:#edf2ea;border:1px solid #b9cbbd;border-radius:14px;padding:21px;margin-bottom:19px}.panel h2{margin:0 0 10px;font-size:1.25rem}.panel p{font-size:.87rem}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.stat{padding:18px;background:var(--surface-alt,#d2dfd3);border-radius:12px}.stat strong{display:block;font-size:2rem;line-height:1.3}.stat span{font-size:.78rem;font-weight:700}.notice{border-left:4px solid #bd904b;padding:12px 15px;background:var(--surface-alt,#d2dfd3);margin:13px 0;font-size:.84rem}
+.tablewrap{overflow-x:auto}.data-table{border-collapse:collapse;width:100%;min-width:900px;font-size:.78rem}.data-table th,.data-table td{padding:11px 9px;text-align:left;vertical-align:top;border-bottom:1px solid #b9cbbd}.data-table th{font-weight:850;background:var(--surface-alt,#d2dfd3);position:sticky;top:0}.data-table a{font-weight:800}.data-table small{display:block;margin-top:3px}.status-ok{color:#266749;font-weight:800}.status-missing{color:#966329;font-weight:800}.meta-mini{font-size:.72rem;overflow-wrap:anywhere}.checklist{padding-left:20px}.checklist li{margin:9px 0;line-height:1.65;font-size:.88rem}.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}.tools button,.tools a{display:inline-flex;padding:10px 15px;align-items:center;border-radius:9px;border:1px solid #b9cbbd;background:#d6e5d8;color:#1a4739;text-decoration:none;font-weight:800;font-size:.82rem;cursor:pointer}.footer{background:#0c2927;color:#fff;padding:25px 0;font-size:.8rem}.footer a{color:#fff}
+.ui-svg-icon{vertical-align:-3px}.menu-icon{display:inline-flex}
+@media(max-width:1000px){.mastin{flex-wrap:wrap;padding:10px 0}.mast nav{margin-left:0;order:3;width:100%}}@media(max-width:700px){.stats{grid-template-columns:1fr}.main{padding:20px 0 40px}.panel{padding:16px}.hero-report{padding:28px 0}.data-table{min-width:850px}}
+@media print{.mast,.tools,.footer,.site-tools{display:none!important}.main{padding:0}.hero-report{background:white;color:black;padding:5px 0}.hero-report p,.hero-report .kicker{color:#333}.panel{break-inside:avoid;background:white;border:1px solid #ccc}.data-table{font-size:.65rem;min-width:0}.data-table th{background:#eee}.tablewrap{overflow:visible}body{background:white;color:black}.stat{background:#eee}}
+</style>
+<link rel="stylesheet" href="assets/comfort-theme.css">
+</head>
+<body>
+<header class="mast"><div class="wrap mastin"><a class="brand" href="./index.html"><img src="assets/logo-jdih-globe.webp" alt=""><span><strong>JDIH Kementerian Transmigrasi</strong><small>Jaringan Dokumentasi dan Informasi Hukum</small></span></a><nav><a href="./index.html">Beranda</a><a href="./katalog.html?kategori=peraturan-menteri-transmigrasi">Katalog</a><a href="./ruang.html?bagian=faq">Bantuan</a></nav></div></header>
+<section class="hero-report"><div class="wrap"><p class="kicker">DOKUMENTASI DEMONSTRASI UNTUK PUSDATIN</p><h1>Inventaris Sampel PDF Resmi per Kategori JDIH</h1><p>Satu contoh PDF yang dapat ditelusuri per kategori tersedia, dengan tautan metadata sumber, status salinan PDF, dan kebutuhan sistem untuk integrasi penuh. Tidak mengklaim koleksi sudah tersinkronisasi.</p></div></section>
+<main class="main"><div class="wrap">
+<div class="tools"><button type="button" id="print-report">Cetak / Simpan PDF laporan</button><a href="./katalog.html?kategori=peraturan-menteri-transmigrasi">Jelajahi katalog</a><a href="./data/pdf-manifest.json" target="_blank" rel="noopener noreferrer">Audit PDF JSON</a></div>
+<section class="panel"><h2>Ringkasan pemeriksaan</h2><div class="stats"><div class="stat"><strong id="count-sampled">14</strong><span>Kategori dengan satu sampel dokumen publik</span></div><div class="stat"><strong id="count-unavailable">12</strong><span>Kategori tanpa PDF contoh yang ditemukan</span></div><div class="stat"><strong id="count-local">...</strong><span>PDF yang berhasil disalin ke GitHub Pages</span></div></div><div class="notice">Sumber metadata dan PDF berasal dari JDIH Kementerian Transmigrasi, diperiksa 19 Oktober 2026. Kategori tanpa sampel tidak berarti dokumennya tidak ada dalam pengelolaan internal Biro Hukum. Untuk katalog penuh diperlukan data resmi dari sistem utama.</div></section>
+<section class="panel"><h2>Matriks dokumen dan sumber pemeriksaan</h2><p class="meta-mini">Tautan “Detail” menuju prototipe ini. Tombol PDF menggunakan salinan lokal jika tersedia; jika tidak, langsung ke file resmi JDIH. Bukti hash salinan tertera pada berkas manifest.</p><div class="tablewrap"><table class="data-table"><thead><tr><th>Kategori</th><th>Sampel dokumen</th><th>Nomor / tahun</th><th>Status PDF</th><th>Penelusuran</th></tr></thead><tbody id="report-rows"></tbody></table></div></section>
+<section class="panel"><h2>Kebutuhan pengembangan untuk Pusdatin</h2><ol class="checklist">
+<li><strong>API katalog per kategori:</strong> endpoint berhalaman untuk daftar, pencarian dan filter jenis/tahun/nomor/status, dengan ID dokumen stabil dan tanggal pemutakhiran.</li>
+<li><strong>Dokumen PDF:</strong> penyimpanan file resmi, URL unduh dan pratinjau yang tidak kedaluwarsa, serta checksum berkas dan pengendalian perubahan.</li>
+<li><strong>Metadata dan abstrak:</strong> skema terpisah untuk peraturan, putusan/yurisprudensi, monografi, dan artikel sesuai Permenkumham Nomor 8 Tahun 2019. Dokumen pembentukan PUU serta keputusan/kerja sama perlu pemetaan khusus.</li>
+<li><strong>Validasi status:</strong> hindari menyamakan status “Berlaku” untuk peraturan dengan status berkekuatan hukum tetap suatu putusan; definisikan kamus status dan relasi hukum.</li>
+<li><strong>Kualitas data dan pembaruan:</strong> verifikasi field wajib, riwayat sunting, petugas pengesahan, sinkronisasi JDIHN, log dan penanganan file gagal.</li>
+<li><strong>Integrasi operasional:</strong> CMS untuk berita, layanan kontak, galeri, statistik kunjungan, survei kepuasan, autentikasi pengguna, dan aksesibilitas.</li>
+</ol><p class="meta-mini">Laporan ini adalah dokumentasi prototipe, bukan berita acara pemenuhan standar atau hasil penilaian resmi.</p></section>
+</div></main>
+<footer class="footer"><div class="wrap">JDIH Kementerian Transmigrasi · Dokumen demonstrasi prototipe · 19 Oktober 2026</div></footer>
+<script src="data/catalog-categories.js"></script>
+<script src="data/sampel-resmi.js"></script>
+<script src="data/peraturan-2026.js"></script>
+<script src="assets/menu-icons.js"></script>
+<script src="assets/site-preferences.js"></script>
+<script>
+(function(){
+"use strict";
+const C=window.JDIH_CATEGORIES||[];
+const S=window.JDIH_VERIFIED_SAMPLES||[];
+const P=window.JDIH_DOCUMENTS||[];
+const verified=[...S];
+const p=P.find(x=>x.id==="4");
+if(p)verified.push({id:"permen-4-2026",category:"peraturan-menteri-transmigrasi",title:p.title,number:p.number,year:p.year,sourceUrl:p.url,pdfUrl:p.pdfUrl,detailUrl:"./detail.html?id=4"});
+const sampleByCategory=new Map(verified.map(x=>[x.category,x]));
+let manifest={items:{}};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function render(){
+ $("#count-sampled").textContent=verified.length;
+ $("#count-unavailable").textContent=C.length-verified.length;
+ $("#count-local").textContent=Object.values(manifest.items||{}).filter(x=>x.bundled).length;
+ const rows=C.map(cat=>{
+  const item=sampleByCategory.get(cat.slug);
+  const ic=window.JDIHIcons?.svg(window.JDIHIcons.category(cat.slug),16)||"";
+  if(!item)return '<tr><td>'+ic+' '+esc(cat.title)+'</td><td>Belum ada PDF contoh di kategori publik yang diperiksa</td><td>—</td><td><span class="status-missing">Belum tersedia</span></td><td><a href="./katalog.html?kategori='+encodeURIComponent(cat.slug)+'">Buka kategori</a></td></tr>';
+  const local=manifest.items?.[item.id]?.bundled;
+  const pdfUrl=local?"./"+manifest.items[item.id].path:item.pdfUrl;
+  const detail=item.detailUrl||"./contoh.html?id="+encodeURIComponent(item.id);
+  return '<tr><td>'+ic+' '+esc(cat.title)+'</td><td>'+esc(item.title)+'</td><td>'+esc(item.number||"—")+' / '+esc(item.year||"—")+'</td>'+
+    '<td><span class="'+(local?"status-ok":"status-missing")+'">'+(local?"Salinan lokal tersedia":"PDF sumber resmi")+'</span>'+
+    (local?'<small>SHA-256 tersedia pada manifest</small>':"")+'</td>'+
+    '<td><a href="'+esc(detail)+'">Detail</a> · <a href="'+esc(pdfUrl)+'" '+(local?'download="'+esc(item.id)+'.pdf"':'target="_blank" rel="noopener noreferrer"')+'>PDF</a> · <a href="'+esc(item.sourceUrl)+'" target="_blank" rel="noopener noreferrer">Sumber</a></td></tr>';
+ });
+ $("#report-rows").innerHTML=rows.join("");
+ window.JDIHPreferences?.translate();
+}
+$("#print-report").addEventListener("click",()=>window.print());
+async function load(){
+ try{
+ const res=await fetch("./data/pdf-manifest.json",{cache:"no-store"});
+ if(res.ok)manifest=await res.json();
+ }catch(e){}
+ render();
+}
+render();load();
+})();
+</script>
+</body></html>
