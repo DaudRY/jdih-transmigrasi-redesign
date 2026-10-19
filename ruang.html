@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="id">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#dce6dc"><title>Informasi & Layanan | JDIH Transmigrasi</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#dce6dc;color:#1c3631;font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}a{color:#216350}a:focus-visible,button:focus-visible{outline:3px solid #c89c4b;outline-offset:3px}.wrap{width:min(1150px,calc(100% - 36px));margin:auto}
+.mast{background:#edf2ea;position:sticky;top:0;z-index:10;border-bottom:1px solid #b9cbbd}.mastin{min-height:80px;display:flex;align-items:center;gap:20px}.brand{display:flex;align-items:center;gap:10px;text-decoration:none;flex:0 0 auto}.brand img{width:43px;height:43px;object-fit:contain;background:white;border-radius:8px}.brand strong,.brand small{display:block}.brand small{font-size:.72rem}.nav{display:flex;gap:17px;flex-wrap:wrap;margin-left:auto}.nav a{font-size:.8rem;font-weight:800;text-decoration:none}
+.catalog-head{background:linear-gradient(115deg,#113931,#2b594d);color:white;padding:38px 0}.catalog-head a{color:white}.catalog-head h1{margin:12px 0;font-size:clamp(1.7rem,3.4vw,2.6rem)}.catalog-head p{color:#dcefe2;max-width:780px}
+.content{padding:38px 0 70px}.info-layout{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:20px}.info-panel,.info-card{border:1px solid #b9cbbd;background:#edf2ea;border-radius:14px;padding:23px}.info-panel h2{margin-top:0}.info-card{margin-bottom:13px}.info-card h3{margin:0 0 8px}.info-nav{display:grid;gap:5px}.info-nav a{display:block;padding:7px 10px;text-decoration:none;font-size:.83rem;border-radius:8px}.info-nav a.active,.info-nav a:hover{background:var(--surface-alt,#d2dfd3)}.info-sidebar{position:sticky;top:98px;max-height:80vh;overflow:auto}.notice{border-left:4px solid #c89c4b;padding:14px 16px;background:var(--surface-alt,#d2dfd3);margin:15px 0}.info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.info-grid .info-card{margin:0}.info-card p{font-size:.87rem}.details details{border-bottom:1px solid #b9cbbd;padding:12px}.details summary{font-weight:800;cursor:pointer}.footer{background:#0c2927;color:white;padding:25px 0;font-size:.8rem}.footer .wrap{display:flex;justify-content:space-between;gap:12px}.footer a{color:white}
+@media(max-width:1050px){.mastin{flex-wrap:wrap;padding:10px 0}.nav{order:3;margin-left:0;width:100%}}@media(max-width:850px){.info-layout{grid-template-columns:1fr}.info-sidebar{position:static;max-height:none}}@media(max-width:600px){.content{padding:18px 0 40px}.info-panel,.info-card{padding:16px}.info-grid{grid-template-columns:1fr}.nav{gap:10px}.nav a{font-size:.73rem}}
+</style><link rel="stylesheet" href="assets/comfort-theme.css"></head>
+<body>
+<header class="mast"><div class="wrap mastin">
+<a class="brand" href="./index.html"><img src="assets/logo-jdih-globe.webp" alt=""><span><strong>JDIH Kementerian Transmigrasi</strong><small>Jaringan Dokumentasi dan Informasi Hukum</small></span></a>
+<nav class="nav" aria-label="Navigasi"><a href="./index.html">Beranda</a><a href="./katalog.html?kategori=peraturan-menteri-transmigrasi">Peraturan</a><a href="./katalog.html?kategori=rancangan-peraturan">Pembentukan PUU</a><a href="./ruang.html?bagian=berita">Informasi</a></nav>
+</div></header>
+<section class="catalog-head"><div class="wrap"><a href="./index.html">Beranda</a> › <span id="crumb">Informasi</span><h1 id="heading">Informasi dan Layanan</h1><p id="summary">Menu layanan tersedia di dalam website ini.</p></div></section>
+<main class="content" id="main"><div class="wrap info-layout">
+<section class="info-panel"><h2 id="subheading">Informasi</h2><div id="pagebody"></div></section>
+<aside class="info-sidebar"><div class="info-card"><h3>Menu informasi</h3><nav class="info-nav" id="information-nav"></nav></div>
+<div class="info-card"><h3>Telusuri kategori</h3><p>Peraturan, dokumen pembentukan, nonperaturan, dan putusan dapat ditelusuri tanpa meninggalkan situs.</p><a href="./katalog.html?kategori=peraturan-menteri-transmigrasi">Buka katalog internal →</a></div></aside>
+</div></main>
+<footer class="footer"><div class="wrap"><span>JDIH Kementerian Transmigrasi · Prototipe</span><a href="./index.html">Kembali ke beranda ↑</a></div></footer>
+<script src="assets/site-preferences.js"></script>
+<script>
+(function(){
+"use strict";
+const source="https://jdih.transmigrasi.go.id";
+const items=[
+["berita","Berita JDIH","JDIH News","web/posts/category/berita"],
+["profil","Profil","Profile","web/pages/read/profil"],
+["dasar-hukum","Dasar Hukum","Legal Basis","web/pages/read/dasar-hukum"],
+["visi-dan-misi","Visi dan Misi","Vision & Mission","web/pages/read/visi-dan-misi"],
+["sejarah","Sejarah","History","web/pages/read/sejarah"],
+["program-5t","Program Unggulan 5T","5T Priority Programs",null],
+["galeri","Galeri","Gallery","web/galleries"],
+["foto","Foto","Photos","web/galleries/category/Photo"],
+["video","Video","Videos","web/galleries/category/Video"],
+["pojok-uke-i","Pojok UKE I","Echelon I Corner","web/posts/category/pojok-uke-i"],
+["statistik","Statistik","Statistics",null],
+["survei","Survei Kepuasan","Satisfaction Survey",null],
+["kontak","Kontak dan Aplikasi Mobile","Contact & Mobile App","web/pages/read/profil"],
+["proses-kegiatan","Proses Kegiatan dan Dokumentasi Rapat","Activities & Meeting Records",null],
+["faq","Panduan dan FAQ","Guide & FAQ",null],
+["jejaring","Jejaring JDIH","JDIH Network",null]
+];
+const slug=new URLSearchParams(location.search).get("bagian")||"berita";
+const current=items.find(i=>i[0]===slug)||items[0];
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const local=(id,en)=>window.JDIHPreferences?.language==="en"?en:id;
+const notice=(id,en)=>'<div class="notice">'+esc(local(id,en))+'</div>';
+function page(){
+ const title=local(current[1],current[2]);
+ $("#crumb").textContent=title;$("#heading").textContent=title;$("#subheading").textContent=title;
+ $("#summary").textContent=local("Seluruh menu ini tersedia dalam prototipe. Data yang belum diintegrasikan ditandai secara terbuka.","All these sections are available within the prototype. Unsynchronized data is clearly marked.");
+ document.title=title+" | JDIH Kementerian Transmigrasi";
+ $("#information-nav").innerHTML=items.map(i=>'<a class="'+(i[0]===current[0]?"active":"")+'" href="./ruang.html?bagian='+encodeURIComponent(i[0])+'">'+esc(local(i[1],i[2]))+'</a>').join("");
+ let body="";
+ if(slug==="kontak"){
+  body='<p>'+esc(local("Alamat pada portal resmi: Jl. TMP Kalibata No. 17, Jakarta Selatan, 12750, DKI Jakarta.","Officially listed address: Jl. TMP Kalibata No. 17, South Jakarta 12750, Jakarta."))+'</p>'+
+  notice("Tautan aplikasi mobile masih perlu diverifikasi. Kami tidak menampilkan tombol unduh yang belum terkonfirmasi.","The mobile app link still requires verification. An unconfirmed download button is intentionally omitted.");
+ }else if(slug==="program-5t"){
+  const programs=["Trans Tuntas","Transmigrasi Lokal","Transmigrasi Patriot","Trans Karya Nusantara","Trans Gotong Royong"];
+  body=notice("Nama program dipertahankan dari portal sebelumnya. Uraian lengkap perlu disahkan pengelola konten.","Program names have been preserved. Official descriptions still need content-owner verification.")+
+   '<div class="info-grid">'+programs.map(s=>'<div class="info-card"><h3>'+esc(s)+'</h3><p>'+esc(local("Informasi lengkap belum tersinkronisasi.","Details are not yet synchronized."))+'</p></div>').join("")+'</div>';
+ }else if(slug==="statistik"){
+  body=notice("Statistik pengunjung dan koleksi memerlukan sumber data resmi. Tidak ada angka yang direkayasa.","Visitor and collection statistics require official data. No figures are invented.")+
+    '<div class="info-grid">'+["Pengunjung hari ini","Pengunjung bulan ini","Total klik","Statistik koleksi"].map(x=>'<div class="info-card"><h3>'+esc(x)+'</h3><p>'+esc(local("Belum tersinkronisasi","Not yet synchronized"))+'</p></div>').join("")+'</div>';
+ }else if(slug==="survei"){
+  body=notice("Formulir survei belum terhubung ke sistem resmi dan belum menerima atau mengirim penilaian pengguna.","The survey form is not connected to the official service; no user assessments are submitted.")+
+    '<p>'+esc(local("Integrasi SKM memerlukan persetujuan pengelola, perlindungan data, dan endpoint layanan yang sah.","SKM integration requires authorization, privacy safeguards, and an official endpoint."))+'</p>';
+ }else if(slug==="faq"){
+  const faqs=[
+   ["Bagaimana mencari peraturan?","Gunakan menu Peraturan untuk membuka katalog di website ini. Empat peraturan contoh telah tersedia pada kategori Peraturan Menteri.","How to find regulations?","Use the Regulations menu. Four sample ministerial regulations are available."],
+   ["Apakah semua koleksi sudah masuk?","Belum. Kategori lain masih menunggu sinkronisasi data dari sistem resmi.","Is the collection complete?","Not yet. Other categories await official data synchronization."],
+   ["Apakah terjemahan bahasa Inggris bersifat resmi?","Tidak. Mode bahasa Inggris menerjemahkan antarmuka, bukan naskah hukum yang sah.","Is the English translation official?","No. The English switch translates interface elements, not authoritative legal documents."],
+   ["Bagaimana mengaktifkan mode malam?","Gunakan tombol bulan/matahari di kepala halaman. Pengaturan disimpan di browser.","How to enable night mode?","Use the moon/sun button in the header. Your preference is saved in the browser."]
+  ];
+  body='<div class="details">'+faqs.map(a=>'<details><summary>'+esc(local(a[0],a[2]))+'</summary><p>'+esc(local(a[1],a[3]))+'</p></details>').join("")+'</div>';
+ }else if(slug==="jejaring"){
+  body=notice("Tautan jejaring memang menuju situs instansi lain. Semua menu utama JDIH Transmigrasi tetap berada di dalam prototipe.","Network links intentionally lead to other institutions. All internal JDIH menus remain on this site.")+
+   '<div class="info-grid">'+[["JDIHN","https://jdihn.go.id/"],["BPHN","https://bphn.jdihn.go.id/"]].map(a=>'<div class="info-card"><h3>'+esc(a[0])+'</h3><a href="'+esc(a[1])+'" target="_blank" rel="noopener noreferrer">'+esc(local("Lihat lembaga ↗","Open institution ↗"))+'</a></div>').join("")+'</div>';
+ }else {
+  body=notice("Konten kategori ini belum tersinkronisasi dari portal resmi. Menu dapat dibuka di website ini, tetapi berita, galeri, dan informasi kelembagaan tidak diisi dengan data rekaan.","This category is not yet synchronized with the official portal. The page opens here, but no articles, galleries or institutional information are fabricated.");
+ }
+ if(current[3])body+='<p class="notice">'+esc(local("Tautan pemeriksaan sumber, hanya jika diperlukan:","Optional link to verify the official source:"))+' <a href="'+esc(source+"/"+current[3])+'" target="_blank" rel="noopener noreferrer">'+esc(local("Sumber resmi ↗","Official source ↗"))+'</a></p>';
+ $("#pagebody").innerHTML=body;
+ window.JDIHPreferences?.translate();
+}
+document.addEventListener("jdih:languagechange",page);
+page();
+})();
+</script>
+</body></html>
