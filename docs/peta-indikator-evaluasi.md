@@ -75,6 +75,26 @@ Tujuan audit adalah memastikan redesign tidak mengurangi kemampuan portal hanya 
 - Placeholder statistik tanpa angka rekaan.
 - Pemberitahuan bahwa data terbatas pada dataset demonstrasi.
 
+## Realisasi Sprint 1: Halaman detail peraturan (19 Oktober 2026)
+
+| Kebutuhan evaluasi | Implementasi yang telah dikerjakan | Batasan dan verifikasi lanjut |
+|---|---|---|
+| Detail metadata peraturan | `detail.html?id={1,2,3,4}` menampilkan jenis, nomor, tahun, tajuk entri utama, subjek, tempat penetapan, tiga kolom tanggal, sumber, bahasa, bidang hukum, lokasi, status dan keterangan status | Tiga kolom tanggal kosong pada metadata portal; catatan abstrak tentang mulai berlaku diberi panel tersendiri. Audit berkala bersama pengelola data |
+| Abstrak PUU | Ikhtisar poin penting dari abstrak tiap dokumen, dengan akses langsung ke PDF abstrak resmi | Ikhtisar bukan salinan lengkap; abstrak dan naskah lengkap tetap dirujuk ke portal resmi |
+| Status dan relasi antarperaturan | Permen 4/2026 ditandai mencabut Permen 10/2025 berdasarkan keterangan status dan catatan abstrak resmi. Permen 1, 2 dan 3/2026 tidak diberi relasi hukum yang belum terkonfirmasi | Penambahan relasi lain memerlukan pemeriksaan eksplisit dokumen yang bersangkutan; rekomendasi dokumen lain tidak otomatis menjadi relasi hukum |
+| Akses naskah hukum | Tautan naskah PDF dan abstrak PDF langsung dari JDIH resmi serta preview yang baru dimuat jika diminta pengunjung | PDF bisa gagal ditampilkan dalam iframe karena pembatasan server/peramban; fallback tautan PDF dan halaman resmi tetap tersedia |
+| Konsistensi sumber data UI | Beranda dan detail memakai `data/peraturan-2026.js` yang sama, tanpa duplikasi metadata yang bertentangan | Dataset empat dokumen belum dapat mewakili seluruh koleksi, dan tidak ada integrasi API otomatis |
+| Aksesibilitas dasar dan responsivitas | Label tombol, navigasi, pengendalian preview yang dapat diakses lewat tombol, desain 375/768/1440px, pengujian tanpa horizontal overflow | Smoke test Chromium bukan validasi Safari iOS atau audit WCAG |
+| Pengendalian mutu deployment | Uji integritas Node dan uji Chromium dijalankan sebelum GitHub Pages build/deploy; tangkapan layar diuji disimpan sementara sebagai artifact | Perlu uji manual aksesibilitas, keamanan, validasi data secara berkala, serta integrasi resmi setelah disetujui |
+
+Sumber data empat peraturan:
+- [Permen Transmigrasi 4/2026](https://jdih.transmigrasi.go.id/web/regulations/read/988)
+- [Permen Transmigrasi 3/2026](https://jdih.transmigrasi.go.id/web/regulations/read/987)
+- [Permen Transmigrasi 2/2026](https://jdih.transmigrasi.go.id/web/regulations/read/986)
+- [Permen Transmigrasi 1/2026](https://jdih.transmigrasi.go.id/web/regulations/read/916)
+
+**Prinsip yang harus dipertahankan:** jangan menyatakan fitur backend, integrasi API atau dokumen yang belum ada sebagai sudah siap operasional. Seluruh fitur navigasi portal yang telah diinventarisasi pada bagian audit *feature parity* wajib tetap tersedia dalam Sprint berikutnya.
+
 ## Prioritas implementasi
 
 ### P0: sebelum prototipe dipakai untuk review substantif
