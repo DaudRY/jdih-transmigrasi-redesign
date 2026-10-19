@@ -32,6 +32,35 @@ for(const kind of ["monograph","article","decision"]){
 assert.ok(detail.includes('<script src="data/metadata-schemas.js"></script>'));
 assert.ok(detail.includes('schema.fields'));
 assert.ok(detail.includes('schema.abstractRequiredStructure'));
+
+const catalogContext={window:{}};
+vm.runInNewContext(read("data/catalog-categories.js"),catalogContext,{filename:"data/catalog-categories.js"});
+const categories=Array.from(catalogContext.window.JDIH_CATEGORIES);
+assert.ok(categories.length>=25,"Kategori portal lama harus dipertahankan sebagai navigasi internal");
+assert.equal(new Set(categories.map(c=>c.slug)).size,categories.length,"Slug kategori tidak boleh duplikat");
+for(const category of categories){
+ assert.ok(["regulation","formation","nonregulation","decision"].includes(category.group));
+ assert.ok(category.title&&category.titleEn);
+}
+assert.ok(fs.existsSync(path.join(root,"katalog.html")),"Halaman katalog internal ada");
+assert.ok(fs.existsSync(path.join(root,"ruang.html")),"Halaman layanan internal ada");
+assert.ok(fs.existsSync(path.join(root,"assets/comfort-theme.css")));
+assert.ok(fs.existsSync(path.join(root,"assets/site-preferences.js")));
+const catalogHTML=read("katalog.html"),serviceHTML=read("ruang.html"),preferencesJS=read("assets/site-preferences.js");
+assert.ok(home.includes('assets/comfort-theme.css')&&detail.includes('assets/comfort-theme.css'));
+assert.ok(catalogHTML.includes('assets/comfort-theme.css')&&serviceHTML.includes('assets/comfort-theme.css'));
+assert.ok(home.includes("assets/site-preferences.js")&&detail.includes("assets/site-preferences.js"));
+assert.ok(catalogHTML.includes("assets/site-preferences.js")&&serviceHTML.includes("assets/site-preferences.js"));
+assert.ok(preferencesJS.includes("jdih-theme")&&preferencesJS.includes("jdih-lang"));
+assert.ok(preferencesJS.includes("jdih:languagechange"));
+const obsoleteDirectCategory=/href="https:\/\/jdih\.transmigrasi\.go\.id\/web\/(?:non)?regulations\/category\//;
+assert.ok(!obsoleteDirectCategory.test(home),"Menu beranda tidak boleh langsung mengarah ke kategori pada portal lama");
+assert.ok(home.includes('href="./katalog.html?kategori=peraturan-menteri-transmigrasi"'));
+assert.ok(home.includes('href="./ruang.html?bagian=berita"'));
+for(const file of ["katalog.html","ruang.html","assets/site-preferences.js","data/catalog-categories.js"]){
+ const script=file.endsWith(".js")?read(file):Array.from(read(file).matchAll(/<script>\s*([\s\S]*?)<\/script>/g)).map(m=>m[1]).join("\n");
+ new vm.Script(script,{filename:file+".inline.js"});
+}
 assert.equal(docs.length,4,"Dataset empat contoh resmi");
 assert.deepEqual(docs.map(d=>d.id),["4","3","2","1"],"Urutan dan ID empat contoh");
 for(const d of docs){
