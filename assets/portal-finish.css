@@ -8,22 +8,25 @@
  --ui-radius-sm:11px;
  --ui-gap:22px;
  --ui-accent:#b58c4f;
- --ui-border:color-mix(in srgb,var(--line) 84%,transparent);
+ --ui-border:#b9cbbd;
  --ui-overlay:rgba(21,64,55,.1);
  --ui-button:#144f43;
  --ui-button-text:#ffffff;
  --ui-focus:#c89c4b;
  --ui-shadow:0 10px 32px rgba(19,56,43,.07);
  --ui-shadow-hover:0 16px 42px rgba(19,56,43,.13);
- --ui-outline:color-mix(in srgb,var(--green2) 30%,var(--line));
- --ui-subtle:color-mix(in srgb,var(--surface-alt) 60%,var(--surface));
- --ui-muted-surface:color-mix(in srgb,var(--surface) 85%,var(--paper));
+ --ui-outline:#83afa0;
+ --ui-subtle:#e5eee5;
+ --ui-muted-surface:#e7eee6;
  --ui-heading:var(--ink);
 }
 html[data-theme="night"]{
  --ui-button:#83d4b6;
  --ui-button-text:#102c28;
- --ui-outline:color-mix(in srgb,var(--green2) 48%,var(--line));
+ --ui-outline:#608d85;
+ --ui-subtle:#293f40;
+ --ui-muted-surface:#24393a;
+ --ui-border:#47615f;
  --ui-shadow:0 10px 30px rgba(0,0,0,.14);
  --ui-shadow-hover:0 17px 44px rgba(0,0,0,.25);
 }
