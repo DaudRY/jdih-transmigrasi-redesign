@@ -30,15 +30,17 @@ jobs:
       - name: Install browser testing tools
         run: |
           npm install --no-save playwright@1.58.2
-          npx playwright install --with-deps chromium
+          npx playwright install --with-deps chromium firefox webkit
       - name: Smoke test desktop, tablet and mobile widths
         run: node tests/browser-smoke.cjs
+      - name: Cross-browser test Chromium, Firefox and WebKit
+        run: node tests/cross-browser.cjs
       - name: Upload responsive test screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: sprint1-responsive-screenshots
-          path: artifacts/sprint1-detail-*.png
+          name: jdih-responsive-browser-screenshots
+          path: artifacts/*.png
           if-no-files-found: ignore
           retention-days: 7
       - name: Configure GitHub Pages
@@ -48,7 +50,7 @@ jobs:
       - name: Prepare static site
         run: |
           mkdir -p _site
-          cp index.html detail.html katalog.html contoh.html laporan.html ruang.html _site/
+          cp index.html detail.html katalog.html contoh.html laporan.html ruang.html telusur.html _site/
           cp -R assets data _site/
       - name: Download and verify public official PDF samples
         run: node scripts/salin-pdf-sampel.cjs
