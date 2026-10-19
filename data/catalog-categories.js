@@ -22,7 +22,7 @@ const categories=[
  ["surat-edaran-kementerian-transmigrasi","Surat Edaran Kementerian","Ministry Circulars","regulation",reg("surat-edaran-kementerian-transmigrasi"),"Surat edaran yang dikeluarkan kementerian."],
  ["sk-pimpinan-uke-i","SK Pimpinan UKE I","Echelon I Leadership Decisions","regulation",reg("sk-pimpinan-uke-i"),"Keputusan pimpinan unit kerja eselon I."],
  ["permendes-pdtt","Permendes PDTT","Village Ministry Regulations","regulation",reg("permendes-pdtt"),"Peraturan Menteri Desa dan Pembangunan Daerah Tertinggal yang relevan."],
- ["rancangan-peraturan","Rancangan Peraturan","Draft Regulations","formation",reg("rancangan-peraturan"),"Dokumen rancangan peraturan yang dipublikasikan."],
+ ["rancangan-peraturan","Rancangan Peraturan","Draft Regulations","formation",reg("rancangan-peraturan-menteri"),"Dokumen rancangan peraturan yang dipublikasikan."],
  ["naskah-urgensi","Naskah Urgensi","Urgency Papers","formation",reg("naskah-urgensi"),"Naskah urgensi pembentukan peraturan."],
  ["naskah-akademik","Naskah Akademik","Academic Papers","formation",reg("naskah-akademik"),"Naskah akademik atau kajian dasar pembentukan peraturan."],
  ["program-penyusunan","Program Penyusunan","Drafting Programs","formation",null,"Program penyusunan peraturan perundang-undangan."],
