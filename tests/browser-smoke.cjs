@@ -84,7 +84,8 @@ async function run(){
      assert.equal(await sitePage.locator("#catalog-results .catalogcard").count(),1);
      await sitePage.locator(".internal-detail").first().click();
      assert.ok(sitePage.url().includes("contoh.html?id=kepmen-99-2025"));
-     assert.ok((await sitePage.locator("#doc-title").innerText()).includes("Nomor 99 Tahun 2025"));
+     const actualSampleTitle=await sitePage.locator("#doc-title").innerText();
+     assert.ok(actualSampleTitle.includes("Nomor 99 Tahun 2025"),"Title="+JSON.stringify(actualSampleTitle)+" errors="+JSON.stringify(errors)+" notfound="+(await sitePage.locator("#notfound").isVisible()));
      assert.equal(await sitePage.locator("#metadatafields .meta").count()>8,true);
      const originalPdf=await sitePage.locator("#download").getAttribute("href");
      assert.ok(originalPdf.includes("pdf")&&originalPdf!=="#","Download uses an official PDF or bundled copy");
