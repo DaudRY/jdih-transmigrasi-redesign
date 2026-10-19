@@ -35,6 +35,22 @@ a{color:#185e4e;text-underline-offset:3px}a:focus-visible,button:focus-visible,s
 @media(max-width:650px){.wrap{width:calc(100% - 28px)}.brand small{font-size:.63rem}.mastin{gap:9px}.catalogfilter{grid-template-columns:1fr}.catalog-head{padding:28px 0}.maincontent{padding:19px 0 45px}.nav{gap:11px}.nav a{font-size:.71rem}}
 </style>
 <link rel="stylesheet" href="assets/comfort-theme.css">
+
+<style>
+.catalog-card-top{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;align-items:center}
+.catalog-card-top .tag{display:inline-flex;align-items:center;gap:6px}
+.catalog-card-top .tag svg,.catalog-nav svg,.groupnav svg,.categorylink svg{display:inline-block;vertical-align:-3px;flex-shrink:0}
+.catalog-actions{display:flex;flex-wrap:wrap;gap:10px 15px}
+.catalog-actions a{font-size:.81rem;text-decoration:none;font-weight:800}
+.catalog-download{padding:6px 10px;border-radius:8px;background:var(--surface-alt,#d2dfd3);border:1px solid var(--line)}
+.sample-indicator{font-size:.7rem;font-weight:850;color:var(--green2)}
+.sample-status{font-size:.77rem;color:var(--muted);margin:6px 0 14px}
+.sample-check{font-size:.73rem;color:var(--green2);font-weight:900}
+.categorylink{display:flex;align-items:center;gap:5px}
+.categorylink .sample-check{margin-left:auto}
+.categorylink span:not(.sample-check){flex:1}
+.groupnav a{display:inline-flex;align-items:center;gap:6px}
+</style>
 </head>
 <body>
 <a class="skip" href="#main">Lewati ke konten utama</a>
@@ -65,6 +81,7 @@ a{color:#185e4e;text-underline-offset:3px}a:focus-visible,button:focus-visible,s
 <button class="btn" type="submit">Cari dokumen →</button>
 </form>
 <p id="catalog-count" class="count" role="status" aria-live="polite"></p>
+<p id="sample-pdf-status" class="sample-status">Memeriksa salinan PDF lokal...</p>
 <div id="catalog-results"></div>
 <div id="catalog-empty" class="catalogempty" hidden>
 <h2>Belum ada data terverifikasi</h2>
@@ -83,98 +100,143 @@ a{color:#185e4e;text-underline-offset:3px}a:focus-visible,button:focus-visible,s
 <footer class="footer"><div class="wrap"><div class="footbrand"><img src="assets/logo-kementrans-bulat.webp" alt=""><span>JDIH Kementerian Transmigrasi · Prototipe</span></div><a href="./index.html">Kembali ke beranda ↑</a></div></footer>
 <script src="data/catalog-categories.js"></script>
 <script src="data/peraturan-2026.js"></script>
+<script src="data/sampel-resmi.js"></script>
+<script src="assets/menu-icons.js"></script>
+<script src="assets/menu-icons.js"></script>
 <script src="assets/site-preferences.js"></script>
 <script>
 (function(){
 "use strict";
 const catalogs=window.JDIH_CATEGORIES||[];
 const groups=window.JDIH_GROUPS||{};
-const dataset=Array.isArray(window.JDIH_DOCUMENTS)?window.JDIH_DOCUMENTS:[];
+const samples=window.JDIH_VERIFIED_SAMPLES||[];
+const existing=Array.isArray(window.JDIH_DOCUMENTS)?window.JDIH_DOCUMENTS:[];
 const $=q=>document.querySelector(q);
 const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const query=new URLSearchParams(window.location.search);
-const slug=query.get("kategori")||"peraturan-menteri-transmigrasi";
-let active=catalogs.find(x=>x.slug===slug)||null;
-let filtered=[];
-const language=()=>window.JDIHPreferences?.language||"id";
-const local=(id,en)=>language()==="en"?en:id;
+const params=new URLSearchParams(location.search);
+const slug=params.get("kategori")||"peraturan-menteri-transmigrasi";
+const active=catalogs.find(c=>c.slug===slug)||catalogs[0];
+let manifest=null;
+const lang=()=>window.JDIHPreferences?.language||"id";
+const tr=(id,en)=>lang()==="en"?en:id;
 const href=c=>"./katalog.html?kategori="+encodeURIComponent(c.slug);
-const safeExternal=url=>/^https:\/\/jdih\.transmigrasi\.go\.id\//.test(url||"");
-function groupList(){
- const current=active?.group||"regulation";
- const html=Object.entries(groups).map(([k,g])=>{
-  const first=catalogs.find(c=>c.group===k);
-  return first?'<a href="'+href(first)+'" class="'+(current===k?"active":"")+'">'+esc(local(g.name,g.nameEn))+'</a>':"";
+const icon=slug=>window.JDIHIcons?.svg(window.JDIHIcons.category(slug),16)||"";
+function recordsForCategory(){
+ if(active.slug==="peraturan-menteri-transmigrasi"){
+   const old=existing.find(d=>d.id==="4");
+   if(!old)return [];
+   return [{
+     id:"permen-4-2026",category:active.slug,title:old.title,label:old.label,number:old.number,
+     year:old.year,summary:old.summary,status:old.status,source:old.source,
+     sourceUrl:old.url,pdfUrl:old.pdfUrl,localPdf:"pdfs/permen-4-2026.pdf",
+     detailUrl:"./detail.html?id=4"
+   }];
+ }
+ return samples.filter(x=>x.category===active.slug).map(x=>({...x,detailUrl:"./contoh.html?id="+encodeURIComponent(x.id)}));
+}
+function renderNavigation(){
+ $("#groupnav").innerHTML=Object.entries(groups).map(([k,g])=>{
+   const first=catalogs.find(c=>c.group===k);
+   return first?'<a href="'+href(first)+'" class="'+(active.group===k?"active":"")+'">'+(window.JDIHIcons?.svg(window.JDIHIcons.group(k),16)||"")+' '+esc(tr(g.name,g.nameEn))+'</a>':"";
  }).join("");
- $("#groupnav").innerHTML=html;
-}
-function categorySidebar(){
- const h=Object.entries(groups).map(([k,g])=>
-  '<div class="sidebar-group"><h4>'+esc(local(g.name,g.nameEn))+'</h4>'+
-  catalogs.filter(c=>c.group===k).map(c=>'<a class="categorylink '+(c.slug===active?.slug?'active':'')+'" href="'+href(c)+'">'+esc(local(c.title,c.titleEn))+'</a>').join("")+'</div>'
+ $("#catalog-sidebar-list").innerHTML=Object.entries(groups).map(([k,g])=>
+ '<div class="sidebar-group"><h4>'+esc(tr(g.name,g.nameEn))+'</h4>'+
+ catalogs.filter(c=>c.group===k).map(c=>'<a class="categorylink '+(c.slug===active.slug?"active":"")+'" href="'+href(c)+'">'+icon(c.slug)+' <span>'+esc(tr(c.title,c.titleEn))+'</span>'+
+ (recordsForSlug(c.slug)?' <span class="sample-check" title="Contoh terverifikasi">✓</span>':"")+'</a>').join("")+'</div>'
  ).join("");
- $("#catalog-sidebar-list").innerHTML=h;
 }
-function getRecords(){
- // Only this category is backed by documents verified in the initial dataset.
- if(active?.slug!=="peraturan-menteri-transmigrasi")return [];
- return dataset.filter(d=>d.type==="regulation"&&d.label==="Peraturan Menteri Transmigrasi");
+function recordsForSlug(slug){
+ return slug==="peraturan-menteri-transmigrasi"?existing.some(d=>d.id==="4"):samples.some(d=>d.category===slug);
 }
-function card(d){
- return '<article class="catalogcard"><span class="tag">'+esc(local("Peraturan Menteri Transmigrasi","Ministerial Regulations"))+'</span>'+
- '<h3><a href="./detail.html?id='+encodeURIComponent(d.id)+'">'+esc(d.title)+'</a></h3>'+
- '<p>'+esc(d.summary)+'</p>'+
- '<div class="catalogmeta">'+esc(local("Nomor","Number"))+' '+esc(d.number)+' · '+esc(d.year)+' · '+esc(d.status)+' · '+esc(d.source)+'</div>'+
- '<div class="catalog-actions"><a href="./detail.html?id='+encodeURIComponent(d.id)+'">'+esc(local("Detail lengkap →","Full details →"))+'</a>'+
- ' <a href="./detail.html?id='+encodeURIComponent(d.id)+'#dokumen">'+esc(local("Naskah & PDF","Document & PDF"))+' ↗</a></div></article>';
+function fileLink(record){
+ const cached=manifest?.items?.[record.id];
+ if(cached?.bundled&&typeof cached.path==="string"&&/^pdfs\/[a-z0-9-]+\.pdf$/.test(cached.path)){
+   return '<a href="./'+esc(cached.path)+'" download="'+esc(record.id)+'.pdf" class="catalog-download">'+esc(tr("Unduh PDF contoh","Download sample PDF"))+' ↓</a>';
+ }
+ return '<a href="'+esc(record.pdfUrl)+'" target="_blank" rel="noopener noreferrer" class="catalog-download">'+esc(tr("PDF sumber resmi","Official PDF"))+' ↗</a>';
 }
-function render(){
- const records=getRecords(),term=$("#catalog-query").value.trim().toLocaleLowerCase("id-ID"),year=$("#catalog-year").value;
- filtered=records.filter(d=>(year==="all"||String(d.year)===year)&&(!term||[d.title,d.summary,d.number,d.subject,d.source].join(" ").toLocaleLowerCase("id-ID").includes(term)));
- $("#catalog-results").innerHTML=filtered.map(card).join("");
- $("#catalog-empty").hidden=filtered.length!==0;
- const en=language()==="en";
- $("#catalog-count").textContent=active?.slug==="peraturan-menteri-transmigrasi"?
-   (en?filtered.length+" verified sample documents in the prototype":filtered.length+" dokumen contoh terverifikasi pada prototipe"):
-   (en?"This category is not yet connected to verified document data.":"Data dokumen terverifikasi pada kategori ini belum terhubung.");
- if(records.length&&!filtered.length)$("#catalog-empty-desc").textContent=en?
- "No sample documents match these filters. This does not indicate that the official collection is empty.":
- "Tidak ada dokumen contoh yang cocok dengan filter ini. Ini bukan bukti bahwa koleksi resmi kosong.";
- if(!records.length)$("#catalog-empty-desc").textContent=en?
- "This category has not been synchronized with the prototype. This does not mean the official JDIH collection is empty.":
- "Koleksi kategori ini belum tersinkronisasi ke prototipe. Keadaan ini bukan bukti bahwa portal JDIH resmi tidak memiliki dokumen pada kategori tersebut.";
+function card(record){
+ const label=tr("Contoh dokumen resmi","Official document sample");
+ const short=record.recordType==="decision"?
+   tr("Putusan: status inkracht belum diverifikasi","Decision: finality not verified"):
+   tr("Satu dokumen yang diperiksa dari sumber resmi","One verified record from the official source");
+ return '<article class="catalogcard"><div class="catalog-card-top"><span class="tag">'+icon(record.category)+' '+esc(record.label)+'</span>'+
+ '<span class="sample-indicator">'+esc(label)+'</span></div>'+
+ '<h3><a class="internal-detail" href="'+esc(record.detailUrl)+'">'+esc(record.title)+'</a></h3>'+
+ '<p>'+esc(record.summary||"")+'</p>'+
+ '<div class="catalogmeta">'+esc(tr("Nomor","Number"))+': '+esc(record.number||"Tidak tercantum")+
+ ' · '+esc(record.year)+' · '+esc(record.source||short)+'</div>'+
+ '<div class="catalog-actions"><a class="internal-detail" href="'+esc(record.detailUrl)+'">'+esc(tr("Lihat metadata dan pratinjau","View metadata and preview"))+' →</a>'+
+ fileLink(record)+'<a href="'+esc(record.sourceUrl)+'" target="_blank" rel="noopener noreferrer">'+esc(tr("Verifikasi di JDIH resmi","Verify with official JDIH"))+' ↗</a></div></article>';
+}
+function showRecords(){
+ const all=recordsForCategory();
+ const q=$("#catalog-query").value.trim().toLocaleLowerCase("id-ID");
+ const year=$("#catalog-year").value;
+ const result=all.filter(d=>(year==="all"||String(d.year)===year)&&(!q||[d.title,d.number,d.year,d.source,d.summary,d.label].join(" ").toLocaleLowerCase("id-ID").includes(q)));
+ $("#catalog-results").innerHTML=result.map(card).join("");
+ $("#catalog-empty").hidden=!!result.length;
+ $("#catalog-count").textContent=all.length?
+   tr(result.length+" dari "+all.length+" contoh dokumen terverifikasi dalam kategori ini.",result.length+" of "+all.length+" verified document samples in this category."):
+   tr("Belum ditemukan contoh PDF resmi pada kategori ini.", "No verified official PDF sample found in this category.");
+ if(!all.length)$("#catalog-empty-desc").textContent=tr(
+ "Tidak ditemukan dokumen PDF pada koleksi publik kategori ini saat pemeriksaan. Bukan berarti kategorinya tidak mempunyai dokumen di sistem internal JDIH.",
+ "No PDF was found in this public category at the time of checking. The internal JDIH system may still contain records."
+ );
+ else if(!result.length)$("#catalog-empty-desc").textContent=tr(
+ "Tidak ada dokumen contoh yang cocok dengan pencarian ini. Hapus filter untuk melihat sampel.",
+ "No example matches this search. Clear filters to see the sample."
+ );
+ if(manifest){
+  const entry=all[0]&&manifest.items?.[all[0].id];
+  if(entry?.bundled)$("#sample-pdf-status").textContent=tr(
+   "PDF contoh telah disimpan dan dapat diunduh langsung dari website ini.",
+   "The sample PDF has been copied and is downloadable directly from this website."
+  );
+  else if(all.length)$("#sample-pdf-status").textContent=tr(
+   "Salinan PDF lokal belum tersedia. Tautan PDF membuka berkas resmi pada sumber JDIH.",
+   "No local copy is currently available. The PDF link opens the official JDIH file."
+  );
+ }
  window.JDIHPreferences?.translate();
 }
 function setHeader(){
- const english=language()==="en";
- const title=active?local(active.title,active.titleEn):local("Katalog dokumen hukum","Legal Document Catalog");
+ const title=tr(active.title,active.titleEn);
  $("#catalog-heading").textContent=title;
  $("#bread-current").textContent=title;
- $("#catalog-intro-text").textContent=active?local(active.description,active.descriptionEn):local("Pilih kategori dokumen hukum untuk melanjutkan.","Select a legal document category to continue.");
+ $("#catalog-intro-text").textContent=tr(active.description,active.descriptionEn);
  document.title=title+" | JDIH Kementerian Transmigrasi";
  const schemaDescription={
- regulation:["Peraturan dan keputusan dapat memiliki klasifikasi berbeda; metadata harus diverifikasi sesuai jenis dan dasar hukumnya.","Regulations and decisions may have different classifications; metadata must be verified according to each legal document."],
- formation:["Dokumen pembentukan PUU merupakan koleksi proses; jenis dan metadata setiap dokumen wajib diverifikasi terlebih dahulu.","Drafting documents are process records; each document type and metadata must be verified."],
- nonregulation:["Metadata monografi berbeda dari artikel dan dokumen HAKI. Lampiran II Permenkumham 8/2019 menyediakan skema monografi dan artikel tersendiri.","Monographs, articles and intellectual property documents require separate metadata treatment."],
- decision:["Putusan menggunakan nomor putusan, tanggal dibacakan, jenis perkara, dan status putusan, bukan tanggal pengundangan peraturan.","Decisions use a case number, delivery date, case type and decision status, not the promulgation date of regulations."]
+ regulation:["Contoh menggunakan metadata yang tersedia di JDIH resmi. Jenis peraturan, keputusan, dan MoU tidak dipaksakan menggunakan satu struktur normatif.","Samples use verified JDIH metadata. Regulations, decisions and MoUs are not forced into one legal schema."],
+ formation:["Contoh naskah akademik, urgensi, atau rancangan adalah dokumen proses, bukan peraturan yang telah ditetapkan.","Academic, urgency and draft samples are process documents, not enacted regulations."],
+ nonregulation:["Metadata monografi, artikel dan HAKI berbeda. Dokumen tidak dipindahkan secara keliru dari kategori peraturan.","Monograph, article and IP metadata require distinct treatment; regulatory records are not falsely relabeled."],
+ decision:["Nomor putusan, jenis perkara dan status putusan dipisahkan dari status berlaku peraturan. Status berkekuatan hukum tetap belum diasumsikan.","Court decision status is distinguished from regulatory validity; finality is not presumed."]
  };
- $("#schema-info").textContent=local(...(schemaDescription[active?.group]||schemaDescription.regulation));
- const source=$("#source-panel");
- if(active?.sourceUrl&&safeExternal(active.sourceUrl)){
-  source.hidden=false;
-  source.innerHTML='<strong>'+esc(local("Sumber rujukan","Source reference"))+':</strong> '+esc(local("Data pada situs ini belum tersinkronisasi secara langsung. Anda tetap dapat melakukan pemeriksaan silang melalui", "This site is not synchronized with official data. To cross-check a document, use"))+' <a target="_blank" rel="noopener noreferrer" href="'+esc(active.sourceUrl)+'">'+esc(local("tautan kategori sumber resmi ↗","the official source category ↗"))+'</a>.';
- }else source.hidden=true;
- const opts=[...new Set(getRecords().map(d=>d.year))].sort((a,b)=>b-a);
- $("#catalog-year").innerHTML='<option value="all">'+esc(local("Semua tahun","All years"))+'</option>'+opts.map(y=>'<option value="'+y+'">'+y+'</option>').join("");
+ $("#schema-info").textContent=tr(...schemaDescription[active.group]);
+ const records=recordsForCategory();
+ const years=[...new Set(records.map(d=>d.year))].sort((a,b)=>b-a);
+ $("#catalog-year").innerHTML='<option value="all">'+esc(tr("Semua tahun","All years"))+'</option>'+years.map(y=>'<option value="'+y+'">'+esc(y)+'</option>').join("");
+ const src=$("#source-panel");
+ if(active.sourceUrl?.startsWith("https://jdih.transmigrasi.go.id/")){
+  src.hidden=false;
+  src.innerHTML='<strong>'+esc(tr("Sumber kategori yang diperiksa","Verified category source"))+':</strong> '+
+   '<a href="'+esc(active.sourceUrl)+'" target="_blank" rel="noopener noreferrer">'+esc(tr("Halaman kategori resmi ↗","Official category page ↗"))+'</a>. '+
+   esc(tr("Sampel ini belum tersinkronisasi otomatis melalui API. Tanggal audit: 19 Oktober 2026.","Samples are not automatically synchronized through an API. Audit date: 19 October 2026."));
+ }else src.hidden=true;
 }
-function updateAll(){
- groupList();categorySidebar();setHeader();render();
+function renderAll(){renderNavigation();setHeader();showRecords()}
+$("#catalog-form").addEventListener("submit",e=>{e.preventDefault();showRecords()});
+$("#catalog-query").addEventListener("input",showRecords);
+$("#catalog-year").addEventListener("change",showRecords);
+document.addEventListener("jdih:languagechange",renderAll);
+async function loadManifest(){
+ try{
+  const response=await fetch("./data/pdf-manifest.json",{cache:"no-store"});
+  if(response.ok)manifest=await response.json();
+ }catch(e){}
+ showRecords();
 }
-$("#catalog-form").addEventListener("submit",e=>{e.preventDefault();render()});
-$("#catalog-query").addEventListener("input",render);
-$("#catalog-year").addEventListener("change",render);
-document.addEventListener("jdih:languagechange",updateAll);
-updateAll();
+renderAll();loadManifest();
 })();
 </script>
 </body>
