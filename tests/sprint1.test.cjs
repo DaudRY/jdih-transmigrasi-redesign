@@ -10,6 +10,28 @@ const home=read("index.html"),detail=read("detail.html"),dataJs=read("data/perat
 const context={window:{}};
 vm.runInNewContext(dataJs,context,{filename:"data/peraturan-2026.js"});
 const docs=Array.from(context.window.JDIH_DOCUMENTS);
+const schemaContext={window:{}};
+vm.runInNewContext(read("data/metadata-schemas.js"),schemaContext,{filename:"data/metadata-schemas.js"});
+const schemaSet=schemaContext.window.JDIH_METADATA_SCHEMAS;
+assert.deepEqual(Object.keys(schemaSet),["regulation","monograph","article","decision"],"Empat skema jenis dokumen");
+const expectedKeys={
+  regulation:["documentType","title","issuer","number","label","formAbbreviation","place","legalDates","source","subject","status","language","location","field","attachmentDescription"],
+  monograph:["documentType","title","author","callNumber","edition","publicationPlace","publisher","publicationYear","physicalDescription","subject","isbn","language","field","bookInventoryNumber","location","attachmentDescription"],
+  article:["documentType","title","author","publicationPlace","publicationYear","source","subject","language","field","location","attachmentDescription"],
+  decision:["documentType","title","courtAuthority","decisionNumber","courtType","courtTypeAbbreviation","courtPlace","dateRead","source","subject","decisionStatus","language","caseType","location","attachmentDescription"]
+};
+for(const [kind,expected] of Object.entries(expectedKeys)){
+ assert.deepEqual(Array.from(schemaSet[kind].fields,row=>row[1]),expected,"Urutan metadata Lampiran II untuk "+kind);
+}
+assert.deepEqual([schemaSet.regulation.page,schemaSet.monograph.page,schemaSet.article.page,schemaSet.decision.page],[24,56,81,92]);
+assert.equal(schemaSet.regulation.abstractRequiredStructure.length,5,"Hanya abstrak PUU mempunyai lima bagian dalam Lampiran I");
+for(const kind of ["monograph","article","decision"]){
+ assert.equal(schemaSet[kind].abstractStandard,null,"Jangan menerapkan struktur abstrak PUU untuk "+kind);
+ assert.ok(schemaSet[kind].summaryGuidance);
+}
+assert.ok(detail.includes('<script src="data/metadata-schemas.js"></script>'));
+assert.ok(detail.includes('schema.fields'));
+assert.ok(detail.includes('schema.abstractRequiredStructure'));
 assert.equal(docs.length,4,"Dataset empat contoh resmi");
 assert.deepEqual(docs.map(d=>d.id),["4","3","2","1"],"Urutan dan ID empat contoh");
 for(const d of docs){
