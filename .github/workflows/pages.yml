@@ -27,6 +27,8 @@ jobs:
           node-version: "22"
       - name: Verify metadata, navigation, assets and JavaScript
         run: node tests/sprint1.test.cjs
+      - name: Audit internal navigation and page structure
+        run: node tests/link-audit.cjs
       - name: Install browser testing tools
         run: |
           npm install --no-save playwright@1.58.2
