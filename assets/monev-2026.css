@@ -1,0 +1,17 @@
+/* Tindak Lanjut Monev 2026: komponen laman detail, program dan masukan. */
+.monev-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.monev-fields label{display:flex;flex-direction:column;gap:5px;font-size:.83rem;font-weight:750;color:var(--ink)}
+.monev-fields input,.monev-fields select,.monev-fields textarea{background:var(--soft-input);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:11px;width:100%;font:inherit}
+.monev-fields .full{grid-column:1/-1}.monev-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.monev-state{padding:12px 14px;border-left:3px solid var(--gold);background:var(--surface-alt);font-size:.82rem;border-radius:0 10px 10px 0}
+.monev-related{display:grid;gap:9px}.monev-related a{display:block;line-height:1.5;border:1px solid var(--line);border-radius:10px;padding:11px 13px;background:var(--surface);font-weight:750}
+.monev-table{width:100%;border-collapse:collapse;text-align:left;font-size:.86rem}
+.monev-table th,.monev-table td{border-bottom:1px solid var(--line);padding:12px 9px;vertical-align:top}
+.monev-table th{background:var(--surface-alt)}.monev-chip{display:inline-flex;border-radius:99px;background:var(--surface-alt);padding:4px 10px;font-size:.77rem;font-weight:750}
+.monev-layout{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:18px}
+.monev-box{padding:22px;border:1px solid var(--line);background:var(--surface);border-radius:16px;margin:14px 0}
+.monev-box h2{margin:0 0 12px;font-size:1.25rem}
+.monev-menu{display:grid;gap:7px}.monev-menu a{border:1px solid var(--line);border-radius:9px;padding:12px;text-decoration:none;font-weight:750}
+.monev-notice{font-size:.84rem;background:var(--surface-alt);padding:13px 16px;border-left:3px solid var(--gold);border-radius:0 10px 10px 0}
+@media(max-width:800px){.monev-layout{grid-template-columns:1fr}}
+@media(max-width:600px){.monev-fields{grid-template-columns:1fr}.monev-box{padding:16px}.monev-table{font-size:.75rem}.monev-table th,.monev-table td{padding:9px 5px}}
