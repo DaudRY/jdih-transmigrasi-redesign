@@ -26,6 +26,7 @@
 <link rel="stylesheet" href="assets/comfort-theme.css">
 <link rel="stylesheet" href="assets/portal-finish.css">
 <link rel="stylesheet" href="assets/portal-polish.css">
+<link rel="stylesheet" href="assets/monev-2026.css">
 <link rel="stylesheet" href="assets/portal-finish.css">
 <style>.ui-svg-icon{flex:0 0 auto;vertical-align:-3px}.menu-icon{display:inline-flex;align-items:center;margin-right:5px}</style>
 </head>
@@ -48,12 +49,16 @@
 <p class="panelintro">Data berasal dari halaman publik JDIH. Nilai yang tidak tersedia pada metadata sumber tidak dilengkapi melalui dugaan.</p>
 <dl class="meta-grid" id="metadatafields"></dl>
 <p id="source-status-note" class="notice" hidden></p>
+<div id="monev-specific-fields"></div>
 </section>
+<section class="panel" id="pendapat" aria-labelledby="pendapat-title">
+<h2 id="pendapat-title">Pendapat Anda</h2><p class="panelintro">Isi masukan dan penilaian atas dokumen ini. Draf dapat diunduh untuk pengujian; belum terhubung ke layanan pengaduan atau masukan resmi JDIH.</p>
+<form><div class="monev-fields"><label>Nama (opsional)<input name="name" maxlength="100" autocomplete="name"></label><label>Penilaian<select name="score" required><option value="">Pilih penilaian</option><option value="5">5 · Sangat membantu</option><option value="4">4 · Membantu</option><option value="3">3 · Cukup</option><option value="2">2 · Kurang</option><option value="1">1 · Tidak membantu</option></select></label><label class="full">Masukan Anda<textarea name="comment" required minlength="15" maxlength="3000" rows="5" placeholder="Tuliskan masukan terkait dokumen"></textarea></label></div><div class="monev-actions"><button class="btn" type="submit">Simpan Draf Masukan ↓</button></div><p class="monev-state" data-feedback-status role="status">Masukan belum dikirim ke sistem resmi.</p></form></section>
 <section class="panel" id="dokumen">
 <h2>Pratinjau dan unduh PDF resmi</h2>
 <p class="panelintro" id="pdf-summary">Berkas dari portal resmi JDIH. Salinan lokal tersedia jika validasi unduhan GitHub Pages berhasil.</p>
 <div id="pdf-status" class="notice" role="status">Memeriksa ketersediaan salinan PDF...</div>
-<div class="actions"><button type="button" id="load-preview" class="btn secondary">Muat pratinjau PDF</button><a id="download" class="btn" href="#" download>Unduh PDF</a><a id="verify-source" class="btn secondary" href="#" target="_blank" rel="noopener noreferrer">Verifikasi sumber ↗</a></div>
+<div class="actions"><button type="button" id="load-preview" class="btn secondary">Muat pratinjau PDF</button><a id="download" class="btn" href="#" download>Unduh PDF</a><a id="verify-source" class="btn secondary" href="#" target="_blank" rel="noopener noreferrer">Verifikasi sumber ↗</a><a href="#pendapat" class="btn secondary">Pendapat Anda ✎</a></div>
 <div class="preview"><div class="placeholder" id="preview-placeholder">Klik “Muat pratinjau PDF” untuk melihat dokumen resmi tanpa meninggalkan halaman ini.</div><iframe id="pdfpreview" title="Pratinjau dokumen PDF" loading="lazy" referrerpolicy="no-referrer" hidden></iframe></div>
 <p class="small">Salinan lokal, bila tersedia, identik dengan byte unduhan sumber pada waktu build dan memiliki catatan hash SHA-256. Jika PDF tidak dapat dimuat di perangkat Anda, gunakan tombol unduh. PDF bukan dokumen terjemahan.</p>
 </section>
@@ -71,6 +76,7 @@
 </div>
 <footer class="footer"><div class="wrap"><span>JDIH Kementerian Transmigrasi · Dokumen hukum</span><a href="./index.html">Kembali ke beranda ↑</a></div></footer>
 <script src="data/sampel-resmi.js"></script>
+<script src="data/monev-2026.js"></script>
 <script src="data/catalog-categories.js"></script>
 <script src="assets/menu-icons.js"></script>
 <script src="assets/site-preferences.js"></script>
@@ -90,10 +96,13 @@ const schema=d.recordType;
 const meta=[];
 const add=(label,value)=>meta.push({label,value:(value===undefined||value===null||value===""||value==="-")?null:String(value)});
 add("Jenis dokumen",d.label);
+if(document.getElementById("pendapat"))document.getElementById("pendapat").dataset.document=d.title;
 add("Judul",d.title);
 if(schema==="decision"){
+ add("Jenis Putusan",d.decisionType);
  add("T.E.U. Badan",d.courtAuthority);
  add("Nomor Putusan",d.number);
+ add("Tahun",d.year);
  add("Jenis Peradilan",d.courtType);
  add("Singkatan Jenis Peradilan",d.courtTypeAbbreviation);
  add("Tempat Peradilan",d.courtPlace);
@@ -182,4 +191,5 @@ configurePdf();
 window.JDIHPreferences?.translate();
 })();
 </script>
+<script src="assets/monev-feedback.js"></script>
 </body></html>
