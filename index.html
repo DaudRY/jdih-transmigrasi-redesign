@@ -12,8 +12,9 @@
 <link rel="stylesheet" href="assets/portal-polish.css">
 <link rel="stylesheet" href="assets/identitas-kementrans.css">
 <link rel="stylesheet" href="assets/beranda-2026.css">
+<link rel="stylesheet" href="assets/navigasi-dan-penelusuran.css">
 </head>
-<body class="home-page">
+<body class="home-page jdih-shell">
 <a class="skip" href="#main">Lewati ke konten utama</a>
 <div class="top">
   <div class="home-container">
@@ -195,6 +196,7 @@
 <script src="data/peraturan-2026.js"></script>
 <script src="assets/menu-icons.js"></script>
 <script src="assets/site-preferences.js"></script>
+<script src="assets/navigasi-seragam.js"></script>
 <script>
 (function(){
  "use strict";
@@ -210,13 +212,6 @@
    '<a class="home-doc-link" href="./detail.html?id='+encodeURIComponent(d.id)+'" data-en="Read Regulation →">Lihat peraturan →</a>';
   results.appendChild(card);
  }
- const nav=document.querySelector("#nav");
- const menu=document.querySelector("#menu");
- function closeMenu(){nav.classList.remove("open");menu.setAttribute("aria-expanded","false")}
- menu.addEventListener("click",()=>{const open=nav.classList.toggle("open");menu.setAttribute("aria-expanded",String(open))});
- document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeMenu();nav.querySelectorAll("details[open]").forEach(el=>el.removeAttribute("open"))}});
- nav.querySelectorAll("a").forEach(a=>a.addEventListener("click",closeMenu));
- document.addEventListener("click",e=>{if(!nav.contains(e.target)&&e.target!==menu&&!menu.contains(e.target))closeMenu()});
  const original=new WeakMap();
  function syncLanguage(){
   const en=window.JDIHPreferences?.language==="en";
