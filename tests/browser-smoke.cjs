@@ -7,7 +7,7 @@ const path=require("node:path");
 const http=require("node:http");
 const {chromium}=require("playwright");
 const root=path.resolve(__dirname,"..");
-const mime={".html":"text/html; charset=utf-8",".js":"application/javascript; charset=utf-8",".webp":"image/webp",".css":"text/css; charset=utf-8"};
+const mime={".html":"text/html; charset=utf-8",".js":"application/javascript; charset=utf-8",".webp":"image/webp",".png":"image/png",".css":"text/css; charset=utf-8"};
 const server=http.createServer((req,res)=>{
   try{
     let requestPath=new URL(req.url,"http://localhost").pathname;
@@ -49,11 +49,9 @@ async function run(){
      assert.ok(overflow<=2,"Overflow detail "+width+"px: "+overflow);
      assert.deepEqual(errors,[],"JavaScript error pada detail "+width+"px");
      await page.goto(origin+"/index.html",{waitUntil:"load"});
-     assert.equal(await page.locator("#results .doc").count(),4);
-     await page.locator("#number").fill("4");
-     assert.equal(await page.locator("#results .doc").count(),1);
-     await page.locator("#results .doc .detail-link").click();
-     assert.ok(page.url().includes("detail.html?id=4"));
+     assert.equal(await page.locator("#results .home-doc-card").count(),3,"Only three recent regulations on homepage");
+     await page.locator("#results .home-doc-card .home-doc-link").first().click();
+     assert.ok(page.url().includes("detail.html?id=4"),"Recent regulation must open the internal detail page");
      // Uji warna yang nyaman, mode malam, lokalisasi dan navigasi internal.
      const sitePage=page;
      await sitePage.goto(origin+"/index.html",{waitUntil:"load"});
@@ -113,6 +111,11 @@ async function run(){
      await sitePage.locator("#theme-toggle").click();
      assert.equal(await sitePage.locator("html").getAttribute("data-theme"),"day");
      await page.goto(origin+"/index.html",{waitUntil:"load"});
+     assert.equal(await page.locator(".home-section").count(),4,"Four middle sections plus hero and footer");
+     assert.equal(await page.locator("#results .home-doc-card").count(),3);
+     const mapLoaded=await page.locator(".home-map").evaluate(el=>el.complete&&el.naturalWidth>300);
+     assert.ok(mapLoaded,"User supplied transmigration map must load");
+     assert.ok(await page.locator('a[href="./struktur-organisasi.html"]').count()>=1,"Organization structure in homepage");
      await page.screenshot({path:path.join(output,"sprint2-day-home-"+width+".png"),fullPage:true});
      const homeOverflow=await page.evaluate(()=>document.documentElement.scrollWidth-window.innerWidth);
      assert.ok(homeOverflow<=2,"Overflow beranda "+width+"px: "+homeOverflow);
