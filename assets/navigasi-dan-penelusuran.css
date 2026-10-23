@@ -3,6 +3,18 @@
    Rujukan identitas visual: biru dan emas lambang Kementerian Transmigrasi. */
 
 .jdih-shell{min-width:0;overflow-x:clip;color:var(--ink);background:var(--paper)}
+.jdih-shell .top{background:#102d42!important;color:#edf4f8}
+.jdih-shell .top .home-container{
+ width:min(1180px,calc(100% - 48px));margin:auto;min-height:36px;
+ display:flex;align-items:center;justify-content:space-between;gap:14px;font-size:.75rem;
+}
+.jdih-shell .top .home-top-title{display:flex;align-items:center;gap:9px;font-weight:700}
+.jdih-shell .top .home-top-title img{
+ width:24px;height:24px;object-fit:contain;background:#fff;border-radius:50%;
+}
+.jdih-shell .top a{color:#f6f9fc!important;text-decoration:none}
+.jdih-shell .top a:hover{text-decoration:underline}
+
 .jdih-shell .mast{
   position:sticky!important;top:0!important;z-index:9999!important;
   background:var(--surface)!important;color:var(--ink)!important;
@@ -241,6 +253,9 @@ html[data-theme="night"] .search-page .catalog-head p{color:#e5f1f6!important}
  html[data-theme="night"] .jdih-shell .nav details[open]>.navmenu a{color:var(--ink)!important}
 }
 @media(max-width:650px){
+ .jdih-shell .top .home-container{width:calc(100% - 28px);font-size:.67rem}
+ .jdih-shell .top .home-top-links{display:none}
+
  .jdih-shell .mastin{width:calc(100% - 28px)!important}
  .jdih-shell .mastin>.brand{width:auto!important;max-width:calc(100vw - 125px)}
  .jdih-shell .brand img,.jdih-shell .brand .brand-mark{
