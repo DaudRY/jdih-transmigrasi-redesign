@@ -124,10 +124,11 @@
 <script src="assets/document-actions.js"></script>
 <script src="data/metadata-schemas.js"></script>
 <script src="data/peraturan-2026.js"></script>
+<script src="data/peraturan-terkait.js"></script>
 <script>
 (function(){
 "use strict";
-var data=Array.isArray(window.JDIH_DOCUMENTS)?window.JDIH_DOCUMENTS:[];
+var data=[...(Array.isArray(window.JDIH_DOCUMENTS)?window.JDIH_DOCUMENTS:[]),...(window.JDIH_RELATED_DOCUMENTS||[])];
 var params=new URLSearchParams(window.location.search);
 var id=params.get("id");
 var d=data.find(function(item){return item.id===id;});
@@ -258,8 +259,10 @@ data.filter(function(item){return item.id!==d.id;}).forEach(function(item){
  if(verified.length){
    verified.forEach(function(item){
      const a=document.createElement("a");
-     a.href=d.url;a.target="_blank";a.rel="noopener noreferrer";
-     a.textContent=item.kind+": "+item.title+" (periksa sumber resmi) ↗";
+     const relatedId=item.internalId||(item.title.includes("Nomor 10 Tahun 2025")?"10-2025":null);
+     a.href=relatedId?"./detail.html?id="+encodeURIComponent(relatedId):d.url;
+     if(!relatedId){a.target="_blank";a.rel="noopener noreferrer";}
+     a.textContent=item.kind+": "+item.title+(relatedId?" →":" (periksa sumber resmi) ↗");
      regulations.appendChild(a);
    });
  }else{appendText(regulations,"p","smallsrc","Belum ada hubungan antarperaturan yang tercantum pada data resmi yang diperiksa.");}
