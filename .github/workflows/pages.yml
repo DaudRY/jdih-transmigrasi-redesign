@@ -25,6 +25,18 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "22"
+      - name: Prepare transmigration map asset
+        run: |
+          curl -fLsS --retry 3 --retry-delay 2 --connect-timeout 15 --max-time 60 \
+            "https://transmigrasi.org/images/peta-kawasan.png" \
+            -o assets/peta-kawasan-transmigrasi.png
+          python3 - <<'PY'
+          from pathlib import Path
+          image = Path("assets/peta-kawasan-transmigrasi.png").read_bytes()
+          assert image[:8] == b"\\x89PNG\\r\\n\\x1a\\n", "Map file must be a valid PNG"
+          assert len(image) > 20000, "Map image is unexpectedly small"
+          print(f"Verified map background: {len(image):,} bytes")
+          PY
       - name: Verify metadata, navigation, assets and JavaScript
         run: node tests/sprint1.test.cjs
       - name: Audit internal navigation and page structure
@@ -52,7 +64,7 @@ jobs:
       - name: Prepare static site
         run: |
           mkdir -p _site
-          cp index.html detail.html katalog.html contoh.html laporan.html ruang.html telusur.html program-penyusunan.html _site/
+          cp index.html detail.html katalog.html contoh.html laporan.html ruang.html telusur.html program-penyusunan.html struktur-organisasi.html _site/
           cp -R assets data _site/
       - name: Download and verify public official PDF samples
         run: node scripts/salin-pdf-sampel.cjs
