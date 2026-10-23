@@ -141,6 +141,14 @@ Perubahan yang dapat diuji:
 
 **Batasan yang harus disebut saat laporan resmi:** proyek masih frontend peninjauan, bukan portal pemerintah yang sudah diluncurkan. Publikasi produksi memerlukan CMS/API resmi, validasi lengkap oleh Biro Hukum, pengujian perangkat iOS/Android langsung, keamanan, pemutakhiran koleksi, serta penerimaan Pusdatin.
 
+## Penyempurnaan antarmuka dan pedoman implementasi (23 Oktober 2026)
+
+Tampilan publik menggunakan komponen yang konsisten untuk beranda, katalog, hasil penelusuran, halaman detail, layanan dan dokumentasi. Lapisan `assets/portal-polish.css` melengkapi tema siang/malam dengan jarak antarkomponen yang seragam, kartu kategori intuitif, ikon SVG, keterbacaan, fokus keyboard dan ukuran area sentuh yang nyaman untuk gawai.
+
+Redaksi teknis yang tidak diperlukan oleh pengunjung dikurangi pada halaman publik, tetapi status integrasi dan batasan pengelolaan data tetap dicatat dalam dokumen pengembangan. Antarmuka ini menjadi **baseline untuk implementasi frontend**; integrasi backend, validasi koleksi penuh, keamanan dan uji perangkat fisik masih diperlukan sebelum dipakai sebagai situs resmi kementerian.
+
+**Pedoman developer:** [Spesifikasi Handoff UI/UX untuk Pusdatin](docs/handoff-uiux-pusdatin.md), meliputi peta halaman, standar tampilan, rancangan kontrak API, persyaratan aksesibilitas, pengujian lintas browser dan kriteria penerimaan sebelum go-live.
+
 ## Tahap pengembangan berikutnya
 
 Prioritaskan inventarisasi dan kelengkapan dokumen hukum lain, konsistensi metadata serta abstrak, model metadata berbeda untuk peraturan dan putusan, relasi peraturan yang tervalidasi, statistik dari sumber resmi, serta pengujian API/sinkronisasi dan aksesibilitas. Jangan menaruh token atau kunci API di frontend publik. Keputusan arsitektur backend harus dilakukan bersama pemilik sistem dan tim TI.
