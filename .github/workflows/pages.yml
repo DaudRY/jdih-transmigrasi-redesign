@@ -49,6 +49,8 @@ jobs:
         run: node tests/browser-smoke.cjs
       - name: Cross-browser test Chromium, Firefox and WebKit
         run: node tests/cross-browser.cjs
+      - name: Check dropdowns and palette between homepage and search
+        run: node tests/menu-palet-qa.cjs
       - name: QA day-night dropdowns and search palette across browsers
         run: node tests/menu-dan-warna-qa.cjs
       - name: Upload responsive test screenshots
