@@ -48,13 +48,66 @@ a{color:#24634f;text-underline-offset:3px}
 <link rel="stylesheet" href="assets/portal-finish.css">
 <link rel="stylesheet" href="assets/portal-polish.css">
 <link rel="stylesheet" href="assets/identitas-kementrans.css">
+<link rel="stylesheet" href="assets/navigasi-dan-penelusuran.css">
 </head>
-<body>
+<body class="search-page jdih-shell">
 <a href="#main" class="skip">Lewati ke hasil pencarian</a>
-<header class="mast"><div class="wrap mastin">
-<a class="brand" href="./index.html"><img src="assets/logo-jdih-globe.webp" alt=""><span><strong>JDIH Kementerian Transmigrasi</strong><small>Jaringan Dokumentasi dan Informasi Hukum</small></span></a>
-<nav class="nav" aria-label="Navigasi penelusuran"><a href="./index.html">Beranda</a><a href="./katalog.html?kategori=peraturan-menteri-transmigrasi">Katalog</a><a href="./ruang.html?bagian=faq">Panduan</a><a href="./laporan.html">Dokumen Pengembangan</a></nav>
-</div></header>
+<div class="top">
+  <div class="home-container">
+    <div class="home-top-title"><img src="assets/logo-kementrans-bulat.webp" alt=""> Kementerian Transmigrasi Republik Indonesia</div>
+    <div class="home-top-links"><a href="https://jdihn.go.id/" target="_blank" rel="noopener noreferrer">JDIHN Nasional ↗</a></div>
+  </div>
+</div>
+<header class="mast">
+ <div class="mastin">
+  <a class="brand" href="./index.html#beranda" aria-label="Beranda JDIH Kementerian Transmigrasi">
+   <img class="brand-mark" src="assets/logo-kementrans-bulat.webp" alt="">
+   <span><strong>JDIH Kementerian Transmigrasi</strong><small>Jaringan Dokumentasi dan Informasi Hukum</small></span>
+  </a>
+  <nav class="nav" id="nav" aria-label="Navigasi utama">
+   <a href="./index.html#beranda" data-en="Home">Beranda</a>
+   <a href="./telusur.html" data-en="Search Documents">Penelusuran</a>
+   <details class="navgroup">
+    <summary data-en="Legal Documents">Dokumen Hukum</summary>
+    <div class="navmenu">
+     <a href="./katalog.html?kategori=peraturan-menteri-transmigrasi" data-en="Ministerial Regulations">Peraturan Menteri</a>
+     <a href="./katalog.html?kategori=keputusan-menteri-transmigrasi" data-en="Ministerial Decisions">Keputusan Menteri</a>
+     <a href="./katalog.html?kategori=monographs" data-en="Legal Monographs">Monografi Hukum</a>
+     <a href="./katalog.html?kategori=book" data-en="Legal Articles">Artikel Hukum</a>
+     <a href="./katalog.html?kategori=putusan-pengadilanyurisprudensi" data-en="Court Decisions">Putusan Pengadilan</a>
+    </div>
+   </details>
+   <details class="navgroup">
+    <summary data-en="Regulation Drafting">Pembentukan PUU</summary>
+    <div class="navmenu">
+     <a href="./program-penyusunan.html" data-en="Drafting Program">Program Penyusunan</a>
+     <a href="./katalog.html?kategori=rancangan-peraturan" data-en="Draft Regulations">Rancangan Peraturan</a>
+     <a href="./katalog.html?kategori=naskah-urgensi" data-en="Urgency Papers">Naskah Urgensi</a>
+     <a href="./katalog.html?kategori=naskah-akademik" data-en="Academic Papers">Naskah Akademik</a>
+     <a href="./katalog.html?kategori=risalah-harmonisasi" data-en="Discussion Minutes">Risalah Pembahasan</a>
+     <a href="./katalog.html?kategori=analisis-evaluasi" data-en="Legal Analysis and Evaluation">Analisis dan Evaluasi</a>
+    </div>
+   </details>
+   <details class="navgroup">
+    <summary data-en="Profile">Profil</summary>
+    <div class="navmenu">
+     <a href="./struktur-organisasi.html" data-en="Organizational Structure">Struktur Organisasi</a>
+     <a href="./ruang.html?bagian=profil" data-en="About JDIH">Tentang JDIH</a>
+     <a href="./ruang.html?bagian=dasar-hukum" data-en="Legal Basis">Dasar Hukum</a>
+    </div>
+   </details>
+   <details class="navgroup">
+    <summary data-en="Services">Layanan</summary>
+    <div class="navmenu">
+     <a href="./ruang.html?bagian=faq" data-en="Help and FAQ">Panduan dan FAQ</a>
+     <a href="./ruang.html?bagian=kontak" data-en="Contact">Kontak</a>
+     <a href="./ruang.html?bagian=survei" data-en="Satisfaction Survey">Survei Kepuasan</a>
+    </div>
+   </details>
+  </nav>
+  <button class="menu" id="menu" type="button" aria-expanded="false" aria-controls="nav">☰ <span data-en="Menu">Menu</span></button>
+ </div>
+</header>
 <section class="catalog-head"><div class="wrap">
 <nav class="breadcrumb" aria-label="Lokasi halaman"><a href="./index.html">Beranda</a><span aria-hidden="true">›</span><span>Penelusuran Dokumen</span></nav>
 <h1>Penelusuran Dokumen Hukum</h1><p>Cari peraturan, keputusan, dokumen pembentukan, dan putusan berdasarkan informasi dokumen yang tersedia.</p>
@@ -78,12 +131,13 @@ a{color:#24634f;text-underline-offset:3px}
 <div id="noresults" class="noresults" hidden><h2>Dokumen tidak ditemukan</h2><p>Periksa kata kunci atau gunakan kelompok dokumen lain.</p><button class="btn secondary" type="button" id="noresults-reset">Tampilkan semua dokumen</button></div>
 <div class="footnote">Katalog menampilkan data dan salinan PDF yang bersumber dari JDIH Kementerian Transmigrasi. Cakupan seluruh koleksi dan pemutakhiran otomatis memerlukan integrasi sistem.</div>
 </div></main>
-<footer class="footer"><div class="wrap"><span>JDIH Kementerian Transmigrasi</span><a href="./laporan.html">Informasi sumber data dan pengembangan sistem</a></div></footer>
+<footer class="footer"><div class="wrap"><span>JDIH Kementerian Transmigrasi</span><a href="./laporan.html">Dokumentasi Layanan</a></div></footer>
 <script src="data/peraturan-2026.js"></script>
 <script src="data/sampel-resmi.js"></script>
 <script src="data/catalog-categories.js"></script>
 <script src="assets/menu-icons.js"></script>
 <script src="assets/site-preferences.js"></script>
+<script src="assets/navigasi-seragam.js"></script>
 <script>
 (function(){
 "use strict";
