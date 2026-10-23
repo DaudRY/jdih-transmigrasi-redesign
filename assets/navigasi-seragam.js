@@ -27,6 +27,9 @@ function init(){
    if(!open)closeGroups();
  });
  groups.forEach(group=>{
+   // Jalankan sebelum aksi native <summary>, tidak menunggu event toggle asinkron.
+   const summary=group.querySelector("summary");
+   if(summary)summary.addEventListener("click",()=>closeGroups(group),{capture:true});
    group.addEventListener("toggle",()=>{if(group.open)closeGroups(group);});
  });
  nav.querySelectorAll("a").forEach(a=>{
