@@ -82,8 +82,8 @@ for(const d of docs.slice(1))assert.equal(d.relations.length,0,"Tidak mengarang 
 assert.ok(home.includes('<script src="data/peraturan-2026.js"></script>'));
 assert.ok(detail.includes('<script src="data/peraturan-2026.js"></script>'));
 assert.ok(home.includes('const docs=Array.isArray(window.JDIH_DOCUMENTS)'));
-assert.ok(home.includes('href="./detail.html?id='+String.fromCharCode(36)+'{encodeURIComponent(d.id)}"'));
-for(const id of ["koleksi","pembentukan","kategori-lengkap","program-5t","layanan-portal","fitur-tambahan","statistik","dialog"]){
+assert.ok(home.includes('href="./detail.html?id='+String.fromCharCode(36)+'{encodeURIComponent(d.id)}"')||home.includes("./detail.html?id='+encodeURIComponent(d.id)"),"Internal detail links from recent regulations");
+for(const id of ["beranda","heroform","heroquery","akses-cepat","koleksi","struktur","layanan","footer","results"]){
   assert.ok(home.includes('id="'+id+'"'),"Komponen eksisting tetap ada: "+id);
 }
 for(const id of ["metadata","metadatafields","abstrak","abstractpoints","relasi","relations","dokumen","pdfpreview","sumber","notfound"]){
@@ -96,7 +96,12 @@ assert.ok(detail.includes('$("#preview-abstract").addEventListener("click"'));
 assert.ok(detail.includes('Belum tercantum pada metadata resmi'));
 assert.ok(detail.includes('Daftar navigasi berikut bukan daftar peraturan terkait secara hukum.'));
 assert.ok(detail.includes('@media(max-width:900px)')&&detail.includes('@media(max-width:640px)')&&detail.includes('@media(max-width:390px)'));
-assert.ok(home.includes('@media(max-width:650px)'));
+assert.ok(home.includes('assets/beranda-2026.css'));
+assert.ok(read('assets/beranda-2026.css').includes('@media(max-width:650px)'));
+assert.ok(home.includes('assets/peta-kawasan-transmigrasi.png'));
+assert.ok(home.includes('assets/identitas-kementrans.css'));
+assert.ok(home.includes('struktur-organisasi.html'));
+assert.ok(fs.existsSync(path.join(root,'struktur-organisasi.html')));
 for(const asset of ["assets/logo-jdih-globe.webp","assets/logo-kementrans-bulat.webp"]){
   assert.ok(fs.existsSync(path.join(root,asset)),"Logo harus tersedia: "+asset);
 }
