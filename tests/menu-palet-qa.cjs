@@ -84,9 +84,9 @@ async function testBrowser(name,browserType,origin){
      const searchNav=page.locator("#nav");
      assert.equal(await searchNav.locator("details.navgroup").count(),4,label+" same menu on search");
      const bg=await page.locator(".catalog-head").evaluate(el=>getComputedStyle(el).backgroundImage);
-     const match=bg.match(/rgb\\((\\d+),\\s*(\\d+),\\s*(\\d+)\\)/);
+     const match=bg.match(/rgb\(([^)]+)\)/);
      assert.ok(bg.includes("linear-gradient")&&match,label+" search gradient exists: "+bg);
-     const [red,green,blue]=match.slice(1).map(Number);
+     const [red,green,blue]=match[1].split(",").slice(0,3).map(x=>Number(x.trim()));
      assert.ok(blue>green&&green>red,label+" navy-blue palette, not green: "+bg);
      const searchBoxColor=await page.locator(".searchpanel").evaluate(el=>getComputedStyle(el).backgroundColor);
      assert.notEqual(searchBoxColor,"rgb(255, 255, 255)",label+" soft card palette");
