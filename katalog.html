@@ -93,7 +93,7 @@ a{color:#185e4e;text-underline-offset:3px}a:focus-visible,button:focus-visible,s
 <p id="catalog-empty-help">Pilih kategori lain atau lanjutkan penelusuran dokumen.</p>
 </div>
 <div id="source-panel" class="page-notice" hidden></div>
-<section id="monev-fields-panel" class="monev-box" hidden><h2>Struktur Metadata Dokumen</h2><p class="small">Kolom yang dibutuhkan untuk pengelolaan kategori ini. Data diisi setelah dokumen sumber tersedia.</p><div id="monev-fields-list" class="monev-fields"></div></section>
+<section id="monev-fields-panel" class="monev-box" hidden><h2>Struktur Metadata Dokumen</h2><p class="small">Kolom yang dibutuhkan untuk pengelolaan kategori ini. Data diisi setelah dokumen sumber tersedia.</p><div id="monev-required" class="monev-related"></div><div id="monev-fields-list" class="monev-fields"></div></section>
 </section>
 <aside class="catalogsidebar" aria-labelledby="catalog-sidebar-heading">
 <h3 id="catalog-sidebar-heading">Semua kategori</h3>
@@ -213,6 +213,13 @@ function showMonevFields(){
  const panel=$("#monev-fields-panel");
  if(!fields){panel.hidden=true;return;}
  panel.hidden=false;
+ const required=$("#monev-required");
+ required.textContent="";
+ if(key==="minutes"){
+  const label=document.createElement("p");
+  label.textContent="Dokumen yang diperlukan: Undangan Harmonisasi dan Laporan Rapat Harmonisasi.";
+  required.appendChild(label);
+ }
  const list=$("#monev-fields-list");list.textContent="";
  for(const [name] of fields){
    const label=document.createElement("label");
