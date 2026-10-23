@@ -33,7 +33,7 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           image = Path("assets/peta-kawasan-transmigrasi.png").read_bytes()
-          assert image[:8] == b"\\x89PNG\\r\\n\\x1a\\n", "Map file must be a valid PNG"
+          assert image[:4] == bytes([137, 80, 78, 71]), "Map file must be a valid PNG"
           assert len(image) > 20000, "Map image is unexpectedly small"
           print(f"Verified map background: {len(image):,} bytes")
           PY
