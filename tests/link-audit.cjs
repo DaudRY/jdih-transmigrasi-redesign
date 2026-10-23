@@ -17,6 +17,7 @@ for(const [name,text] of Object.entries(all)){
  assert.match(text,/<meta name="viewport"/,"Responsive viewport missing: "+name);
  assert.ok(text.includes("assets/comfort-theme.css"),"Comfort palette missing: "+name);
  assert.ok(text.includes("assets/portal-finish.css"),"Shared design system missing: "+name);
+ assert.ok(text.includes("assets/portal-polish.css"),"Final responsive UI layer missing: "+name);
  assert.ok(text.includes("assets/site-preferences.js"),"Language/theme missing: "+name);
  const beforeScripts=text.slice(0,text.indexOf("<script src=")>0?text.indexOf("<script src="):text.length);
  const attrs=[...beforeScripts.matchAll(/\b(?:href|src)="([^"]+)"/g)].map(x=>x[1]);
