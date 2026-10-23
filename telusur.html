@@ -212,13 +212,28 @@ function syncUrl(){
  const url=location.pathname+(p.toString()?"?"+p.toString():"");
  history.replaceState(null,"",url);
 }
+function matchesKeyword(d,q){
+ if(!q)return true;
+ const haystack=[d.title,d.summary,d.number,d.year,d.label,d.category].join(" ").toLocaleLowerCase("id-ID");
+ if(haystack.includes(q))return true;
+ const shortTerms={
+  permen:"peraturan menteri",
+  kepmen:"keputusan menteri",
+  perpres:"peraturan presiden",
+  keppres:"keputusan presiden",
+  perppu:"peraturan pemerintah pengganti undang-undang",
+  inpres:"instruksi presiden"
+ };
+ const expanded=q.replace(/\b(permen|kepmen|perpres|keppres|perppu|inpres)\b/g,k=>shortTerms[k]);
+ return expanded!==q&&haystack.includes(expanded);
+}
 function render(){
  const locale=preference();
  const q=current.q.trim().toLocaleLowerCase("id-ID");
  let result=docs.filter(d=>(current.group==="all"||d.group===current.group)&&
   (current.year==="all"||String(d.year)===current.year)&&
   (!current.number||String(d.number||"").toLowerCase().includes(current.number.toLowerCase()))&&
-  (!q||[d.title,d.summary,d.number,d.year,d.label,d.category].join(" ").toLocaleLowerCase("id-ID").includes(q)));
+  matchesKeyword(d,q));
  result.sort((a,b)=>{
   if(current.sort==="oldest")return a.year-b.year||a.title.localeCompare(b.title);
   if(current.sort==="title")return a.title.localeCompare(b.title,"id");
