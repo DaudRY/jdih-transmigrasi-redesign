@@ -31,6 +31,7 @@
 <link rel="stylesheet" href="assets/comfort-theme.css">
 <link rel="stylesheet" href="assets/portal-finish.css">
 <link rel="stylesheet" href="assets/portal-polish.css">
+<link rel="stylesheet" href="assets/monev-2026.css">
 <link rel="stylesheet" href="assets/portal-finish.css">
 </head>
 <body>
@@ -59,9 +60,9 @@
       <div class="info" id="dateinfo"></div>
     </section>
     <section class="panel" id="abstrak" aria-labelledby="abstrakheading">
-      <h2 id="abstrakheading">Abstrak dan ringkasan dokumen</h2>
+      <h2 id="abstrakheading">Abstrak Peraturan</h2>
       <p class="panelintro" id="abstractintroduction"></p>
-      <div id="abstractstructure" class="abstract-structure"></div>
+      <div id="abstractstructure" class="abstract-structure" hidden></div>
       <h3 id="abstractpointstitle">Ikhtisar isi yang telah diperiksa</h3>
       <ul class="abstract-list" id="abstractpoints"></ul>
       <p><a id="abstractcta" class="inline-link" href="#" target="_blank" rel="noopener noreferrer">Baca abstrak resmi selengkapnya (PDF) ↗</a></p>
@@ -71,7 +72,9 @@
       <h2 id="relasiheading">Status dan hubungan antarperaturan</h2>
       <p class="panelintro" id="relationintro">Hubungan hukum hanya ditampilkan jika dinyatakan pada keterangan status atau catatan abstrak resmi, bukan berdasarkan kemiripan judul.</p>
       <div class="proof" id="statusproof">● <span id="statusdetail"></span></div>
-      <div id="relations"></div>
+      <h3>Peraturan terkait</h3><div id="regulations-related" class="monev-related"></div>
+      <h3>Dokumen terkait</h3><div id="formation-related" class="monev-related"></div>
+      <div id="relations" hidden></div>
       <p class="smallsrc" id="relationnote">Peraturan pelaksanaan dan dokumen terkait lainnya memerlukan metadata yang diverifikasi lebih lanjut. Daftar rekomendasi otomatis di portal resmi tidak dianggap sebagai bukti hubungan hukum.</p>
     </section>
     <section class="panel" id="dokumen" aria-labelledby="pdfheading">
@@ -80,7 +83,8 @@
       <div class="doc-actions">
         <button class="btn secondary" type="button" id="preview-regulation">Muat pratinjau naskah</button>
         <button class="btn subtle" type="button" id="preview-abstract">Muat pratinjau abstrak</button>
-        <a id="pdfexternal" class="btn subtle" href="#" target="_blank" rel="noopener noreferrer">Buka PDF di tab baru ↗</a>
+        <a id="pdfexternal" class="btn subtle" href="#" target="_blank" rel="noopener noreferrer">Unduh / Buka Naskah PDF ↗</a>
+        <a class="btn subtle" href="#pendapat">Pendapat Anda ✎</a>
       </div>
       <div class="pdfshell">
         <div id="preview-placeholder" class="pdfplaceholder"><p>Pilih jenis pratinjau di atas. Untuk dokumen berukuran besar atau ketika pratinjau gagal tampil, gunakan tautan <strong>Buka PDF di tab baru</strong> atau halaman JDIH resmi.</p></div>
@@ -90,6 +94,14 @@
       <p class="smallsrc">PDF bersumber dari JDIH Kementerian Transmigrasi. Jika pratinjau tidak tampil, gunakan tombol unduh atau buka PDF.</p>
     </section>
   </div>
+<section class="panel" id="pendapat" aria-labelledby="pendapat-title">
+<h2 id="pendapat-title">Pendapat Anda</h2>
+<p class="panelintro">Sampaikan penilaian dan masukan terhadap peraturan. Untuk tahap pengujian, masukan dapat diunduh sebagai draf. Pengiriman kepada pengelola JDIH memerlukan integrasi layanan resmi.</p>
+<form><div class="monev-fields"><label>Nama (opsional)<input name="name" maxlength="100" autocomplete="name" placeholder="Nama pengirim"></label>
+<label>Penilaian terhadap peraturan<select name="score" required><option value="">Pilih penilaian</option><option value="5">5 · Sangat membantu</option><option value="4">4 · Membantu</option><option value="3">3 · Cukup</option><option value="2">2 · Kurang</option><option value="1">1 · Tidak membantu</option></select></label>
+<label class="full">Masukan Anda<textarea name="comment" required minlength="15" maxlength="3000" rows="5" placeholder="Tuliskan masukan yang berkaitan dengan dokumen ini"></textarea></label></div>
+<div class="monev-actions"><button class="btn primary" type="submit">Simpan Draf Masukan ↓</button></div>
+<p class="monev-state" data-feedback-status role="status">Draf ini tidak dikirim ke server atau database resmi.</p></form></section>
   <aside class="sidecol" aria-label="Informasi tambahan">
     <section class="panel" id="sumber">
       <h2>Informasi sumber dokumen</h2>
@@ -237,6 +249,22 @@ data.filter(function(item){return item.id!==d.id;}).forEach(function(item){
  var a=document.createElement("a");a.href="./detail.html?id="+encodeURIComponent(item.id);a.textContent=item.subject+" ↗";box.appendChild(a);
  $("#otherdocs").appendChild(box);
 });
+
+// Monev 2026: hubungan antarperaturan hanya menggunakan sumber yang dikonfirmasi.
+(function(){
+ const regulations=$("#regulations-related"),formation=$("#formation-related");
+ const verified=(d.relations||[]).filter(x=>x.kind&&x.title);
+ if(verified.length){
+   verified.forEach(function(item){
+     const a=document.createElement("a");
+     a.href=d.url;a.target="_blank";a.rel="noopener noreferrer";
+     a.textContent=item.kind+": "+item.title+" (periksa sumber resmi) ↗";
+     regulations.appendChild(a);
+   });
+ }else{appendText(regulations,"p","smallsrc","Belum ada hubungan antarperaturan yang tercantum pada data resmi yang diperiksa.");}
+ appendText(formation,"p","smallsrc","Belum ada keterkaitan dokumen pembentukan yang dapat dikonfirmasi untuk peraturan ini.");
+ const feedback=$("#pendapat");if(feedback)feedback.dataset.document=d.title;
+})();
 var preview=$("#pdfpreview"),hint=$("#preview-placeholder"),label=$("#preview-label");
 function loadPreview(url,title){
  const validRemote=/^https:\/\/jdih\.transmigrasi\.go\.id\/public\/documents\/[^?#]+\.pdf(\?[^#]*)?$/.test(url||"");
@@ -275,5 +303,6 @@ if(d.id==="4"){
 window.JDIHPreferences?.translate();
 })();
 </script>
+<script src="assets/monev-feedback.js"></script>
 </body>
 </html>
