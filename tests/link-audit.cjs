@@ -5,7 +5,7 @@ const path=require("node:path");
 const assert=require("node:assert/strict");
 const vm=require("node:vm");
 const root=path.resolve(__dirname,"..");
-const pages=["index.html","katalog.html","telusur.html","detail.html","contoh.html","ruang.html","laporan.html","program-penyusunan.html"];
+const pages=["index.html","katalog.html","telusur.html","detail.html","contoh.html","ruang.html","laporan.html","program-penyusunan.html","struktur-organisasi.html"];
 const all={};
 for(const page of pages)all[page]=fs.readFileSync(path.join(root,page),"utf8");
 const ctx={window:{}};
@@ -18,6 +18,7 @@ for(const [name,text] of Object.entries(all)){
  assert.ok(text.includes("assets/comfort-theme.css"),"Comfort palette missing: "+name);
  assert.ok(text.includes("assets/portal-finish.css"),"Shared design system missing: "+name);
  assert.ok(text.includes("assets/portal-polish.css"),"Final responsive UI layer missing: "+name);
+ assert.ok(text.includes("assets/identitas-kementrans.css"),"Ministry palette missing: "+name);
  assert.ok(text.includes("assets/site-preferences.js"),"Language/theme missing: "+name);
  const beforeScripts=text.slice(0,text.indexOf("<script src=")>0?text.indexOf("<script src="):text.length);
  const attrs=[...beforeScripts.matchAll(/\b(?:href|src)="([^"]+)"/g)].map(x=>x[1]);
