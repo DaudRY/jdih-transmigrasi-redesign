@@ -67,3 +67,30 @@ input,select,textarea,.field input,.field select,.catalogfilter input,.catalogfi
 input::placeholder,textarea::placeholder{color:var(--muted);opacity:.85}
 ::selection{background:#d7af6c;color:#16364a}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+
+/* Perbaikan global: hapus gradasi hijau peninggalan desain lama
+   pada setiap halaman turunan, bukan hanya pada beranda. */
+.catalog-head,.hero-report,.head{
+ background:linear-gradient(115deg,#14394f 0%,#1e536d 57%,#2e7593 100%)!important;
+ color:#fff!important;
+}
+html[data-theme="night"] .catalog-head,
+html[data-theme="night"] .hero-report,
+html[data-theme="night"] .head{
+ background:linear-gradient(115deg,#091d2d 0%,#15354a 68%,#1b465d 100%)!important;
+ color:#fff!important;
+}
+.catalog-head h1,.catalog-head a,.hero-report h1,.head h1{color:#fff!important}
+.catalog-head p,.hero-report p,.head p{color:#e4f0f5!important}
+.catalog-head .breadcrumb,.catalog-head .breadcrumb a{color:#f3f8fd!important}
+.navmenu a,.categorylink{color:var(--ink)}
+.groupnav .active,.categorylink.active{color:var(--green2)!important}
+.btn.secondary,.btn.subtle,.btn.reset{
+ background:var(--surface-alt)!important;
+ color:var(--ink)!important;border-color:var(--line)!important;
+}
+html[data-theme="night"] .btn.secondary,
+html[data-theme="night"] .btn.subtle,
+html[data-theme="night"] .btn.reset{
+ background:#294a5d!important;color:#eaf3f6!important;border-color:#46687b!important;
+}
