@@ -293,7 +293,7 @@ function updateTheme(){
    b.innerHTML='<span class="theme-indicator" aria-hidden="true">'+(theme==="night"?"☀️":"🌙")+'</span> '+(theme==="night"?(lang==="en"?"Day mode":"Mode siang"):(lang==="en"?"Night mode":"Mode malam"));
  }
  const m=document.querySelector('meta[name="theme-color"]');
- if(m)m.content=theme==="night"?"#132326":"#dce6dc";
+ if(m)m.content=theme==="night"?"#101f2c":"#e8eff2";
 }
 function changeTheme(){
  theme=theme==="night"?"day":"night";
