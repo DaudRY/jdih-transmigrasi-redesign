@@ -37,6 +37,7 @@ a{color:#185e4e;text-underline-offset:3px}a:focus-visible,button:focus-visible,s
 <link rel="stylesheet" href="assets/comfort-theme.css">
 <link rel="stylesheet" href="assets/portal-finish.css">
 <link rel="stylesheet" href="assets/portal-polish.css">
+<link rel="stylesheet" href="assets/monev-2026.css">
 <link rel="stylesheet" href="assets/portal-finish.css">
 
 <style>
@@ -92,6 +93,7 @@ a{color:#185e4e;text-underline-offset:3px}a:focus-visible,button:focus-visible,s
 <p id="catalog-empty-help">Pilih kategori lain atau lanjutkan penelusuran dokumen.</p>
 </div>
 <div id="source-panel" class="page-notice" hidden></div>
+<section id="monev-fields-panel" class="monev-box" hidden><h2>Struktur Metadata Dokumen</h2><p class="small">Kolom yang dibutuhkan untuk pengelolaan kategori ini. Data diisi setelah dokumen sumber tersedia.</p><div id="monev-fields-list" class="monev-fields"></div></section>
 </section>
 <aside class="catalogsidebar" aria-labelledby="catalog-sidebar-heading">
 <h3 id="catalog-sidebar-heading">Semua kategori</h3>
@@ -105,6 +107,7 @@ a{color:#185e4e;text-underline-offset:3px}a:focus-visible,button:focus-visible,s
 <script src="data/catalog-categories.js"></script>
 <script src="data/peraturan-2026.js"></script>
 <script src="data/sampel-resmi.js"></script>
+<script src="data/monev-2026.js"></script>
 <script src="assets/menu-icons.js"></script>
 <script src="assets/menu-icons.js"></script>
 <script src="assets/site-preferences.js"></script>
@@ -123,7 +126,7 @@ const active=catalogs.find(c=>c.slug===slug)||catalogs[0];
 let manifest=null;
 const lang=()=>window.JDIHPreferences?.language||"id";
 const tr=(id,en)=>lang()==="en"?en:id;
-const href=c=>"./katalog.html?kategori="+encodeURIComponent(c.slug);
+const href=c=>c.slug==="program-penyusunan"?"./program-penyusunan.html":"./katalog.html?kategori="+encodeURIComponent(c.slug);
 const icon=slug=>window.JDIHIcons?.svg(window.JDIHIcons.category(slug),16)||"";
 function recordsForCategory(){
  if(active.slug==="peraturan-menteri-transmigrasi"){
@@ -204,6 +207,21 @@ function showRecords(){
  }
  window.JDIHPreferences?.translate();
 }
+function showMonevFields(){
+ const mapping={"risalah-harmonisasi":"minutes","kajian-penelitian":"study","naskah-akademik":"academic","putusan-pengadilanyurisprudensi":"court"};
+ const key=mapping[active.slug],fields=window.JDIH_MONEV_METADATA?.[key];
+ const panel=$("#monev-fields-panel");
+ if(!fields){panel.hidden=true;return;}
+ panel.hidden=false;
+ const list=$("#monev-fields-list");list.textContent="";
+ for(const [name] of fields){
+   const label=document.createElement("label");
+   label.textContent=name;
+   const input=document.createElement("input");
+   input.type="text";input.disabled=true;input.placeholder="Diisi dari dokumen resmi";
+   label.appendChild(input);list.appendChild(label);
+ }
+}
 function setHeader(){
  const title=tr(active.title,active.titleEn);
  $("#catalog-heading").textContent=title;
@@ -228,7 +246,7 @@ function setHeader(){
    esc(tr("Data yang tampil diperiksa terhadap rujukan resmi pada 19 Oktober 2026.","Displayed documents were checked against official sources on 19 October 2026."));
  }else src.hidden=true;
 }
-function renderAll(){renderNavigation();setHeader();showRecords()}
+function renderAll(){renderNavigation();setHeader();showMonevFields();showRecords()}
 $("#catalog-form").addEventListener("submit",e=>{e.preventDefault();showRecords()});
 $("#catalog-query").addEventListener("input",showRecords);
 $("#catalog-year").addEventListener("change",showRecords);
