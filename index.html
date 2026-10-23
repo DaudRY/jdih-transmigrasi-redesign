@@ -222,7 +222,15 @@
   const en=window.JDIHPreferences?.language==="en";
   document.querySelectorAll("[data-en]").forEach(el=>{
    if(!original.has(el))original.set(el,el.textContent);
-   el.textContent=en?el.getAttribute("data-en"):original.get(el);
+   const value=en?el.getAttribute("data-en"):original.get(el);
+   const icon=el.querySelector(".menu-icon");
+   if(icon){
+    const node=Array.from(el.childNodes).find(n=>n.nodeType===Node.TEXT_NODE);
+    if(node)node.nodeValue=" "+value;
+    else el.appendChild(document.createTextNode(" "+value));
+   }else{
+    el.textContent=value;
+   }
   });
   const input=document.querySelector("#heroquery");
   if(input)input.placeholder=en?input.dataset.placeholderEn:"Contoh: transmigrasi, peraturan nomor 4";
