@@ -52,7 +52,7 @@ jobs:
       - name: Prepare static site
         run: |
           mkdir -p _site
-          cp index.html detail.html katalog.html contoh.html laporan.html ruang.html telusur.html _site/
+          cp index.html detail.html katalog.html contoh.html laporan.html ruang.html telusur.html program-penyusunan.html _site/
           cp -R assets data _site/
       - name: Download and verify public official PDF samples
         run: node scripts/salin-pdf-sampel.cjs
