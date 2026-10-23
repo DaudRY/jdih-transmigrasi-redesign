@@ -6,7 +6,7 @@ const path=require("node:path");
 const http=require("node:http");
 const {chromium,firefox,webkit}=require("playwright");
 const root=path.resolve(__dirname,"..");
-const types={".html":"text/html; charset=utf-8",".js":"application/javascript; charset=utf-8",".css":"text/css; charset=utf-8",".webp":"image/webp",".pdf":"application/pdf",".json":"application/json"};
+const types={".html":"text/html; charset=utf-8",".js":"application/javascript; charset=utf-8",".css":"text/css; charset=utf-8",".webp":"image/webp",".png":"image/png",".pdf":"application/pdf",".json":"application/json"};
 const server=http.createServer((req,res)=>{
  try{
   const p=decodeURIComponent(new URL(req.url,"http://localhost").pathname);
@@ -28,8 +28,9 @@ async function test(name,engine,origin){
    await page.route("https://jdih.transmigrasi.go.id/**",route=>route.abort());
    await page.goto(origin+"/index.html",{waitUntil:"load"});
    await page.locator("#theme-toggle").waitFor();
-   assert.equal(await page.locator("#results .doc").count(),4,name+"/"+width+": homepage cards");
+   assert.equal(await page.locator("#results .home-doc-card").count(),3,name+"/"+width+": concise latest regulations");
    assert.equal(await page.locator(".quick a .qicon svg").count(),4,name+"/"+width+": four category icons");
+   assert.ok(await page.locator(".home-map").evaluate(img=>img.complete&&img.naturalWidth>300),name+"/"+width+": map hero image must load");
    const overflow=await page.evaluate(()=>Math.round(document.documentElement.scrollWidth-window.innerWidth));
    assert.ok(overflow<=3,name+"/"+width+": home overflow "+overflow+"px");
    assert.equal(await page.locator("a.skip").count(),1,name+"/"+width+": skip link");
