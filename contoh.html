@@ -25,6 +25,7 @@
 </style>
 <link rel="stylesheet" href="assets/comfort-theme.css">
 <link rel="stylesheet" href="assets/portal-finish.css">
+<link rel="stylesheet" href="assets/portal-polish.css">
 <link rel="stylesheet" href="assets/portal-finish.css">
 <style>.ui-svg-icon{flex:0 0 auto;vertical-align:-3px}.menu-icon{display:inline-flex;align-items:center;margin-right:5px}</style>
 </head>
@@ -36,8 +37,8 @@
 <div id="notfound" class="wrap panel" hidden><h1>Dokumen tidak ditemukan</h1><p>Dokumen tidak ditemukan dalam daftar pilihan. Kembali ke katalog untuk memilih dokumen.</p><a href="./katalog.html?kategori=peraturan-menteri-transmigrasi">Kembali ke katalog</a></div>
 <div id="detailpage" hidden>
 <section class="catalog-head"><div class="wrap">
-<nav class="breadcrumb" aria-label="Lokasi"><a href="./index.html">Beranda</a><span>›</span><a id="breadcrumb-category" href="./katalog.html">Katalog</a><span>›</span><span>Contoh dokumen</span></nav>
-<p style="margin-top:15px"><span class="tag" id="sample-tag">Contoh dokumen terverifikasi</span></p>
+<nav class="breadcrumb" aria-label="Lokasi"><a href="./index.html">Beranda</a><span>›</span><a id="breadcrumb-category" href="./katalog.html">Katalog</a><span>›</span><span>Detail dokumen</span></nav>
+<p style="margin-top:15px"><span class="tag" id="sample-tag">Dokumen hukum</span></p>
 <h1 id="doc-title"></h1><p id="doc-summary"></p>
 </div></section>
 <main id="main" class="content"><div class="wrap layout">
@@ -132,7 +133,7 @@ function text(parent,tag,cls,string){
 $("#doc-title").textContent=d.title;
 $("#doc-summary").textContent=d.summary||"";
 const ic=window.JDIHIcons?.svg(window.JDIHIcons.category(d.category),17)||"";
-$("#sample-tag").innerHTML=ic+' <span>Contoh '+(d.label||"dokumen")+'</span>';
+$("#sample-tag").innerHTML=ic+' <span>Dokumen '+(d.label||"hukum")+'</span>';
 $("#breadcrumb-category").textContent=active?.title||"Katalog";
 $("#breadcrumb-category").href="./katalog.html?kategori="+encodeURIComponent(d.category);
 $("#category-return").href="./katalog.html?kategori="+encodeURIComponent(d.category);
