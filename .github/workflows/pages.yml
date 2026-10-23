@@ -49,6 +49,8 @@ jobs:
         run: node tests/browser-smoke.cjs
       - name: Cross-browser test Chromium, Firefox and WebKit
         run: node tests/cross-browser.cjs
+      - name: QA day-night dropdowns and search palette across browsers
+        run: node tests/menu-dan-warna-qa.cjs
       - name: Upload responsive test screenshots
         if: always()
         uses: actions/upload-artifact@v4
