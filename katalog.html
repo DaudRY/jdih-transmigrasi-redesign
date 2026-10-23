@@ -36,6 +36,7 @@ a{color:#185e4e;text-underline-offset:3px}a:focus-visible,button:focus-visible,s
 </style>
 <link rel="stylesheet" href="assets/comfort-theme.css">
 <link rel="stylesheet" href="assets/portal-finish.css">
+<link rel="stylesheet" href="assets/portal-polish.css">
 <link rel="stylesheet" href="assets/portal-finish.css">
 
 <style>
@@ -86,8 +87,8 @@ a{color:#185e4e;text-underline-offset:3px}a:focus-visible,button:focus-visible,s
 <p id="sample-pdf-status" class="sample-status">Memeriksa salinan PDF lokal...</p>
 <div id="catalog-results"></div>
 <div id="catalog-empty" class="catalogempty" hidden>
-<h2>Belum ada dokumen pilihan</h2>
-<p id="catalog-empty-desc">Dokumen untuk kategori ini belum tersedia dalam koleksi pilihan saat ini.</p>
+<h2>Dokumen belum tersedia dalam kategori ini</h2>
+<p id="catalog-empty-desc">Coba kategori lain atau gunakan penelusuran terpadu untuk menemukan dokumen hukum.</p>
 <p id="catalog-empty-help">Pilih kategori lain atau lanjutkan penelusuran dokumen.</p>
 </div>
 <div id="source-panel" class="page-notice" hidden></div>
@@ -154,15 +155,15 @@ function recordsForSlug(slug){
 function fileLink(record){
  const cached=manifest?.items?.[record.id];
  if(cached?.bundled&&typeof cached.path==="string"&&/^pdfs\/[a-z0-9-]+\.pdf$/.test(cached.path)){
-   return '<a href="./'+esc(cached.path)+'" download="'+esc(record.id)+'.pdf" class="catalog-download">'+esc(tr("Unduh PDF contoh","Download sample PDF"))+' ↓</a>';
+   return '<a href="./'+esc(cached.path)+'" download="'+esc(record.id)+'.pdf" class="catalog-download">'+esc(tr("Unduh naskah PDF","Download PDF"))+' ↓</a>';
  }
  return '<a href="'+esc(record.pdfUrl)+'" target="_blank" rel="noopener noreferrer" class="catalog-download">'+esc(tr("PDF sumber resmi","Official PDF"))+' ↗</a>';
 }
 function card(record){
- const label=tr("Contoh dokumen resmi","Official document sample");
+ const label=tr("Dokumen hukum","Legal document");
  const short=record.recordType==="decision"?
    tr("Putusan: status inkracht belum diverifikasi","Decision: finality not verified"):
-   tr("Satu dokumen yang diperiksa dari sumber resmi","One verified record from the official source");
+   tr("Dokumen dari sumber resmi","One verified record from the official source");
  return '<article class="catalogcard"><div class="catalog-card-top"><span class="tag">'+icon(record.category)+' '+esc(record.label)+'</span>'+
  '<span class="sample-indicator">'+esc(label)+'</span></div>'+
  '<h3><a class="internal-detail" href="'+esc(record.detailUrl)+'">'+esc(record.title)+'</a></h3>'+
@@ -181,7 +182,7 @@ function showRecords(){
  $("#catalog-empty").hidden=!!result.length;
  $("#catalog-count").textContent=all.length?
    tr(result.length+" dari "+all.length+" contoh dokumen terverifikasi dalam kategori ini.",result.length+" of "+all.length+" verified document samples in this category."):
-   tr("Belum ada dokumen pilihan pada kategori ini.", "No verified official PDF sample found in this category.");
+   tr("Dokumen dalam kategori ini belum tersedia di koleksi website.", "No document is currently available in this category.");
  if(!all.length)$("#catalog-empty-desc").textContent=tr(
  "Tidak ditemukan dokumen PDF pada koleksi publik kategori ini saat pemeriksaan. Bukan berarti kategorinya tidak mempunyai dokumen di sistem internal JDIH.",
  "No PDF was found in this public category at the time of checking. The internal JDIH system may still contain records."
@@ -210,7 +211,7 @@ function setHeader(){
  $("#catalog-intro-text").textContent=tr(active.description,active.descriptionEn);
  document.title=title+" | JDIH Kementerian Transmigrasi";
  const schemaDescription={
- regulation:["Contoh menggunakan metadata yang tersedia di JDIH resmi. Jenis peraturan, keputusan, dan MoU tidak dipaksakan menggunakan satu struktur normatif.","Samples use verified JDIH metadata. Regulations, decisions and MoUs are not forced into one legal schema."],
+ regulation:["Metadata ditampilkan berdasarkan informasi yang tersedia pada JDIH resmi. Jenis peraturan, keputusan, dan MoU tidak dipaksakan menggunakan satu struktur normatif.","Samples use verified JDIH metadata. Regulations, decisions and MoUs are not forced into one legal schema."],
  formation:["Contoh naskah akademik, urgensi, atau rancangan adalah dokumen proses, bukan peraturan yang telah ditetapkan.","Academic, urgency and draft samples are process documents, not enacted regulations."],
  nonregulation:["Metadata monografi, artikel dan HAKI berbeda. Dokumen tidak dipindahkan secara keliru dari kategori peraturan.","Monograph, article and IP metadata require distinct treatment; regulatory records are not falsely relabeled."],
  decision:["Nomor putusan, jenis perkara dan status putusan dipisahkan dari status berlaku peraturan. Status berkekuatan hukum tetap belum diasumsikan.","Court decision status is distinguished from regulatory validity; finality is not presumed."]
