@@ -1,0 +1,126 @@
+/* JDIH Transmigrasi: penyelarasan antarmuka layanan publik.
+ * Lapisan ini berada setelah portal-finish.css dan tidak mengubah data hukum.
+ * Mendukung layar kecil, touch, reduced-motion, kontras, mode gelap.
+ */
+:root{
+  --portal-radius:16px;
+  --portal-primary:#175747;
+  --portal-primary-hover:#0c4338;
+  --portal-highlight:#b68a4a;
+  --portal-line:var(--line,#b8cbbd);
+  --portal-panel:var(--surface,#edf2ea);
+  --portal-bg:var(--paper,#dce6dc);
+  --portal-text:var(--ink,#1c3631);
+  --portal-secondary:var(--muted,#506c60);
+}
+html[data-theme=night]{
+  --portal-primary:#b4e7cf;
+  --portal-primary-hover:#d7f8e8;
+  --portal-highlight:#e6bd79;
+}
+body{background:var(--portal-bg);color:var(--portal-text)}
+section,.section,.content,.maincontent{scroll-margin-top:115px}
+.quick a,.doc,.catalogcard,.info-card,.info-panel,.featuretile,
+.othercard,.servicepanel,.panel,.searchpanel,.searchbox,.resultcard{
+  border:1px solid var(--portal-line);
+  background:var(--portal-panel);
+  border-radius:var(--portal-radius);
+}
+.quick a,.featuretile,.othercard,.catalogcard,.resultcard{
+  transition:border-color .16s ease,transform .16s ease,box-shadow .16s ease,background-color .16s ease;
+}
+.quick a:hover,.featuretile:hover,.othercard:hover,.catalogcard:hover,.resultcard:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 28px rgba(12,50,38,.12);
+  border-color:var(--green2);
+}
+.quick a:focus-visible,.catalogcard a:focus-visible,.featuretile:focus-visible{outline-offset:4px}
+.quick a{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:7px;min-height:160px;text-decoration:none}
+.quick a .qicon{display:inline-grid;place-items:center;width:43px;height:43px;border-radius:12px;background:var(--surface-alt);color:var(--green2);margin-bottom:5px}
+.quick a strong{color:var(--portal-text);font-size:.96rem;line-height:1.35}
+.quick a small{color:var(--portal-secondary);font-size:.81rem;line-height:1.5}
+.quick a:after{content:"→";color:var(--green2);font-size:1rem;font-weight:900;align-self:flex-end;margin-top:auto}
+.sectionhead{align-items:end;gap:18px}
+.sectionhead h2{line-height:1.17;text-wrap:balance}
+.sectiondesc{max-width:500px;color:var(--portal-secondary);line-height:1.6}
+.kicker{letter-spacing:.12em;font-weight:850}
+.hero-copy .lead{max-width:640px;line-height:1.65}
+.hero .searchbox{border:1px solid rgba(255,255,255,.22)}
+.searchbox input,.searchbox select,.controls input,.controls select,.searchpanel input,.searchpanel select{
+  width:100%;min-width:0;border-radius:10px;
+}
+.btn,a.btn,button.btn{border-radius:10px;min-height:44px}
+.docfoot{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.docfoot a,.docfoot button{min-height:40px;display:inline-flex;align-items:center}
+.navmenu a,.categorylink{border-radius:8px;min-height:34px}
+.navmenu .menu-icon{color:var(--green2)}
+.catalog-actions a,.resultactions a{min-height:40px;display:inline-flex;align-items:center}
+.catalogcard h3,.resultcard h3{line-height:1.42;overflow-wrap:anywhere}
+.catalogcard .tag{font-size:.72rem;line-height:1.35}
+.page-notice,.notice{border-radius:0 12px 12px 0;line-height:1.6}
+.site-tools{gap:8px}
+.site-tools button,.site-tools select{min-height:42px}
+.site-tools button:focus-visible,.site-tools select:focus-visible{outline:3px solid var(--portal-highlight);outline-offset:3px}
+.pdfshell,.preview{background:var(--surface-alt);border-color:var(--line)}
+.hero .eyebrow{color:#e8d7b6}
+.catalog-head h1,.hero-report h1{color:#fff}
+.catalog-head,.hero-report{background-color:#123c34}
+footer a:hover,.footer a:hover{text-decoration:underline}
+.info-panel h2,.panel h2{line-height:1.3}
+.info-nav a:hover,.info-nav a.active{background:var(--surface-alt);color:var(--ink)}
+/* Layanan contoh tetap jujur tanpa memenuhi beranda dengan catatan teknis. */
+.data-note{display:inline-flex;gap:6px;align-items:center;font-size:.77rem;color:var(--portal-secondary)}
+.data-note svg{flex-shrink:0}
+/* Safari: elemen interaktif tidak menggunakan ukuran sentuh terlalu kecil. */
+button,a,summary,select{-webkit-tap-highlight-color:rgba(40,102,83,.14)}
+button,select{cursor:pointer}
+@media(max-width:1200px){
+  .mastin,.headin{gap:10px}
+  .site-tools{margin-left:auto}
+}
+@media(max-width:900px){
+  .sectionhead{align-items:flex-start}
+  .nav.open{max-height:min(75dvh,650px);overflow-y:auto;overscroll-behavior:contain}
+  .quick a{min-height:145px}
+  .catalogsidebar,.info-sidebar{position:static;max-height:none}
+}
+@media(max-width:650px){
+  .wrap{width:calc(100% - 28px)}
+  .mastin,.headin{gap:9px}
+  .brand{min-width:0}
+  .brand strong{font-size:.88rem}
+  .nav a,.topnav a{font-size:.82rem}
+  .site-tools{gap:5px}
+  .site-tools button,.site-tools select{padding:8px}
+  .section{padding-top:35px;padding-bottom:35px}
+  .sectionhead{gap:9px}
+  .sectionhead h2{font-size:clamp(1.42rem,6vw,2.1rem)}
+  .quick{gap:12px}
+  .quick a{min-width:0;min-height:150px;padding:16px}
+  .quick a strong{font-size:.87rem}
+  .quick a small{font-size:.76rem}
+  .controls{gap:9px}
+  .catalogcard,.panel,.info-panel{padding:17px}
+  .catalog-actions{gap:10px}
+  .catalog-head{padding:26px 0}
+  .docfoot>*{flex:1 1 auto}
+  .meta-grid{grid-template-columns:1fr}
+  .footer .wrap{gap:10px}
+}
+@media(max-width:390px){
+  .quick{grid-template-columns:1fr 1fr}
+  .quick a{padding:12px;min-height:152px}
+  .quick a .qicon{width:38px;height:38px}
+  .quick a:after{font-size:.86rem}
+  .site-tools button,.site-tools select{min-height:38px}
+}
+@media(hover:none){
+  .quick a:hover,.featuretile:hover,.othercard:hover,.catalogcard:hover,.resultcard:hover{transform:none;box-shadow:none}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+@media print{
+  .mast,.header,.top,.site-tools,.menu,.footer,.nav,.topnav{position:static;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  .quick a,.catalogcard,.panel,.info-panel{break-inside:avoid}
+}
