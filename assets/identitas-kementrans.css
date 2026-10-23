@@ -1,0 +1,69 @@
+/* Identitas visual Kementerian Transmigrasi: biru maritim, biru langit, emas,
+   dan permukaan hangat. Diterapkan setelah stylesheet warisan. */
+:root{
+ --ink:#18394c; --muted:#526c79; --green:#194f67; --green2:#2c7b9e;
+ --gold:#c69b56; --paper:#e8eff2; --surface:#f6f8f7; --surface-alt:#dae7ed;
+ --line:#c5d6de; --white:#f6f8f7; --soft-input:#f1f6f7;
+ --portal-primary:#194f67; --portal-primary-hover:#11394f;
+ --portal-highlight:#c69b56; --portal-panel:#f6f8f7;
+ --portal-bg:#e8eff2; --portal-text:#18394c;
+ --portal-secondary:#526c79;
+ --brand-navy:#163c54;--brand-deep:#102e43;--brand-ocean:#337f9d;
+ --brand-ivory:#f6f4ee;--brand-gold:#c69b56;
+ --shadow:0 15px 36px rgba(21,61,85,.10);
+ color-scheme:light;
+}
+html[data-theme="night"]{
+ --ink:#eaf3f6;--muted:#b4c9d5;--green:#6faac5;--green2:#9bcfe4;
+ --gold:#e2ba79;--paper:#101f2c;--surface:#1b3040;--surface-alt:#223e50;
+ --line:#365768;--white:#1b3040;--soft-input:#243e4e;
+ --portal-primary:#a9d5e7;--portal-primary-hover:#d5f0fa;
+ --portal-highlight:#e2ba79;--portal-panel:#1b3040;
+ --portal-bg:#101f2c;--portal-text:#eaf3f6;
+ --portal-secondary:#b4c9d5;
+ --brand-navy:#102436;--brand-deep:#071726;--brand-ocean:#74b8d3;
+ --brand-ivory:#1b3040;--brand-gold:#e2ba79;
+ --shadow:0 17px 36px rgba(1,9,18,.33);
+ color-scheme:dark;
+}
+body{background:var(--paper)!important;color:var(--ink)}
+.mast,.header,.nav.open,.navmenu{background:var(--surface)!important;border-color:var(--line)!important}
+.mast .brand strong,.brand strong,.nav a,.navgroup>summary{color:var(--ink)!important}
+.brand small,.sectiondesc,.panelintro,.catalogmeta,.hint,.small,.meta dt,
+.info-card p,.notice,.page-notice{color:var(--muted)}
+.top,.footer{background:var(--brand-deep)!important;color:#f5f8fa}
+.top a,.footer a{color:#f3f7f9!important}
+.section:not(.hero),.content,.maincontent{background:var(--paper);color:var(--ink)}
+.collection,.relation{background:var(--surface-alt)!important}
+.quick a,.doc,.formationlist,.catalogintro,.catalogsidebar,.catalogcard,
+.panel,.info-panel,.info-card,.servicepanel,.featuretile,.othercard,
+.searchbox,.monev-box,.resultcard{background:var(--surface)!important;border-color:var(--line)!important;color:var(--ink)}
+.btn.primary,.primary,.searchbox .btn{background:var(--brand-navy);color:#fff}
+.btn.primary:hover,.primary:hover,.searchbox .btn:hover{background:var(--brand-deep)}
+.btn.secondary,.btn.subtle,.outline,.btn.reset{border-color:var(--line)}
+h1,h2,h3,h4,h5{letter-spacing:-.025em}
+a,button,summary{touch-action:manipulation}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,
+textarea:focus-visible,summary:focus-visible{outline:3px solid var(--gold)!important;outline-offset:3px}
+.site-tools button,.site-tools select{background:var(--surface-alt)!important;border-color:var(--line)!important;color:var(--ink)!important}
+.site-tools button{font-weight:750}
+.navmenu a:hover,.categorylink:hover,.info-nav a:hover{background:var(--surface-alt)}
+.hero,.catalog-head,.hero-report{color:#fff;background-color:var(--brand-deep)}
+.hero h1,.catalog-head h1,.hero-report h1{color:white}
+.docno,.num,.kicker{color:var(--brand-ocean)}
+.tag,.qicon,.menu-icon{color:var(--brand-ocean)}
+.status{color:var(--brand-ocean)}
+html[data-theme="night"] .tag,
+html[data-theme="night"] .qicon{background:#2b4d5e;color:#c2e5f4}
+html[data-theme="night"] .docno,html[data-theme="night"] .num,
+html[data-theme="night"] .kicker{color:#b4dff2}
+html[data-theme="night"] .btn.primary,
+html[data-theme="night"] .searchbox .btn{background:#397e9e;color:#fff}
+html[data-theme="night"] .searchbox .field label{color:var(--ink)}
+html[data-theme="night"] .hero .lead{color:#e1ebf1}
+input,select,textarea,.field input,.field select,.catalogfilter input,.catalogfilter select{
+ background:var(--soft-input)!important;color:var(--ink)!important;border-color:var(--line)!important
+}
+input::placeholder,textarea::placeholder{color:var(--muted);opacity:.85}
+::selection{background:#d7af6c;color:#16364a}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
